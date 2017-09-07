@@ -36,4 +36,42 @@ class Relation extends AbstractModel
      * @ORM\JoinColumn(referencedColumnName="id")
      */
     protected $tableRegistry;
+
+    /**
+     * @return Tag
+     */
+    public function getTag()
+    {
+        return $this->tag;
+    }
+
+    /**
+     * @param Tag $tag
+     * @return $this
+     */
+    public function setTag(Tag $tag)
+    {
+        $this->tag = $tag;
+
+        return $this;
+    }
+
+    /**
+     * @return TableRegistry
+     */
+    public function getTableRegistry()
+    {
+        return $this->tableRegistry;
+    }
+
+    /**
+     * @param TableRegistry $tableRegistry
+     * @return $this
+     */
+    public function setTableRegistry(TableRegistry $tableRegistry)
+    {
+        $this->tableRegistry = $tableRegistry;
+
+        return $this;
+    }
 }
