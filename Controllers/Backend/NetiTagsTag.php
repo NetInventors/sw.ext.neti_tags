@@ -23,8 +23,7 @@ class Shopware_Controllers_Backend_NetiTagsTag
 
         $qb->select()
             ->leftJoin($this->alias . '.relations', 'r')
-            ->where($this->alias . '.deleted = 0')
-            ->andWhere('r.tag = ' . $this->alias . '.id');
+            ->where($this->alias . '.deleted = 0');
 
         return $qb;
     }
