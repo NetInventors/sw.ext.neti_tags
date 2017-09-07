@@ -1,31 +1,40 @@
-# Tags Plugin
-> Tell something great about this plugin
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_bundles/badges/quality-score.png?b=master&s=a02f91ff34fb078a181065ae39fece08b6e924bf)](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_bundles/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_bundles/badges/build.png?b=master&s=79a95045ac84c0deb182c9e8ba2b298396012003)](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_bundles/build-status/master)
+
+# Tags
+> Relate everything with tags
 
 * PluginKey: NetiTags
+* ProjectId: [000000-012-266](https://redmine.netinventors.de/projects/000000-012-266)
+* [Plugin in shopware store](http://store.shopware.com/detail/index/sArticle/162715)
+* [Plugin landing page](http://www.shopinventors.de/shopware-plugins/tags/)
 
 ## GitHub
-* [GitHub Repository](https://github.com/NetInventors/sw.ext.neti_plugin_boilerplate/) 
-* [ChangeLog](https://github.com/NetInventors/sw.ext.neti_plugin_boilerplate/commits)
-* [Issues](https://github.com/NetInventors/sw.ext.neti_plugin_boilerplate/issues)
+* [GitHub Repository](https://github.com/NetInventors/sw.ext.neti_tags/) 
+* [ChangeLog](https://github.com/NetInventors/sw.ext.neti_tags/commits)
+* [Issues](https://github.com/NetInventors/sw.ext.neti_tags/issues)
 
 ## Requirements:
 * Shopware version >= 5.2.6
-* NetiFoundation >= 2.3.2
+* NetiFoundation >= 2.0.7
 
-## Working from Boilerplate
-* Checkout this repo to your shopware directory
-* Remove the `.git/` directory
-* Open in your IDE (e.g. PhpStorm)
-* Change every occurrence of `NetiBoilerplate` to the technical name of your new plugin
-* Adjust all components to fit your plugin's requirements (use the `TODO` tags to help)
-* Remove `TODO` tags
+## Install:
+1. If you haven't already, download and install our free plugin "[NetiFoundation](http://store.shopware.com/detail/index/sArticle/162025)" from the Shopware Community Store
+2. Install Plugin via plugin manager or upload this plugin in "/custom/plugins/". The plugin directory should be named "NetiBundles". 
+
+## Configuration:
+* Install
+* Configure
+
+## How to report bugs / request features?
+* [GitHub issue tracker](https://github.com/NetInventors/sw.ext.neti_tags/issues)
 
 ## Get involved 
 We highly appreciate if you want to add further functions and fix issues. Just fork our plugin and create a pull request.
 For more information about contributing to this plugin, please see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License & Copyright
-Copyright (c) 2017, Net Inventors - Agentur für digitale Medien GmbH
+Net Inventors - Agentur für digitale Medien GmbH
 
 Please see [License file](LICENSE) for more information.
 
@@ -34,6 +43,3 @@ Please see [License file](LICENSE) for more information.
 Stahltwiete 23  
 22761 Hamburg  
 Germany  
-
-T. 040 42934714-0 // F. 040 42934714-9  
-www.netinventors.de // info@netinventors.de  
