@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../engine/Shopware/Components/Plugin/schema/plugin.xsd">
+
+    <label lang="de">Tags Plugin</label> <!-- TODO: adjust -->
+    <label lang="en">Tags Plugin</label> <!-- TODO: adjust -->
+
+    <version>1.0.0</version> <!-- TODO: adjust -->
+    <link>http://www.shopinventors.de</link>
+    <author>Net Inventors GmbH</author>
+    <compatibility minVersion="5.2.6"/> <!-- TODO: !!DO NOT!! set a lower minimum Shopware version if you require Foundation. Remove this comment before releasing the plugin. -->
+
+    <!-- TODO: adjust -->
+    <changelog version="1.0.0">
+        <changes lang="de"><![CDATA[]]></changes>
+        <changes lang="en"><![CDATA[]]></changes>
+    </changelog>
+
+    <requiredPlugins>
+        <requiredPlugin pluginName="NetiFoundation" minVersion="2.3.2"/> <!-- TODO: adjust -->
+    </requiredPlugins>
+</plugin>
