@@ -1,5 +1,5 @@
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_bundles/badges/quality-score.png?b=master&s=a02f91ff34fb078a181065ae39fece08b6e924bf)](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_bundles/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_bundles/badges/build.png?b=master&s=79a95045ac84c0deb182c9e8ba2b298396012003)](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_bundles/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_tags/badges/quality-score.png?b=develop&s=145eab19bf396bdd889e1e41a77a42756fe8a115)](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_tags/?branch=develop)
+[![Build Status](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_tags/badges/build.png?b=develop&s=8c36927f2ac5c5ee577b3f15990c74b13374efa1)](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_tags/build-status/develop)
 
 # Tags
 > Relate everything with tags
@@ -28,6 +28,9 @@
 
 ## How to report bugs / request features?
 * [GitHub issue tracker](https://github.com/NetInventors/sw.ext.neti_tags/issues)
+
+## Add your tags and relations to your own plugin
+> Todo:
 
 ## Get involved 
 We highly appreciate if you want to add further functions and fix issues. Just fork our plugin and create a pull request.
