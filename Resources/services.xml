@@ -4,6 +4,10 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <imports>
+        <import resource="services/relations.xml"/>
+    </imports>
+
     <services>
         <!-- Event Subscribers -->
         <service class="NetiTags\Subscriber\ControllerPath" id="neti_tags.subscriber.controller_path">
@@ -17,6 +21,10 @@
             <argument id="neti_foundation.plugin_manager_config" type="service"/>
             <argument>%neti_tags.plugin_dir%</argument>
             <tag name="shopware.event_subscriber"/>
+        </service>
+
+        <service class="NetiTags\Service\Tag\Association" id="neti_tags.service.tag.association">
+            <argument id="neti_tags.service.tag.relation_collector" type="service"/>
         </service>
     </services>
 </container>

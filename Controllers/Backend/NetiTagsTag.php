@@ -24,11 +24,54 @@ class Shopware_Controllers_Backend_NetiTagsTag
         $qb->select()
             ->leftJoin($this->alias . '.relations', 'r')
             ->where($this->alias . '.deleted = 0')
-            ->andWhere('r.tag = ' . $this->alias . '.id')
-        ;
+            ->andWhere('r.tag = ' . $this->alias . '.id');
 
         return $qb;
     }
 
+    /**
+     * @param string $search
+     * @param string $association
+     * @param int    $offset
+     * @param int    $limit
+     * @param null   $id
+     * @param array  $filter
+     * @param array  $sort
+     *
+     * @return array
+     */
+    public function searchAssociation($search, $association, $offset, $limit, $id = null, $filter = [], $sort = [])
+    {
+        try {
+            $result = $this->container->get('neti_tags.service.tag.association')->searchAssociation(
+                $search,
+                $association,
+                $offset,
+                $limit,
+                $id,
+                $filter,
+                $sort
+            );
+        } catch (\Exception $e) {
+            $result = array(
+                'success' => false,
+                'message' => $e->getMessage()
+            );
+        }
+
+        if (empty($result)) {
+            $result = parent::searchAssociation(
+                $search,
+                $association,
+                $offset,
+                $limit,
+                $id,
+                $filter,
+                $sort
+            );
+        }
+
+        return $result;
+    }
 
 }

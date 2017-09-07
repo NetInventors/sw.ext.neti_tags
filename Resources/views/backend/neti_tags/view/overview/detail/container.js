@@ -25,13 +25,11 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.Container', {
                             allowBlank: false
                         },
                         description: {
-                            xtype: 'textareafield',
                             fieldLabel: '{s name="field_label_description"}Description{/s}',
                             helpText: '{s name="help_text_description"}{/s}',
                             allowBlank: true
                         },
                         disabled: {
-                            xtype: 'booleancolumn',
                             fieldLabel: '{s name="field_label_disabled"}Disabled{/s}',
                             helpText: '{s name="help_text_disabled"}{/s}',
                             allowBlank: false
@@ -43,6 +41,8 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.Container', {
                     columns: 1,
                     fields: {
                         relations: {
+                            'xtype': 'neti_tags_view_overview_detail_container_relations',
+                            'height': 300,
                             fieldLabel: '',
                             hideLabel: true,
                             allowBlank: true

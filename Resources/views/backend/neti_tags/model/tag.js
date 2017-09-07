@@ -10,8 +10,8 @@ Ext.define('Shopware.apps.NetiTags.model.Tag', {
 
     configure: function () {
         return {
-            controller: 'NetiTagsTag'
-            // related: 'Shopware.apps.NetiTags.view.consultant.detail.Association'
+            controller: 'NetiTagsTag',
+            'detail': 'Shopware.apps.NetiTags.view.overview.detail.Container'
         };
     },
 
