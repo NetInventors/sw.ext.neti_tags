@@ -7,7 +7,9 @@
 
 namespace NetiTags\Models;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Shopware\Models\Plugin\Plugin;
 
 /**
  * Class TableRegistry
@@ -21,6 +23,16 @@ class TableRegistry extends AbstractModel
      * @var string
      * @ORM\Column(
      *     type="string",
+     *     name="title",
+     *     nullable=false,
+     * )
+     */
+    protected $title;
+
+    /**
+     * @var string
+     * @ORM\Column(
+     *     type="string",
      *     name="table_name",
      *     nullable=false,
      *     unique=true
@@ -29,7 +41,7 @@ class TableRegistry extends AbstractModel
     protected $tableName;
 
     /**
-     * @var \Shopware\Models\Plugin\Plugin
+     * @var Plugin
      * @ORM\Column(
      *     type="integer",
      *     name="plugin_id",
@@ -41,7 +53,7 @@ class TableRegistry extends AbstractModel
     protected $plugin;
 
     /**
-     * @var Relation
+     * @var ArrayCollection|Relation[]
      * @ORM\OneToMany(
      *     targetEntity="Relation",
      *     mappedBy="tableRegistry",
@@ -49,7 +61,32 @@ class TableRegistry extends AbstractModel
      *     cascade={"persist"}
      * )
      */
-    protected $relation;
+    protected $relations;
+
+    /**
+     * TableRegistry constructor.
+     */
+    public function __construct()
+    {
+        $this->relations = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
 
     /**
      * @return string
@@ -79,12 +116,54 @@ class TableRegistry extends AbstractModel
     }
 
     /**
-     * @param \Shopware\Models\Plugin\Plugin $plugin
+     * @param Plugin $plugin
      * @return $this
      */
-    public function setPlugin(\Shopware\Models\Plugin\Plugin $plugin)
+    public function setPlugin(Plugin $plugin)
     {
         $this->plugin = $plugin;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection|Relation[]
+     */
+    public function getRelations()
+    {
+        return $this->relations;
+    }
+
+    /**
+     * @param Relation $relation
+     * @return $this
+     */
+    public function addRelation(Relation $relation)
+    {
+        if ($this->relations->contains($relation)) {
+            return $this;
+        }
+
+        $this->relations->add($relation);
+        // needed to update the owning side of the relationship!
+        $relation->setTableRegistry($this);
+
+        return $this;
+    }
+
+    /**
+     * @param Relation $relation
+     * @return $this
+     */
+    public function removeRelation(Relation $relation)
+    {
+        if (!$this->relations->contains($relation)) {
+            return $this;
+        }
+
+        $this->relations->removeElement($relation);
+        // needed to update the owning side of the relationship!
+        $relation->setTableRegistry(null);
 
         return $this;
     }

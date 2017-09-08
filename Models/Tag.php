@@ -107,4 +107,38 @@ class Tag extends AbstractModel
     {
         return $this->relations;
     }
+
+    /**
+     * @param Relation $relation
+     * @return $this
+     */
+    public function addRelation(Relation $relation)
+    {
+        if ($this->relations->contains($relation)) {
+            return $this;
+        }
+
+        $this->relations->add($relation);
+        // needed to update the owning side of the relationship!
+        $relation->setTag($this);
+
+        return $this;
+    }
+
+    /**
+     * @param Relation $relation
+     * @return $this
+     */
+    public function removeRelation(Relation $relation)
+    {
+        if (!$this->relations->contains($relation)) {
+            return $this;
+        }
+
+        $this->relations->removeElement($relation);
+        // needed to update the owning side of the relationship!
+        $relation->setTag(null);
+
+        return $this;
+    }
 }
