@@ -210,7 +210,7 @@ class Article implements RelationsInterface
 
         $qbr->innerJoin('t.article', 'article');
         $qbr->andWhere(
-            $qbr->expr()->eq('t.id', $relation['id'])
+            $qbr->expr()->eq('t.id', $relation['relationId'])
         );
 
         $result = $qbr->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_ARRAY);

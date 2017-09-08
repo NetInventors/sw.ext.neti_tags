@@ -155,6 +155,8 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         var me = this,
             stores = me.getStores();
 
+        me.clearStores(stores);
+
         if (Ext.isObject(value)) {
             Ext.Object.each(stores, function (key, store) {
                 if (value.hasOwnProperty(key)) {
@@ -162,6 +164,12 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
                 }
             });
         }
+    },
+
+    'clearStores': function (stores) {
+        Ext.Object.each(stores, function (key, store) {
+            store.removeAll();
+        });
     },
 
     'setStoreValue': function (values, store) {

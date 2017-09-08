@@ -58,7 +58,7 @@ class Shopware_Controllers_Backend_NetiTagsTag
             }
 
             $alias = $relationHandler->getAlias();
-            if (! isset($relations[$alias])) {
+            if (! isset($result[$alias])) {
                 $result[$alias] = array();
             }
 
