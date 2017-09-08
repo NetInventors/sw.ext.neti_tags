@@ -9,10 +9,10 @@ namespace NetiTags\Models;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Tag
+ *
  * @package NetiTags\Models
  * @ORM\Entity(repositoryClass="TagRepository")
  * @ORM\Table(name="s_neti_tags_tag")
@@ -72,6 +72,7 @@ class Tag extends AbstractModel
 
     /**
      * @param string $title
+     *
      * @return $this
      */
     public function setTitle($title)
@@ -91,6 +92,7 @@ class Tag extends AbstractModel
 
     /**
      * @param string $description
+     *
      * @return $this
      */
     public function setDescription($description)
@@ -109,36 +111,32 @@ class Tag extends AbstractModel
     }
 
     /**
-     * @param Relation $relation
-     * @return $this
+     * Sets the Value to relations in the record
+     *
+     * @param Relation $relations
+     *
+     * @return self
      */
-    public function addRelation(Relation $relation)
+    public function setRelations($relations)
     {
-        if ($this->relations->contains($relation)) {
-            return $this;
+        $updated = new ArrayCollection();
+        foreach ($relations as $relation) {
+            if (! $relation instanceof Relation) {
+                continue;
+            }
+
+            $relation->setTag($this);
+            $updated->add($relation);
         }
 
-        $this->relations->add($relation);
-        // needed to update the owning side of the relationship!
-        $relation->setTag($this);
-
-        return $this;
-    }
-
-    /**
-     * @param Relation $relation
-     * @return $this
-     */
-    public function removeRelation(Relation $relation)
-    {
-        if (!$this->relations->contains($relation)) {
-            return $this;
+        foreach ($this->relations as $relation) {
+            if (! $updated->contains($relation)) {
+                $this->relations->removeElement($relation);
+                Shopware()->Container()->get('models')->remove($relation);
+            }
         }
 
-        $this->relations->removeElement($relation);
-        // needed to update the owning side of the relationship!
-        $relation->setTag(null);
-
-        return $this;
+        $this->relations = $relations;
     }
+
 }
