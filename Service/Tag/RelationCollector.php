@@ -22,6 +22,14 @@ class RelationCollector implements RelationCollectorInterface
     private $relations;
 
     /**
+     * @return RelationsInterface[]
+     */
+    public function getAll()
+    {
+        return $this->relations;
+    }
+
+    /**
      * @param string $alias
      *
      * @return RelationsInterface
