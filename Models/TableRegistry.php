@@ -81,10 +81,14 @@ class TableRegistry extends AbstractModel
 
     /**
      * @param string $title
+     *
+     * @return $this
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
     }
 
 

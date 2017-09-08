@@ -36,12 +36,27 @@ class TableRegistry implements TableRegistryInterface
 
     /**
      * @param string $tableName
+     *
+     * @return \NetiTags\Models\TableRegistry|null
+     */
+    public function getByTableName($tableName)
+    {
+        $qbr = $this->modelManager->getRepository(\NetiTags\Models\TableRegistry::class);
+
+        return $qbr->findOneBy(array(
+            'tableName' => $tableName
+        ));
+    }
+
+    /**
+     * @param string $title
+     * @param string $tableName
      * @param Plugin $plugin
      *
      * @return bool
      * @throws \Exception
      */
-    public function register($tableName, Plugin $plugin)
+    public function register($title, $tableName, Plugin $plugin)
     {
         $qbr   = $this->modelManager->getRepository(\NetiTags\Models\TableRegistry::class);
         $model = $qbr->findOneBy(array(
@@ -55,6 +70,7 @@ class TableRegistry implements TableRegistryInterface
 
         $model = new \NetiTags\Models\TableRegistry();
         $model->setTableName($tableName)
+            ->setTitle($title)
             ->setPlugin($plugin);
 
         $violations = $this->modelManager->validate($model);

@@ -18,12 +18,20 @@ interface TableRegistryInterface
 {
     /**
      * @param string $tableName
+     *
+     * @return \NetiTags\Models\TableRegistry|null
+     */
+    public function getByTableName($tableName);
+
+    /**
+     * @param string $title
+     * @param string $tableName
      * @param Plugin $plugin
      *
      * @return bool
      * @throws \Exception
      */
-    public function register($tableName, Plugin $plugin);
+    public function register($title, $tableName, Plugin $plugin);
 
     /**
      * @param string $tableName
