@@ -17,6 +17,11 @@ use NetiTags\Service\Tag\Relations\RelationsInterface;
 interface RelationCollectorInterface
 {
     /**
+     * @return RelationsInterface[]
+     */
+    public function getAll();
+
+    /**
      * @param string $alias
      *
      * @return RelationsInterface
