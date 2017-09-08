@@ -38,6 +38,11 @@ class Relation extends AbstractModel
     protected $tableRegistry;
 
     /**
+     * @ORM\Column(type="integer", name="relation_id")
+     */
+    protected $relationId;
+
+    /**
      * @return Tag
      */
     public function getTag()
@@ -71,6 +76,30 @@ class Relation extends AbstractModel
     public function setTableRegistry(TableRegistry $tableRegistry)
     {
         $this->tableRegistry = $tableRegistry;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of relationId from the record
+     *
+     * @return mixed
+     */
+    public function getRelationId()
+    {
+        return $this->relationId;
+    }
+
+    /**
+     * Sets the Value to relationId in the record
+     *
+     * @param mixed $relationId
+     *
+     * @return self
+     */
+    public function setRelationId($relationId)
+    {
+        $this->relationId = $relationId;
 
         return $this;
     }
