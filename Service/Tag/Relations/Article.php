@@ -10,6 +10,9 @@ namespace NetiTags\Service\Tag\Relations;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use NetiTags\Models\Relation;
+use NetiTags\Service\TableRegistryInterface;
+use Shopware\Components\Api\Exception\ValidationException;
 use Shopware\Components\Model\ModelManager;
 use Shopware\Models\Article\Detail;
 
@@ -21,19 +24,57 @@ use Shopware\Models\Article\Detail;
 class Article implements RelationsInterface
 {
     /**
+     * @var string
+     */
+    const TABLE_NAME = 's_articles_details';
+
+    /**
      * @var ModelManager
      */
     private $modelManager;
 
     /**
+     * @var \Enlight_Components_Snippet_Manager
+     */
+    protected $snippets;
+
+    /**
+     * @var TableRegistryInterface
+     */
+    protected $tableRegistry;
+
+    /**
      * Article constructor.
      *
-     * @param ModelManager $modelManager
+     * @param ModelManager                        $modelManager
+     * @param \Enlight_Components_Snippet_Manager $snippets
+     * @param TableRegistryInterface              $tableRegistry
      */
     public function __construct(
-        ModelManager $modelManager
+        ModelManager $modelManager,
+        \Enlight_Components_Snippet_Manager $snippets,
+        TableRegistryInterface $tableRegistry
     ) {
-        $this->modelManager = $modelManager;
+        $this->modelManager  = $modelManager;
+        $this->snippets      = $snippets;
+        $this->tableRegistry = $tableRegistry;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->snippets->getNamespace('plugins/neti_tags/backend/relations/article')
+            ->get('name', 'Article');
+    }
+
+    /**
+     * @return string
+     */
+    public function getTableName()
+    {
+        return self::TABLE_NAME;
     }
 
     /**
@@ -87,6 +128,44 @@ class Article implements RelationsInterface
             'data'    => $data,
             'total'   => $paginator->count()
         );
+    }
+
+    /**
+     * @param array $relations
+     *
+     * @return Relation[]
+     * @throws ValidationException
+     */
+    public function resolveRelations(array $relations)
+    {
+        $repository = $this->modelManager->getRepository(Detail::class);
+        $relationModels = array();
+        foreach ($relations as $relation) {
+            $model = $repository->find($relation['id']);
+            if (empty($model)) {
+                continue;
+            }
+
+            $tableRegistryModel = $this->tableRegistry->getByTableName($this->getTableName());
+            if (empty($tableRegistryModel)) {
+                continue;
+            }
+
+            $relationModel = new Relation();
+            $relationModel->setRelationId($model->getId())
+                ->setTableRegistry($tableRegistryModel);
+
+            $violations = $this->modelManager->validate($model);
+            if ((bool) $violations->count()) {
+                throw new ValidationException($violations);
+            }
+
+            $this->modelManager->persist($relationModel);
+
+            $relationModels[] = $relationModel;
+        }
+
+        return $relationModels;
     }
 
     /**

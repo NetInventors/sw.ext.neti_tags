@@ -29,6 +29,36 @@ class Shopware_Controllers_Backend_NetiTagsTag
     }
 
     /**
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function resolveExtJsData($data)
+    {
+        $data              = parent::resolveExtJsData($data);
+        $relationCollector = $this->container->get('neti_tags.service.tag.relation_collector');
+        if (isset($data['relations'])) {
+            $allRelations = array();
+            foreach ($data['relations'] as $alias => &$relations) {
+                if (empty($relations)) {
+                    continue;
+                }
+
+                $relationHandler = $relationCollector->getByAlias($alias);
+                if (empty($relationHandler)) {
+                    continue;
+                }
+
+                $allRelations = $allRelations + $relationHandler->resolveRelations($relations);
+            }
+
+            $data['relations'] = $allRelations;
+        }
+
+        return $data;
+    }
+
+    /**
      * @param string $search
      * @param string $association
      * @param int    $offset
@@ -54,7 +84,7 @@ class Shopware_Controllers_Backend_NetiTagsTag
         } catch (\Exception $e) {
             $result = array(
                 'success' => false,
-                'message' => $e->getMessage()
+                'error'   => $e->getMessage()
             );
         }
 

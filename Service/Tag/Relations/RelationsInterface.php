@@ -7,6 +7,8 @@
 
 namespace NetiTags\Service\Tag\Relations;
 
+use NetiTags\Models\Relation;
+
 /**
  * Interface AssociationsInterface
  *
@@ -14,6 +16,16 @@ namespace NetiTags\Service\Tag\Relations;
  */
 interface RelationsInterface
 {
+    /**
+     * @return string
+     */
+    public function getName();
+
+    /**
+     * @return string
+     */
+    public function getTableName();
+
     /**
      * @param string $search
      * @param string $association
@@ -26,4 +38,11 @@ interface RelationsInterface
      * @return array
      */
     public function searchAssociation($search, $association, $offset, $limit, $id = null, $filter = [], $sort = []);
+
+    /**
+     * @param array $relations
+     *
+     * @return Relation[]
+     */
+    public function resolveRelations(array $relations);
 }
