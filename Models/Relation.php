@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Relation
+ *
  * @package NetiTags\Models
  * @ORM\Entity(repositoryClass="RelationRepository")
  * @ORM\Table(name="s_neti_tags_relation")
@@ -23,9 +24,14 @@ class Relation extends AbstractModel
      *     targetEntity="Tag",
      *     inversedBy="relation"
      * )
-     * @ORM\JoinColumn(referencedColumnName="id")
+     * @ORM\JoinColumn(name="tag_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $tag;
+
+    /**
+     * @ORM\Column(type="integer", name="table_registry_id")
+     */
+    protected $tableRegistryId;
 
     /**
      * @var TableRegistry
@@ -33,7 +39,7 @@ class Relation extends AbstractModel
      *     targetEntity="TableRegistry",
      *     inversedBy="relation"
      * )
-     * @ORM\JoinColumn(referencedColumnName="id")
+     * @ORM\JoinColumn(name="table_registry_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $tableRegistry;
 
@@ -52,6 +58,7 @@ class Relation extends AbstractModel
 
     /**
      * @param Tag $tag
+     *
      * @return $this
      */
     public function setTag(Tag $tag)
@@ -71,6 +78,7 @@ class Relation extends AbstractModel
 
     /**
      * @param TableRegistry $tableRegistry
+     *
      * @return $this
      */
     public function setTableRegistry(TableRegistry $tableRegistry)

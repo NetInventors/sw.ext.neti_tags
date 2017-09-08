@@ -29,6 +29,11 @@ class Article implements RelationsInterface
     const TABLE_NAME = 's_articles_details';
 
     /**
+     * @var string
+     */
+    private $alias;
+
+    /**
      * @var ModelManager
      */
     private $modelManager;
@@ -67,6 +72,26 @@ class Article implements RelationsInterface
     {
         return $this->snippets->getNamespace('plugins/neti_tags/backend/relations/article')
             ->get('name', 'Article');
+    }
+
+    /**
+     * @param string $alias
+     *
+     * @return $this
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAlias()
+    {
+        return $this->alias;
     }
 
     /**
@@ -138,7 +163,7 @@ class Article implements RelationsInterface
      */
     public function resolveRelations(array $relations)
     {
-        $repository = $this->modelManager->getRepository(Detail::class);
+        $repository     = $this->modelManager->getRepository(Detail::class);
         $relationModels = array();
         foreach ($relations as $relation) {
             $model = $repository->find($relation['id']);
@@ -166,6 +191,37 @@ class Article implements RelationsInterface
         }
 
         return $relationModels;
+    }
+
+    /**
+     * @param array $relation
+     *
+     * @return array|null
+     */
+    public function loadRelation(array $relation)
+    {
+        $qbr = $this->modelManager->getRepository(Detail::class)->createQueryBuilder('t');
+
+        $qbr->select(array(
+            't.id',
+            't.number',
+            'article.name'
+        ));
+
+        $qbr->innerJoin('t.article', 'article');
+        $qbr->andWhere(
+            $qbr->expr()->eq('t.id', $relation['id'])
+        );
+
+        $result = $qbr->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_ARRAY);
+
+        if (empty($result)) {
+            return;
+        }
+
+        $result['name'] = sprintf('%s (%s)', $result['name'], $result['number']);
+
+        return $result;
     }
 
     /**

@@ -30,6 +30,22 @@ class RelationCollector implements RelationCollectorInterface
     }
 
     /**
+     * @param string $tableName
+     *
+     * @return RelationsInterface
+     */
+    public function getByTableName($tableName)
+    {
+        foreach ($this->relations as $relation) {
+            if ($tableName !== $relation->getTableName()) {
+                continue;
+            }
+
+            return $relation;
+        }
+    }
+
+    /**
      * @param string $alias
      *
      * @return RelationsInterface
@@ -47,6 +63,7 @@ class RelationCollector implements RelationCollectorInterface
      */
     public function add(RelationsInterface $relation, $alias)
     {
+        $relation->setAlias($alias);
         $this->relations[$alias] = $relation;
     }
 }

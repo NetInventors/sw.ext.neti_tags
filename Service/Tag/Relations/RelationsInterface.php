@@ -22,6 +22,18 @@ interface RelationsInterface
     public function getName();
 
     /**
+     * @param string $alias
+     *
+     * @return self
+     */
+    public function setAlias($alias);
+
+    /**
+     * @return string
+     */
+    public function getAlias();
+
+    /**
      * @return string
      */
     public function getTableName();
@@ -45,4 +57,11 @@ interface RelationsInterface
      * @return Relation[]
      */
     public function resolveRelations(array $relations);
+
+    /**
+     * @param array $relation
+     *
+     * @return array|null
+     */
+    public function loadRelation(array $relation);
 }

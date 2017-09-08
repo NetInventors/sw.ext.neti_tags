@@ -48,7 +48,7 @@ class TableRegistry extends AbstractModel
      *     nullable=true
      * )
      * @ORM\ManyToOne(targetEntity="Shopware\Models\Plugin\Plugin")
-     * @ORM\JoinColumn(referencedColumnName="id")
+     * @ORM\JoinColumn(referencedColumnName="id", onDelete="CASCADE")
      */
     protected $plugin;
 

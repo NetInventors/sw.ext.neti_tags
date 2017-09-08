@@ -14,18 +14,63 @@ class Shopware_Controllers_Backend_NetiTagsTag
     protected $model = 'NetiTags\Models\Tag';
 
     /**
-     * @return \Shopware\Components\Model\QueryBuilder
+     * @param int $id
+     *
+     * @return \Doctrine\ORM\QueryBuilder|\Shopware\Components\Model\QueryBuilder
      */
-    protected function getListQuery()
+    protected function getDetailQuery($id)
     {
-        /** @var \Shopware\Components\Model\QueryBuilder $qb */
-        $qb = parent::getListQuery();
+        $qbr = parent::getDetailQuery($id);
 
-        $qb->select()
-            ->leftJoin($this->alias . '.relations', 'r')
-            ->where($this->alias . '.deleted = 0');
+        $qbr->addSelect(array('relations', 'tableRegistry'));
+        $qbr->leftJoin($this->alias . '.relations', 'relations');
+        $qbr->leftJoin('relations.tableRegistry', 'tableRegistry');
 
-        return $qb;
+        return $qbr;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function getAdditionalDetailData(array $data)
+    {
+        $data              = parent::getAdditionalDetailData($data);
+        $data['relations'] = $this->fetchRelations($data['relations']);
+
+        return $data;
+    }
+
+    /**
+     * @param array $relations
+     *
+     * @return array
+     */
+    private function fetchRelations($relations)
+    {
+        $result            = array();
+        $relationCollector = $this->container->get('neti_tags.service.tag.relation_collector');
+        foreach ($relations as $value) {
+            $relationHandler = $relationCollector->getByTableName($value['tableRegistry']['tableName']);
+            if (empty($relationHandler)) {
+                continue;
+            }
+
+            $alias = $relationHandler->getAlias();
+            if (! isset($relations[$alias])) {
+                $result[$alias] = array();
+            }
+
+            $relation = $relationHandler->loadRelation($value);
+            if (empty($relation)) {
+                continue;
+            }
+
+            $result[$alias][] = $relation;
+        }
+
+        return $result;
     }
 
     /**
