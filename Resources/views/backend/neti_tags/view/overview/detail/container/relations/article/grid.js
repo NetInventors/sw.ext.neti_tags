@@ -12,7 +12,7 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.relations.arti
     'configure': function () {
         return {
             'controller': 'NetiTagsTag',
-            'associationKey': 'article',
+            'associationKey': 'articles',
             'columns': {
                 'name': {
                     'header': '{s name="grid_column_name"}Name{/s}'
