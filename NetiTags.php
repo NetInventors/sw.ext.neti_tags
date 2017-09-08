@@ -41,8 +41,10 @@ class NetiTags extends Plugin
         parent::install($context);
 
         try {
+            $articleRelationService = $this->container->get('neti_tags.service.tag.relations.article');
             $this->container->get('neti_tags.service.table_registry')->register(
-                's_articles_details',
+                $articleRelationService->getName(),
+                $articleRelationService->getTableName(),
                 $context->getPlugin()
             );
         } catch (\Exception $e) {
@@ -58,8 +60,10 @@ class NetiTags extends Plugin
         parent::update($context);
 
         try {
+            $articleRelationService = $this->container->get('neti_tags.service.tag.relations.article');
             $this->container->get('neti_tags.service.table_registry')->register(
-                's_articles_details',
+                $articleRelationService->getName(),
+                $articleRelationService->getTableName(),
                 $context->getPlugin()
             );
         } catch (\Exception $e) {
