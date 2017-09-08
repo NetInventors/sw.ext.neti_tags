@@ -13,7 +13,6 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.Container', {
     configure: function () {
         return {
             controller: 'NetiTagsTag',
-            // associations: ['categories', 'articles'],
             fieldSets: [
                 {
                     title: '{s name="field_set_title_general_settings"}General Settings{/s}',
@@ -25,6 +24,7 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.Container', {
                             allowBlank: false
                         },
                         description: {
+                            xtype: 'textareafield',
                             fieldLabel: '{s name="field_label_description"}Description{/s}',
                             helpText: '{s name="help_text_description"}{/s}',
                             allowBlank: true
