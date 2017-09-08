@@ -20,6 +20,8 @@ class Relations implements CompilerPassInterface
 {
     /**
      * @param ContainerBuilder $container
+     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
+     * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
      */
     public function process(ContainerBuilder $container)
     {
