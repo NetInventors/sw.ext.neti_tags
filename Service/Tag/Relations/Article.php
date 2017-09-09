@@ -11,6 +11,7 @@ use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use NetiTags\Models\Relation;
+use NetiTags\Models\Tag;
 use NetiTags\Service\TableRegistryInterface;
 use Shopware\Components\Api\Exception\ValidationException;
 use Shopware\Components\Model\ModelManager;
@@ -27,6 +28,11 @@ class Article implements RelationsInterface
      * @var string
      */
     const TABLE_NAME = 's_articles_details';
+
+    /**
+     * @var  string
+     */
+    const ATTRIBUTE_TABLE_NAME = 's_articles_attributes';
 
     /**
      * @var string
@@ -100,6 +106,11 @@ class Article implements RelationsInterface
     public function getTableName()
     {
         return self::TABLE_NAME;
+    }
+
+    public function getAttributeTableName()
+    {
+        return self::ATTRIBUTE_TABLE_NAME;
     }
 
     /**
@@ -198,7 +209,7 @@ class Article implements RelationsInterface
      *
      * @return array|null
      */
-    public function loadRelation(array $relation)
+    public function fetchRelations(array $relation)
     {
         $qbr = $this->modelManager->getRepository(Detail::class)->createQueryBuilder('t');
 
@@ -222,6 +233,30 @@ class Article implements RelationsInterface
         $result['name'] = sprintf('%s (%s)', $result['name'], $result['number']);
 
         return $result;
+    }
+
+    /**
+     * @param int $relationId
+     *
+     * @return array|null
+     */
+    public function loadRelation($relationId)
+    {
+        $qbr = $this->modelManager->getRepository(Tag::class)->createQueryBuilder('t');
+        $qbr->select(array(
+            't.id'
+        ));
+        $qbr->leftJoin('t.relations', 'relations');
+        $qbr->leftJoin('relations.tableRegistry', 'tableRegistry');
+
+        $qbr->andWhere(
+            $qbr->expr()->eq('relations.relationId', $relationId),
+            $qbr->expr()->eq('tableRegistry.tableName', $qbr->expr()->literal($this->getTableName()))
+        );
+
+        $results = $qbr->getQuery()->getArrayResult();
+
+        return array_column($results, 'id');
     }
 
     /**

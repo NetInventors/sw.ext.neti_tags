@@ -29,6 +29,13 @@ interface RelationCollectorInterface
     public function getByTableName($tableName);
 
     /**
+     * @param string $tableName
+     *
+     * @return RelationsInterface
+     */
+    public function getByAttributeTableName($tableName);
+
+    /**
      * @param string $alias
      *
      * @return RelationsInterface

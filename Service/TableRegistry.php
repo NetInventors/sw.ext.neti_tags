@@ -60,12 +60,11 @@ class TableRegistry implements TableRegistryInterface
     {
         $qbr   = $this->modelManager->getRepository(\NetiTags\Models\TableRegistry::class);
         $model = $qbr->findOneBy(array(
-            'tableName' => $tableName,
-            'plugin'    => $plugin
+            'tableName' => $tableName
         ));
 
         if (! empty($model)) {
-            throw new \Exception(sprintf('Table "%s" for Plugin "%s" already exsists', $tableName, $plugin->getName()));
+            throw new \Exception(sprintf('Table "%s" already exsists', $tableName));
         }
 
         $model = new \NetiTags\Models\TableRegistry();

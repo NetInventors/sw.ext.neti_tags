@@ -39,6 +39,11 @@ interface RelationsInterface
     public function getTableName();
 
     /**
+     * @return string
+     */
+    public function getAttributeTableName();
+
+    /**
      * @param string $search
      * @param string $association
      * @param int    $offset
@@ -63,5 +68,12 @@ interface RelationsInterface
      *
      * @return array|null
      */
-    public function loadRelation(array $relation);
+    public function fetchRelations(array $relation);
+
+    /**
+     * @param int $relationId
+     *
+     * @return array|null
+     */
+    public function loadRelation($relationId);
 }

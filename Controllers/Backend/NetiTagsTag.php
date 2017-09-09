@@ -62,7 +62,7 @@ class Shopware_Controllers_Backend_NetiTagsTag
                 $result[$alias] = array();
             }
 
-            $relation = $relationHandler->loadRelation($value);
+            $relation = $relationHandler->fetchRelations($value);
             if (empty($relation)) {
                 continue;
             }

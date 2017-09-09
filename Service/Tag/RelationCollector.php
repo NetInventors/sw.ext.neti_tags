@@ -46,6 +46,22 @@ class RelationCollector implements RelationCollectorInterface
     }
 
     /**
+     * @param string $tableName
+     *
+     * @return RelationsInterface
+     */
+    public function getByAttributeTableName($tableName)
+    {
+        foreach ($this->relations as $relation) {
+            if ($tableName !== $relation->getAttributeTableName()) {
+                continue;
+            }
+
+            return $relation;
+        }
+    }
+
+    /**
      * @param string $alias
      *
      * @return RelationsInterface

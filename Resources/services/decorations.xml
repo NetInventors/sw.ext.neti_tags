@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service decorates="shopware_attribute.data_loader"
+                 id="neti_tags.service.decorations.attribute_data_loader"
+                 class="NetiTags\Service\Decorations\AttributeDataLoader"
+                 public="false">
+            <argument type="service" id="neti_tags.service.decorations.attribute_data_loader.inner"/>
+            <argument type="service" id="shopware_attribute.table_mapping"/>
+            <argument type="service" id="dbal_connection"/>
+            <argument type="service" id="neti_tags.service.tag.relation_collector"/>
+        </service>
+
+        <service decorates="shopware_attribute.data_persister"
+                 id="neti_tags.service.decorations.attribute_data_persister"
+                 class="NetiTags\Service\Decorations\AttributeDataPersister"
+                 public="false">
+            <argument type="service" id="neti_tags.service.decorations.attribute_data_persister.inner"/>
+            <argument type="service" id="dbal_connection"/>
+            <argument type="service" id="shopware_attribute.table_mapping"/>
+            <argument type="service" id="shopware_attribute.data_loader"/>
+            <argument type="service" id="models"/>
+            <argument type="service" id="shopware_media.media_service"/>
+        </service>
+    </services>
+</container>
