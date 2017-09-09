@@ -8,6 +8,7 @@
 namespace NetiTags\Service\Tag\Relations;
 
 use NetiTags\Models\Relation;
+use NetiTags\Models\Tag;
 
 /**
  * Interface AssociationsInterface
@@ -76,4 +77,17 @@ interface RelationsInterface
      * @return array|null
      */
     public function loadRelation($relationId);
+
+    /**
+     * @param array $data
+     * @param int   $relationId
+     */
+    public function persistRelations(array $data, $relationId);
+
+    /**
+     * @param int $relationId
+     *
+     * @return array|null
+     */
+    public function getTags($relationId);
 }

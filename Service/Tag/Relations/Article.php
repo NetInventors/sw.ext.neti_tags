@@ -11,6 +11,7 @@ use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use NetiTags\Models\Relation;
+use NetiTags\Models\TableRegistry;
 use NetiTags\Models\Tag;
 use NetiTags\Service\TableRegistryInterface;
 use Shopware\Components\Api\Exception\ValidationException;
@@ -242,10 +243,89 @@ class Article implements RelationsInterface
      */
     public function loadRelation($relationId)
     {
-        $qbr = $this->modelManager->getRepository(Tag::class)->createQueryBuilder('t');
+        $qbr = $this->getTagsQuery($relationId);
         $qbr->select(array(
             't.id'
         ));
+
+        $results = $qbr->getQuery()->getArrayResult();
+
+        return array_column($results, 'id');
+    }
+
+    /**
+     * @param array $data
+     * @param int   $relationId
+     */
+    public function persistRelations(array $data, $relationId)
+    {
+        $tableRegistryId = $this->getTableRegistrationIdForTable();
+        if (empty($tableRegistryId)) {
+            return;
+        }
+
+        $qbr = $this->modelManager->getRepository(Relation::class)->createQueryBuilder('t');
+        $qbr->delete();
+        $qbr->andWhere(
+            $qbr->expr()->eq('t.relationId', $relationId),
+            $qbr->expr()->eq('t.tableRegistryId', $tableRegistryId)
+        );
+
+        $qbr->getQuery()->execute();
+
+        $relations = array();
+        foreach ($data as $tagId) {
+            $relation = new Relation();
+            $relation->setRelationId($relationId)
+                ->setTagId($tagId)
+                ->setTableRegistryId($tableRegistryId);
+            $this->modelManager->persist($relation);
+
+            $relations[] = $relation;
+        }
+
+        $this->modelManager->flush($relations);
+    }
+
+    /**
+     * @param int $relationId
+     *
+     * @return array|null
+     */
+    public function getTags($relationId)
+    {
+        $tableRegistryId = $this->getTableRegistrationIdForTable();
+        if (empty($tableRegistryId)) {
+            return;
+        }
+
+        $qbr = $this->getTagsQuery($relationId);
+        $qbr->select(array(
+            't.id',
+            't.title'
+        ));
+
+        try {
+            $results = $qbr->getQuery()->getArrayResult();
+        } catch (\Exception $e) {
+            $results = null;
+        }
+
+        if (empty($results)) {
+            return;
+        }
+
+        return $results;
+    }
+
+    /**
+     * @param int $relationId
+     *
+     * @return QueryBuilder
+     */
+    private function getTagsQuery($relationId)
+    {
+        $qbr = $this->modelManager->getRepository(Tag::class)->createQueryBuilder('t');
         $qbr->leftJoin('t.relations', 'relations');
         $qbr->leftJoin('relations.tableRegistry', 'tableRegistry');
 
@@ -254,9 +334,21 @@ class Article implements RelationsInterface
             $qbr->expr()->eq('tableRegistry.tableName', $qbr->expr()->literal($this->getTableName()))
         );
 
-        $results = $qbr->getQuery()->getArrayResult();
+        return $qbr;
+    }
 
-        return array_column($results, 'id');
+    /**
+     * @return int
+     */
+    private function getTableRegistrationIdForTable()
+    {
+        $qbr = $this->modelManager->getRepository(TableRegistry::class)->createQueryBuilder('t');
+        $qbr->select('t.id');
+        $qbr->andWhere(
+            $qbr->expr()->eq('t.tableName', $qbr->expr()->literal($this->getTableName()))
+        );
+
+        return (int) $qbr->getQuery()->getSingleScalarResult();
     }
 
     /**

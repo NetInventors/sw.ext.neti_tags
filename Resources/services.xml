@@ -5,18 +5,9 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <imports>
+        <import resource="services/services.xml"/>
         <import resource="services/relations.xml"/>
         <import resource="services/subscriber.xml"/>
         <import resource="services/decorations.xml"/>
     </imports>
-
-    <services>
-        <service class="NetiTags\Service\Tag\Association" id="neti_tags.service.tag.association">
-            <argument id="neti_tags.service.tag.relation_collector" type="service"/>
-        </service>
-
-        <service class="NetiTags\Service\TableRegistry" id="neti_tags.service.table_registry">
-            <argument id="models" type="service"/>
-        </service>
-    </services>
 </container>

@@ -19,6 +19,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Relation extends AbstractModel
 {
     /**
+     * @ORM\Column(type="integer", name="tag_id")
+     */
+    protected $tagId;
+
+    /**
      * @var Tag
      * @ORM\ManyToOne(
      *     targetEntity="Tag",
@@ -108,6 +113,34 @@ class Relation extends AbstractModel
     public function setRelationId($relationId)
     {
         $this->relationId = $relationId;
+
+        return $this;
+    }
+
+    /**
+     * Sets the Value to tagId in the record
+     *
+     * @param mixed $tagId
+     *
+     * @return self
+     */
+    public function setTagId($tagId)
+    {
+        $this->tagId = $tagId;
+
+        return $this;
+    }
+
+    /**
+     * Sets the Value to tableRegistryId in the record
+     *
+     * @param mixed $tableRegistryId
+     *
+     * @return self
+     */
+    public function setTableRegistryId($tableRegistryId)
+    {
+        $this->tableRegistryId = $tableRegistryId;
 
         return $this;
     }

@@ -7,6 +7,7 @@
 
 namespace NetiTags\Service\Decorations;
 
+use NetiTags\Service\Tag\RelationCollectorInterface;
 use Shopware\Bundle\AttributeBundle\Service\DataLoader;
 use Shopware\Bundle\AttributeBundle\Service\DataPersister as CoreService;
 use Shopware\Bundle\AttributeBundle\Service\TableMapping;
@@ -40,24 +41,32 @@ class AttributeDataPersister extends CoreService
     protected $dataLoader;
 
     /**
+     * @var RelationCollectorInterface
+     */
+    protected $relationCollector;
+
+    /**
      * AttributeDataPersister constructor.
      *
-     * @param CoreService  $coreService
-     * @param Connection   $connection
-     * @param TableMapping $mapping
-     * @param DataLoader   $dataLoader
+     * @param CoreService                $coreService
+     * @param Connection                 $connection
+     * @param TableMapping               $mapping
+     * @param DataLoader                 $dataLoader
+     * @param RelationCollectorInterface $relationCollector
      */
     public function __construct(
         CoreService $coreService,
         Connection $connection,
         TableMapping $mapping,
-        DataLoader $dataLoader
+        DataLoader $dataLoader,
+        RelationCollectorInterface $relationCollector
     ) {
         parent::__construct($connection, $mapping, $dataLoader);
-        $this->coreService = $coreService;
-        $this->connection  = $connection;
-        $this->mapping     = $mapping;
-        $this->dataLoader  = $dataLoader;
+        $this->coreService       = $coreService;
+        $this->connection        = $connection;
+        $this->mapping           = $mapping;
+        $this->dataLoader        = $dataLoader;
+        $this->relationCollector = $relationCollector;
     }
 
     /**
@@ -67,7 +76,31 @@ class AttributeDataPersister extends CoreService
      */
     public function persist($data, $table, $foreignKey)
     {
+        $this->persistRelations($data, $table, $foreignKey);
+
         $this->coreService->persist($data, $table, $foreignKey);
+    }
+
+    /**
+     * @param array  $data
+     * @param string $table
+     * @param int    $foreignKey
+     */
+    private function persistRelations(array &$data, $table, $foreignKey)
+    {
+        $relationHandler = $this->relationCollector->getByAttributeTableName($table);
+        if (empty($relationHandler)) {
+            return;
+        }
+
+        $tags = $data['neti_tags'];
+        if (! is_array($tags)) {
+            $tags = explode('|', trim($tags, '|'));
+        }
+
+        $tags = array_map('intval', $tags);
+
+        $relationHandler->persistRelations($tags, (int) $foreignKey);
     }
 
     /**
