@@ -9,7 +9,7 @@
 Ext.define('Shopware.apps.NetiTags.view.overview.Window', {
     extend: 'Shopware.window.Listing',
     alias: 'widget.neti_tags_view_overview_window',
-    title: '{s name="plugin_name" namespace="plugins/neti_tags/neti_tags"}NetiTags{/s}{s name="separator" namespace="plugins/neti_tags/neti_tags"} > {/s}{s name="window_title"}Overview{/s}',
+    title: '{s name="plugin_name" namespace="plugins/neti_tags/neti_tags"}Tags{/s}{s name="separator" namespace="plugins/neti_tags/neti_tags"} > {/s}{s name="window_title"}Overview{/s}',
     autoShow: true,
     configure: function () {
         return {

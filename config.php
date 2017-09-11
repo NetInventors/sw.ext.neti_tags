@@ -31,8 +31,8 @@ return [
     'menu'       => [
         [
             'label'      => [
-                'de_DE' => 'NetiTags',
-                'en_GB' => 'NetiTags',
+                'de_DE' => 'Tags',
+                'en_GB' => 'Tags',
             ],
             'controller' => 'NetiTags',
             'class'      => 'sprite-tags-label',
