@@ -15,14 +15,23 @@ Ext.define('Shopware.apps.NetiTags.view.overview.List', {
         return {
             detailWindow: 'Shopware.apps.NetiTags.view.overview.detail.Window',
             columns: {
+
+                id: {
+                    header: '{s name="grid_column_id"}Id{/s}',
+                    width: 100
+                },
+
                 title: {
                     header: '{s name="grid_column_title"}Tag{/s}'
                 },
+
                 // 'relations': {
                 //     'header': '{s name="grid_column_relations"}Relations{/s}'
                 // },
+
                 disabled: {
-                    header: '{s name="grid_column_disabled"}Disabled{/s}'
+                    header: '{s name="grid_column_status"}Status{/s}',
+                    width: 100
                 }
             }
         };
