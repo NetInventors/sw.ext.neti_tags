@@ -50,6 +50,17 @@ class NetiTags extends Plugin
         } catch (\Exception $e) {
 
         }
+
+        try {
+            $customerRelationService = $this->container->get('neti_tags.service.tag.relations.customer');
+            $this->container->get('neti_tags.service.table_registry')->register(
+                $customerRelationService->getName(),
+                $customerRelationService->getTableName(),
+                $context->getPlugin()
+            );
+        } catch (\Exception $e) {
+
+        }
     }
 
     /**
@@ -64,6 +75,17 @@ class NetiTags extends Plugin
             $this->container->get('neti_tags.service.table_registry')->register(
                 $articleRelationService->getName(),
                 $articleRelationService->getTableName(),
+                $context->getPlugin()
+            );
+        } catch (\Exception $e) {
+
+        }
+
+        try {
+            $customerRelationService = $this->container->get('neti_tags.service.tag.relations.customer');
+            $this->container->get('neti_tags.service.table_registry')->register(
+                $customerRelationService->getName(),
+                $customerRelationService->getTableName(),
                 $context->getPlugin()
             );
         } catch (\Exception $e) {

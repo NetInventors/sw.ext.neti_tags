@@ -10,7 +10,7 @@ namespace NetiTags\Subscriber;
 use Enlight\Event\SubscriberInterface;
 use NetiFoundation\Service\PluginManager\ConfigInterface;
 use NetiFoundation\Service\PluginManager\License;
-use NetiSurcharge\Struct\PluginConfig;
+use NetiTags\Struct\PluginConfig;
 
 /**
  * Class View

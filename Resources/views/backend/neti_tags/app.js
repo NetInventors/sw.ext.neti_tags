@@ -20,13 +20,15 @@ Ext.define('Shopware.apps.NetiTags', {
 
     models: [
         'Tag',
-        'relations.Article'
+        'relations.Article',
+        'relations.Customer'
     ],
 
     views: [
         'overview.List',
         'overview.Window',
         'overview.detail.container.relations.article.Grid',
+        'overview.detail.container.relations.customer.Grid',
         'overview.detail.container.Relations',
         'overview.detail.Container',
         'overview.detail.Window'
@@ -34,7 +36,8 @@ Ext.define('Shopware.apps.NetiTags', {
 
     stores: [
         'Tag',
-        'relations.Article'
+        'relations.Article',
+        'relations.Customer'
     ],
 
     launch: function() {

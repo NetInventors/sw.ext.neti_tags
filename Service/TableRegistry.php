@@ -64,7 +64,8 @@ class TableRegistry implements TableRegistryInterface
         ));
 
         if (! empty($model)) {
-            throw new \Exception(sprintf('Table "%s" already exsists', $tableName));
+//            throw new \Exception(sprintf('Table "%s" already exsists', $tableName));
+            return false;
         }
 
         $model = new \NetiTags\Models\TableRegistry();
