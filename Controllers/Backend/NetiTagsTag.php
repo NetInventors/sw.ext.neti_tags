@@ -94,7 +94,7 @@ class Shopware_Controllers_Backend_NetiTagsTag
                     continue;
                 }
 
-                $allRelations = $allRelations + $relationHandler->resolveRelations($relations);
+                $allRelations = array_merge($allRelations, $relationHandler->resolveRelations($relations));
             }
 
             $data['relations'] = $allRelations;

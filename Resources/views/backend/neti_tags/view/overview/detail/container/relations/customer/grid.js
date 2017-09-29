@@ -14,11 +14,11 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.relations.cust
             'controller': 'NetiTagsTag',
             'associationKey': 'customers',
             'columns': {
+                'name': {
+                    'header': '{s name="grid_column_name"}Name{/s}'
+                },
                 'email': {
                     'header': '{s name="grid_column_email"}Email{/s}'
-                },
-                'number': {
-                    'header': '{s name="grid_column_number"}Number{/s}'
                 }
             }
         };

@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Relation extends AbstractModel
 {
     /**
-     * @ORM\Column(type="integer", name="tag_id")
+     * @ORM\Column(type="integer", name="tag_id", nullable=true)
      */
     protected $tagId;
 

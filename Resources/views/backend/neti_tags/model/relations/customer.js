@@ -14,6 +14,10 @@ Ext.define('Shopware.apps.NetiTags.model.relations.Customer', {
             'type': 'int'
         },
         {
+            'name': 'name',
+            'type': 'string'
+        },
+        {
             'name': 'number',
             'type': 'string'
         },

@@ -109,7 +109,7 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
             'items': me.getCustomerTabPanelItems()
         });
 
-        return me.articleTabPanel;
+        return me.customerTabPanel;
     },
 
     'getArticleTabPanelItems': function () {
