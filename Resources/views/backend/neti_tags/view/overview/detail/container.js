@@ -4,7 +4,7 @@
  * @author     dpogodda
  */
 
-//{namespace name="plugins/neti_tags/backend/detail"}
+//{namespace name="plugins/neti_tags/backend/detail/detail"}
 //{block name="plugins/neti_tags/backend/view/overview/detail/container"}
 Ext.define('Shopware.apps.NetiTags.view.overview.detail.Container', {
     extend: 'Shopware.apps.NetiFoundationExtensions.components.model.Container',
@@ -29,9 +29,9 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.Container', {
                             helpText: '{s name="help_text_description"}{/s}',
                             allowBlank: true
                         },
-                        disabled: {
-                            fieldLabel: '{s name="field_label_disabled"}Disabled{/s}',
-                            helpText: '{s name="help_text_disabled"}{/s}',
+                        enabled: {
+                            fieldLabel: '{s name="field_label_enabled"}Enabled{/s}',
+                            helpText: '{s name="help_text_enabled"}{/s}',
                             allowBlank: false
                         }
                     }

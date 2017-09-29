@@ -4,7 +4,7 @@
  * @author     dpogodda
  */
 
-//{namespace name="plugins/neti_tags/backend/detail"}
+//{namespace name="plugins/neti_tags/backend/detail/detail"}
 //{block name="plugins/neti_tags/backend/view/overview/detail/window"}
 Ext.define('Shopware.apps.NetiTags.view.overview.detail.Window', {
     extend: 'Shopware.apps.NetiFoundationExtensions.components.view.window.Detail',

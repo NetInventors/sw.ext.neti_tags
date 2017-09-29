@@ -54,17 +54,17 @@ abstract class AbstractModel extends ModelEntity
     protected $changeDate;
 
     /**
-     * Flags whether the record is disabled or not
+     * Flags whether the record is enabled or not
      *
      * @var bool
      * @ORM\Column(
      *     type="boolean",
-     *     name="disabled",
+     *     name="enabled",
      *     nullable=false,
-     *     options={"default": false}
+     *     options={"default": true}
      * )
      */
-    protected $disabled = false;
+    protected $enabled = true;
 
     /**
      * Flags whether the record is deleted or not
@@ -163,18 +163,18 @@ abstract class AbstractModel extends ModelEntity
     /**
      * @return bool
      */
-    public function isDisabled()
+    public function isEnabled()
     {
-        return $this->disabled;
+        return $this->enabled;
     }
 
     /**
-     * @param bool $disabled
+     * @param bool $enabled
      * @return $this
      */
-    public function setDisabled($disabled)
+    public function setEnabled($enabled)
     {
-        $this->disabled = (bool)$disabled;
+        $this->enabled = (bool)$enabled;
 
         return $this;
     }

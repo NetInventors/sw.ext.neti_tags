@@ -33,8 +33,9 @@ Ext.define('Shopware.apps.NetiTags.model.Tag', {
             type: 'auto'
         },
         {
-            name: 'disabled',
-            type: 'bool'
+            name: 'enabled',
+            type: 'bool',
+            defaultValue:true
         }
     ]
 });

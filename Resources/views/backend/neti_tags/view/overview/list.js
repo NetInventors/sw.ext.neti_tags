@@ -29,8 +29,8 @@ Ext.define('Shopware.apps.NetiTags.view.overview.List', {
                 //     'header': '{s name="grid_column_relations"}Relations{/s}'
                 // },
 
-                disabled: {
-                    header: '{s name="grid_column_status"}Status{/s}',
+                enabled: {
+                    header: '{s name="grid_column_enabled"}Active{/s}',
                     width: 100
                 }
             }
