@@ -61,6 +61,27 @@ class NetiTags extends Plugin
         } catch (\Exception $e) {
 
         }
+        try {
+            $customerRelationService = $this->container->get('neti_tags.service.tag.relations.blog');
+            $this->container->get('neti_tags.service.table_registry')->register(
+                $customerRelationService->getName(),
+                $customerRelationService->getTableName(),
+                $context->getPlugin()
+            );
+        } catch (\Exception $e) {
+
+        }
+
+        try {
+            $customerRelationService = $this->container->get('neti_tags.service.tag.relations.cms');
+            $this->container->get('neti_tags.service.table_registry')->register(
+                $customerRelationService->getName(),
+                $customerRelationService->getTableName(),
+                $context->getPlugin()
+            );
+        } catch (\Exception $e) {
+
+        }
     }
 
     /**

@@ -20,6 +20,8 @@ Ext.define('Shopware.apps.NetiTags', {
 
     models: [
         'Tag',
+        'relations.Blog',
+        'relations.Cms',
         'relations.Article',
         'relations.Customer'
     ],
@@ -28,6 +30,8 @@ Ext.define('Shopware.apps.NetiTags', {
         'overview.List',
         'overview.Window',
         'overview.detail.container.relations.article.Grid',
+        'overview.detail.container.relations.blog.Grid',
+        'overview.detail.container.relations.cms.Grid',
         'overview.detail.container.relations.customer.Grid',
         'overview.detail.container.Relations',
         'overview.detail.Container',
@@ -36,6 +40,8 @@ Ext.define('Shopware.apps.NetiTags', {
 
     stores: [
         'Tag',
+        'relations.Blog',
+        'relations.Cms',
         'relations.Article',
         'relations.Customer'
     ],

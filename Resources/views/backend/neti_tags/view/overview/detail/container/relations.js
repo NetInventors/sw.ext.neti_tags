@@ -20,6 +20,12 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
             },
             'customer': {
                 'title': '{s name="tab_panel_title_customer"}Customer{/s}'
+            },
+            'blog': {
+                'title': '{s name="tab_panel_title_blog"}Blog{/s}'
+            },
+            'cms': {
+                'title': '{s name="tab_panel_title_cms"}Cms{/s}'
             }
         }
     },
@@ -68,6 +74,8 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
 
         items.push(me.getArticleTabPanel());
         items.push(me.getCustomerTabPanel());
+        items.push(me.getBlogTabPanel());
+        items.push(me.getCmsTabPanel());
 
         return items;
     },
@@ -82,6 +90,46 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         var me = this;
 
         return me.customerTabPanel || me.createCustomerTabPanel();
+    },
+
+    'getBlogTabPanel': function () {
+        var me = this;
+
+        return me.blogTabPanel || me.createBlogTabPanel();
+    },
+
+    'getCmsTabPanel': function () {
+        var me = this;
+
+        return me.cmsTabPanel || me.createCmsTabPanel();
+    },
+
+    'createCmsTabPanel': function () {
+        var me = this;
+
+        me.cmsTabPanel = Ext.create('Ext.panel.Panel', {
+            'title': me.snippets.tab_panel.cms.title,
+            'border': null,
+            'closable': false,
+            'layout': 'fit',
+            'items': me.getCmsTabPanelItems()
+        });
+
+        return me.cmsTabPanel;
+    },
+
+    'createBlogTabPanel': function () {
+        var me = this;
+
+        me.blogTabPanel = Ext.create('Ext.panel.Panel', {
+            'title': me.snippets.tab_panel.blog.title,
+            'border': null,
+            'closable': false,
+            'layout': 'fit',
+            'items': me.getBlogTabPanelItems()
+        });
+
+        return me.blogTabPanel;
     },
 
     'createArticleTabPanel': function () {
@@ -123,6 +171,28 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         return items;
     },
 
+    'getCmsTabPanelItems': function () {
+        var me = this,
+            items = [];
+
+        items.push(
+            me.getCmsGrid()
+        );
+
+        return items;
+    },
+
+    'getBlogTabPanelItems': function () {
+        var me = this,
+            items = [];
+
+        items.push(
+            me.getBlogGrid()
+        );
+
+        return items;
+    },
+
     'getCustomerTabPanelItems': function () {
         var me = this,
             items = [];
@@ -132,6 +202,18 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         );
 
         return items;
+    },
+
+    'getCmsGrid': function () {
+        var me = this;
+
+        return me.cmsGrid || me.createCmsGrid();
+    },
+
+    'getBlogGrid': function () {
+        var me = this;
+
+        return me.blogGrid || me.createBlogGrid();
     },
 
     'getArticleGrid': function () {
@@ -144,6 +226,26 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         var me = this;
 
         return me.customerGrid || me.createCustomerGrid();
+    },
+
+    'createBlogGrid': function () {
+        var me = this;
+
+        me.blogGrid = Ext.create('Shopware.apps.NetiTags.view.overview.detail.container.relations.blog.Grid', {
+            'store': me.getStore('blog')
+        });
+
+        return me.blogGrid;
+    },
+
+    'createCmsGrid': function () {
+        var me = this;
+
+        me.cmsGrid = Ext.create('Shopware.apps.NetiTags.view.overview.detail.container.relations.cms.Grid', {
+            'store': me.getStore('cms')
+        });
+
+        return me.cmsGrid;
     },
 
     'createArticleGrid': function () {
@@ -192,6 +294,12 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
                 break;
             case 'customers':
                 store = me.subApp.getStore('relations.Customer');
+                break;
+            case 'blog':
+                store = me.subApp.getStore('relations.Blog');
+                break;
+            case 'cms':
+                store = me.subApp.getStore('relations.Cms');
                 break;
         }
 
