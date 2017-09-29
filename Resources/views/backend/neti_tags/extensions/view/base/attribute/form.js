@@ -4,7 +4,8 @@ Ext.override(Shopware.attribute.Form, {
         var handlers = this.callParent(arguments);
 
         return Ext.Array.insert(handlers, 0, [
-            Ext.create('Shopware.apps.NetiTagsExtensions.view.base.attribute.article.field.Handler')
+            Ext.create('Shopware.apps.NetiTagsExtensions.view.base.attribute.article.field.Handler'),
+            Ext.create('Shopware.apps.NetiTagsExtensions.view.base.attribute.customer.field.Handler')
         ]);
     }
 });

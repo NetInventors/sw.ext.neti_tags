@@ -1,12 +1,12 @@
 //{block name="backend/base/attribute/form" append}
-Ext.define('Shopware.apps.NetiTagsExtensions.view.base.attribute.article.field.Handler', {
+Ext.define('Shopware.apps.NetiTagsExtensions.view.base.attribute.customer.field.Handler', {
     'extend': 'Shopware.attribute.FieldHandlerInterface',
     'mixins': {
         'factory': 'Shopware.attribute.SelectionFactory'
     },
     'supports': function (attribute) {
         var columnName = attribute.get('columnName');
-        if (attribute.get('tableName') !== 's_articles_attributes') {
+        if (attribute.get('tableName') !== 's_user_attributes') {
             return false;
         }
 
@@ -15,7 +15,7 @@ Ext.define('Shopware.apps.NetiTagsExtensions.view.base.attribute.article.field.H
 
     'create': function (field, attribute) {
         return Ext.apply(field, {
-            'xtype': 'neti_tags_article_attribute',
+            'xtype': 'neti_tags_customer_attribute',
             'flex': 1,
             'store': this.createDynamicSearchStore(attribute),
             'searchStore': this.createDynamicSearchStore(attribute)
