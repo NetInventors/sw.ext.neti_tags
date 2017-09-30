@@ -26,6 +26,9 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
             },
             'cms': {
                 'title': '{s name="tab_panel_title_cms"}Cms{/s}'
+            },
+            'category': {
+                'title': '{s name="tab_panel_title_category"}Category{/s}'
             }
         }
     },
@@ -76,6 +79,7 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         items.push(me.getCustomerTabPanel());
         items.push(me.getBlogTabPanel());
         items.push(me.getCmsTabPanel());
+        items.push(me.getCategoryTabPanel());
 
         return items;
     },
@@ -116,6 +120,25 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         });
 
         return me.cmsTabPanel;
+    },
+    'getCategoryTabPanel': function () {
+        var me = this;
+
+        return me.categoryTabPanel || me.createCategoryTabPanel();
+    },
+
+    'createCategoryTabPanel': function () {
+        var me = this;
+
+        me.categoryTabPanel = Ext.create('Ext.panel.Panel', {
+            'title': me.snippets.tab_panel.category.title,
+            'border': null,
+            'closable': false,
+            'layout': 'fit',
+            'items': me.getCategoryTabPanelItems()
+        });
+
+        return me.categoryTabPanel;
     },
 
     'createBlogTabPanel': function () {
@@ -160,6 +183,16 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         return me.customerTabPanel;
     },
 
+    'getCategoryTabPanelItems': function () {
+        var me = this,
+            items = [];
+
+        items.push(
+            me.getCategoryGrid()
+        );
+
+        return items;
+    },
     'getArticleTabPanelItems': function () {
         var me = this,
             items = [];
@@ -216,6 +249,12 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         return me.blogGrid || me.createBlogGrid();
     },
 
+    'getCategoryGrid': function () {
+        var me = this;
+
+        return me.categoryGrid || me.createCategoryGrid();
+    },
+
     'getArticleGrid': function () {
         var me = this;
 
@@ -246,6 +285,16 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         });
 
         return me.cmsGrid;
+    },
+
+    'createCategoryGrid': function () {
+        var me = this;
+
+        me.categoryGrid = Ext.create('Shopware.apps.NetiTags.view.overview.detail.container.relations.category.Grid', {
+            'store': me.getStore('categories')
+        });
+
+        return me.categoryGrid;
     },
 
     'createArticleGrid': function () {
@@ -300,6 +349,9 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
                 break;
             case 'cms':
                 store = me.subApp.getStore('relations.Cms');
+                break;
+            case 'categories':
+                store = me.subApp.getStore('relations.Category');
                 break;
         }
 

@@ -17,25 +17,24 @@ use NetiTags\Service\TableRegistryInterface;
 use Shopware\Components\Api\Exception\ValidationException;
 use Shopware\Components\Model\ModelManager;
 use Shopware\Components\Model\QueryBuilder;
-use Shopware\Models\Site\Group;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
- * Class Cms
+ * Class Category
  *
  * @package NetiTags\Service\Tag\Relations
  */
-class Cms implements RelationsInterface
+class Category implements RelationsInterface
 {
     /**
      * @var string
      */
-    const TABLE_NAME = 's_cms_static';
+    const TABLE_NAME = 's_categories';
 
     /**
      * @var string
      */
-    const ATTRIBUTE_TABLE_NAME = 's_cms_static_attributes';
+    const ATTRIBUTE_TABLE_NAME = 's_categories_attributes';
 
     /**
      * @var string
@@ -79,8 +78,8 @@ class Cms implements RelationsInterface
      */
     public function getName()
     {
-        return $this->snippets->getNamespace('plugins/neti_tags/backend/detail/relations/cms')
-            ->get('name', 'Cms');
+        return $this->snippets->getNamespace('plugins/neti_tags/backend/detail/relations/category')
+            ->get('name', 'Category');
     }
 
     /**
@@ -93,6 +92,7 @@ class Cms implements RelationsInterface
 
     /**
      * @param string $alias
+     *
      * @return $this
      */
     public function setAlias($alias)
@@ -129,12 +129,12 @@ class Cms implements RelationsInterface
     public function searchAssociation($search, $association, $offset, $limit, $id = null, $filter = [], $sort = [])
     {
         /** @var QueryBuilder $qbr */
-        $qbr = $this->modelManager->getRepository(\Shopware\Models\Site\Site::class)->createQueryBuilder('t');
+        $repository = $this->modelManager->getRepository(\Shopware\Models\Category\Category::class);
+        $qbr        = $repository->createQueryBuilder('t');
 
         $qbr->select([
             't.id',
-            't.description',
-            't.grouping',
+            't.name',
         ]);
 
         if (! empty($search)) {
@@ -154,8 +154,8 @@ class Cms implements RelationsInterface
 
         $paginator = $this->getQueryPaginator($qbr);
         $data      = $paginator->getIterator()->getArrayCopy();
-        $data      = array_map(function ($value) {
-            $value['description'] = sprintf('%s (%s)', $value['description'], $this->fetchGrouping($value['grouping']));
+        $data      = array_map(function ($value) use ($repository) {
+            $value['name'] = $repository->getPathById($value['id'], 'name', ' > ');
 
             return $value;
         }, $data);
@@ -177,20 +177,20 @@ class Cms implements RelationsInterface
     public function resolveRelations(array $relations)
     {
         /** @var EntityRepository $repository */
-        $repository = $this->modelManager->getRepository(\Shopware\Models\Site\Site::class);
+        $repository = $this->modelManager->getRepository(\Shopware\Models\Category\Category::class);
         /** @var array $relationModels */
         $relationModels = [];
         /** @var array $relation */
         foreach ($relations as $relation) {
-            /** @var \Shopware\Models\Site\Site $model */
+            /** @var \Shopware\Models\Category\Category $model */
             $model = $repository->find($relation['id']);
-            if (!$model instanceof \Shopware\Models\Site\Site) {
+            if (! $model instanceof \Shopware\Models\Category\Category) {
                 continue;
             }
 
             /** @var TableRegistry $tableRegistryModel */
             $tableRegistryModel = $this->tableRegistry->getByTableName($this->getTableName());
-            if (!$tableRegistryModel instanceof TableRegistry) {
+            if (! $tableRegistryModel instanceof TableRegistry) {
                 continue;
             }
 
@@ -222,12 +222,12 @@ class Cms implements RelationsInterface
     public function fetchRelations(array $relation)
     {
         /** @var QueryBuilder $qbr */
-        $qbr = $this->modelManager->getRepository(\Shopware\Models\Site\Site::class)->createQueryBuilder('t');
+        $repository = $this->modelManager->getRepository(\Shopware\Models\Category\Category::class);
+        $qbr        = $repository->createQueryBuilder('t');
 
         $qbr->select([
             't.id',
-            't.description',
-            't.grouping',
+            't.name',
         ]);
 
         $qbr->andWhere(
@@ -240,30 +240,10 @@ class Cms implements RelationsInterface
             return null;
         }
 
-        $result['description'] = sprintf('%s (%s)', $result['description'], $this->fetchGrouping($result['grouping']));
+        $result['name'] = $repository->getPathById($result['id'], 'name', ' > ');
 
         return $result;
     }
-
-    /**
-     * @param string $grouping
-     *
-     * @return array
-     */
-    private function fetchGrouping($grouping)
-    {
-        $repository = $this->modelManager->getRepository(Group::class);
-        $qbr = $repository->createQueryBuilder('t');
-        $qbr->select(array('t.name'));
-        $qbr->andWhere(
-            $qbr->expr()->in('t.key', explode('|', $grouping))
-        );
-
-        $results = $qbr->getQuery()->getResult();
-
-        return implode(', ', array_column($results, 'name'));
-    }
-
 
     /**
      * @param int $relationId
@@ -287,6 +267,7 @@ class Cms implements RelationsInterface
     /**
      * @param array $data
      * @param int   $relationId
+     *
      * @throws \Doctrine\ORM\ORMInvalidArgumentException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
@@ -339,7 +320,7 @@ class Cms implements RelationsInterface
         $qbr = $this->getTagsQuery($relationId);
         $qbr->select(array(
             't.id',
-            't.title',
+            't.name',
         ));
 
         try {
@@ -418,11 +399,11 @@ class Cms implements RelationsInterface
     private function addSearch($search, QueryBuilder $qbr)
     {
         /** @var array $where */
-        $where  = [];
+        $where = [];
         /** @var array $fields */
         $fields = [
             't.id',
-            't.description'
+            't.name',
         ];
 
         /** @var string $fieldName */

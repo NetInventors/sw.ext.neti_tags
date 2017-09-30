@@ -33,5 +33,12 @@
             <argument id="neti_tags.service.table_registry" type="service"/>
             <tag name="neti_tags.relation" alias="cms"/>
         </service>
+
+        <service class="NetiTags\Service\Tag\Relations\Category" id="neti_tags.service.tag.relations.category">
+            <argument id="models" type="service"/>
+            <argument id="snippets" type="service"/>
+            <argument id="neti_tags.service.table_registry" type="service"/>
+            <tag name="neti_tags.relation" alias="categories"/>
+        </service>
     </services>
 </container>
