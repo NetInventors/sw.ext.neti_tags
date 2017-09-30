@@ -77,7 +77,7 @@ class Customer implements RelationsInterface
      */
     public function getName()
     {
-        return $this->snippets->getNamespace('plugins/neti_tags/backend/relations/customer')
+        return $this->snippets->getNamespace('plugins/neti_tags/backend/detail/relations/customer')
             ->get('name', 'Customer');
     }
 

@@ -78,7 +78,7 @@ class Blog implements RelationsInterface
      */
     public function getName()
     {
-        return $this->snippets->getNamespace('plugins/neti_tags/backend/relations/blog')
+        return $this->snippets->getNamespace('plugins/neti_tags/backend/detail/relations/blog')
             ->get('name', 'Blog');
     }
 

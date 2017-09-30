@@ -79,7 +79,7 @@ class Cms implements RelationsInterface
      */
     public function getName()
     {
-        return $this->snippets->getNamespace('plugins/neti_tags/backend/relations/cms')
+        return $this->snippets->getNamespace('plugins/neti_tags/backend/detail/relations/cms')
             ->get('name', 'Cms');
     }
 
