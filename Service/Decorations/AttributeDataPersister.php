@@ -93,12 +93,19 @@ class AttributeDataPersister extends CoreService
             return;
         }
 
-        $tags = $data['neti_tags'];
-        if (! is_array($tags)) {
-            $tags = explode('|', trim($tags, '|'));
+        $tmpTags = $data['neti_tags'];
+        if (! is_array($tmpTags)) {
+            $tmpTags = explode('|', trim($tmpTags, '|'));
         }
 
-        $tags = array_map('intval', $tags);
+        $tags = [];
+        foreach ($tmpTags as $key => $tag) {
+            if (! is_numeric($tag)) {
+                continue;
+            }
+
+            $tags[] = (int) $tag;
+        }
 
         $relationHandler->persistRelations($tags, (int) $foreignKey);
     }
