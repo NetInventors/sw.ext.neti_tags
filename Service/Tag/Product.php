@@ -43,7 +43,7 @@ class Product implements ProductInterface
      */
     public function get($product)
     {
-        if (! $product->hasAttribute('core')) {
+        if (null === $product || ! $product->hasAttribute('core')) {
             return $product;
         }
 
