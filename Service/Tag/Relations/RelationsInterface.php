@@ -45,6 +45,11 @@ interface RelationsInterface
     public function getAttributeTableName();
 
     /**
+     * @return array
+     */
+    public function getAttributeTableConfig();
+
+    /**
      * @param string $search
      * @param string $association
      * @param int    $offset

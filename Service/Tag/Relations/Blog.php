@@ -115,6 +115,14 @@ class Blog implements RelationsInterface
     }
 
     /**
+     * @return array
+     */
+    public function getAttributeTableConfig()
+    {
+        return array();
+    }
+
+    /**
      * @param string $search
      * @param string $association
      * @param int    $offset
