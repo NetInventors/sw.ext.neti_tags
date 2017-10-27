@@ -137,6 +137,8 @@ class AttributeTableMapping extends CoreService
      */
     public function getAttributeTables()
     {
+        $this->addTables();
+
         return array_filter($this->tables, function ($table) {
             return ! $table['readOnly'];
         });
