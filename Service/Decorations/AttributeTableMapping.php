@@ -62,6 +62,23 @@ class AttributeTableMapping extends CoreService
     }
 
     /**
+     * @param $table
+     *
+     * @return string
+     */
+    public function getTableForeignKey($table)
+    {
+        $result = parent::getTableForeignKey($table);
+        if (empty($result)) {
+            $this->addTables();
+
+            $result = $this->tables[$table]['foreignKey'];
+        }
+
+        return $result;
+    }
+
+    /**
      * @param string $table
      * @param string $name
      *
