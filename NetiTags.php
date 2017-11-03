@@ -8,6 +8,13 @@
 namespace NetiTags;
 
 use NetiTags\CompilerPass\Relations;
+use NetiTags\Service\TableRegistry;
+use NetiTags\Service\Tag\Relations\Article;
+use NetiTags\Service\Tag\Relations\Blog;
+use NetiTags\Service\Tag\Relations\Category;
+use NetiTags\Service\Tag\Relations\Cms;
+use NetiTags\Service\Tag\Relations\Customer;
+use Shopware\Components\Model\ModelManager;
 use Shopware\Components\Plugin;
 use Shopware\Components\Plugin\Context\ActivateContext;
 use Shopware\Components\Plugin\Context\DeactivateContext;
@@ -39,60 +46,7 @@ class NetiTags extends Plugin
     public function install(InstallContext $context)
     {
         parent::install($context);
-
-        try {
-            $articleRelationService = $this->container->get('neti_tags.service.tag.relations.article');
-            $this->container->get('neti_tags.service.table_registry')->register(
-                $articleRelationService->getName(),
-                $articleRelationService->getTableName(),
-                $context->getPlugin()
-            );
-        } catch (\Exception $e) {
-
-        }
-
-        try {
-            $customerRelationService = $this->container->get('neti_tags.service.tag.relations.customer');
-            $this->container->get('neti_tags.service.table_registry')->register(
-                $customerRelationService->getName(),
-                $customerRelationService->getTableName(),
-                $context->getPlugin()
-            );
-        } catch (\Exception $e) {
-
-        }
-        try {
-            $customerRelationService = $this->container->get('neti_tags.service.tag.relations.blog');
-            $this->container->get('neti_tags.service.table_registry')->register(
-                $customerRelationService->getName(),
-                $customerRelationService->getTableName(),
-                $context->getPlugin()
-            );
-        } catch (\Exception $e) {
-
-        }
-
-        try {
-            $customerRelationService = $this->container->get('neti_tags.service.tag.relations.cms');
-            $this->container->get('neti_tags.service.table_registry')->register(
-                $customerRelationService->getName(),
-                $customerRelationService->getTableName(),
-                $context->getPlugin()
-            );
-        } catch (\Exception $e) {
-
-        }
-
-        try {
-            $customerRelationService = $this->container->get('neti_tags.service.tag.relations.category');
-            $this->container->get('neti_tags.service.table_registry')->register(
-                $customerRelationService->getName(),
-                $customerRelationService->getTableName(),
-                $context->getPlugin()
-            );
-        } catch (\Exception $e) {
-
-        }
+        $this->registerRelationTables($context->getPlugin());
     }
 
     /**
@@ -101,24 +55,72 @@ class NetiTags extends Plugin
     public function update(UpdateContext $context)
     {
         parent::update($context);
+        $this->registerRelationTables($context->getPlugin());
+    }
+
+    /**
+     * @param \Shopware\Models\Plugin\Plugin $plugin
+     */
+    private function registerRelationTables(\Shopware\Models\Plugin\Plugin $plugin)
+    {
+        /**
+         * @var ModelManager                        $modelManager
+         * @var \Enlight_Components_Snippet_Manager $snippets
+         */
+        $modelManager  = $this->container->get('models');
+        $snippets      = $this->container->get('snippets');
+        $tableRegistry = new TableRegistry(
+            $modelManager
+        );
 
         try {
-            $articleRelationService = $this->container->get('neti_tags.service.tag.relations.article');
-            $this->container->get('neti_tags.service.table_registry')->register(
+            $articleRelationService = new Article($modelManager, $snippets, $tableRegistry);
+            $tableRegistry->register(
                 $articleRelationService->getName(),
                 $articleRelationService->getTableName(),
-                $context->getPlugin()
+                $plugin
+            );
+        } catch (\Exception $e) {
+        }
+
+        try {
+            $customerRelationService = new Customer($modelManager, $snippets, $tableRegistry);
+            $tableRegistry->register(
+                $customerRelationService->getName(),
+                $customerRelationService->getTableName(),
+                $plugin
+            );
+        } catch (\Exception $e) {
+
+        }
+        try {
+            $customerRelationService = new Blog($modelManager, $snippets, $tableRegistry);
+            $tableRegistry->register(
+                $customerRelationService->getName(),
+                $customerRelationService->getTableName(),
+                $plugin
             );
         } catch (\Exception $e) {
 
         }
 
         try {
-            $customerRelationService = $this->container->get('neti_tags.service.tag.relations.customer');
-            $this->container->get('neti_tags.service.table_registry')->register(
+            $customerRelationService = new Cms($modelManager, $snippets, $tableRegistry);
+            $tableRegistry->register(
                 $customerRelationService->getName(),
                 $customerRelationService->getTableName(),
-                $context->getPlugin()
+                $plugin
+            );
+        } catch (\Exception $e) {
+
+        }
+
+        try {
+            $customerRelationService = new Category($modelManager, $snippets, $tableRegistry);
+            $tableRegistry->register(
+                $customerRelationService->getName(),
+                $customerRelationService->getTableName(),
+                $plugin
             );
         } catch (\Exception $e) {
 
