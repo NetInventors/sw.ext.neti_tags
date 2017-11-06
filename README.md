@@ -22,7 +22,7 @@
 1. If you haven't already, download and install our free plugin "[NetiFoundation](http://store.shopware.com/detail/index/sArticle/162025)" from the Shopware Community Store
 2. Install Plugin via plugin manager or upload this plugin in "/custom/plugins/". The plugin directory should be named "NetiBundles". 
 
-## Configuration:
+## Configuration
 * Install
 * Configure
 
@@ -31,6 +31,17 @@
 
 ## Support
 * [Support](https://support.netinventors.de/hc/de/sections/115000761434)
+
+## Supported Shopware Entities:
+* Articles
+* Categories
+* Blog
+* Pages
+* Customer
+
+## Supported Entities by Plugin:
+* CrossSelling (Net Inventors)
+* ConsultantTools (Net Inventors)
 
 ## Get involved 
 We highly appreciate if you want to add further functions and fix issues. Just fork our plugin and create a pull request.
