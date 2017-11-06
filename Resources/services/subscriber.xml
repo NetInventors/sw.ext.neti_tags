@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- Event Subscribers -->
+        <service class="NetiTags\Subscriber\View" id="neti_tags.subscriber.view">
+            <argument id="neti_foundation.plugin_manager_license" type="service"/>
+            <argument id="neti_foundation.plugin_manager_config" type="service"/>
+            <argument>%neti_tags.plugin_dir%</argument>
+            <tag name="shopware.event_subscriber"/>
+        </service>
+        <service class="NetiTags\Subscriber\Backend" id="neti_tags.subscriber.backend">
+            <argument>%neti_tags.plugin_dir%</argument>
+            <argument id="neti_foundation.plugin_manager_license" type="service"/>
+            <tag name="shopware.event_subscriber"/>
+        </service>
+    </services>
+</container>
