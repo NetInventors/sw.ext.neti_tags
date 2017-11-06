@@ -14,11 +14,11 @@
 * [ChangeLog](https://github.com/NetInventors/sw.ext.neti_tags/commits)
 * [Issues](https://github.com/NetInventors/sw.ext.neti_tags/issues)
 
-## Requirements:
+## Requirements
 * Shopware version >= 5.2.6
-* NetiFoundation >= 2.0.7
+* NetiFoundation >= 2.3.4
 
-## Install:
+## Install
 1. If you haven't already, download and install our free plugin "[NetiFoundation](http://store.shopware.com/detail/index/sArticle/162025)" from the Shopware Community Store
 2. Install Plugin via plugin manager or upload this plugin in "/custom/plugins/". The plugin directory should be named "NetiBundles". 
 
@@ -26,11 +26,11 @@
 * Install
 * Configure
 
-## How to report bugs / request features?
+## Report bugs or request features
 * [GitHub issue tracker](https://github.com/NetInventors/sw.ext.neti_tags/issues)
 
-## Add your tags and relations to your own plugin
-> Todo:
+## Support
+* [Support](https://support.netinventors.de/hc/de/sections/115000764413)
 
 ## Get involved 
 We highly appreciate if you want to add further functions and fix issues. Just fork our plugin and create a pull request.
