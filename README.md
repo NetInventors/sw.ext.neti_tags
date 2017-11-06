@@ -30,7 +30,7 @@
 * [GitHub issue tracker](https://github.com/NetInventors/sw.ext.neti_tags/issues)
 
 ## Support
-* [Support](https://support.netinventors.de/hc/de/sections/115000764413)
+* [Support](https://support.netinventors.de/hc/de/sections/115000761434)
 
 ## Get involved 
 We highly appreciate if you want to add further functions and fix issues. Just fork our plugin and create a pull request.
