@@ -8,9 +8,7 @@
 namespace NetiTags\Subscriber;
 
 use Enlight\Event\SubscriberInterface;
-use NetiFoundation\Service\PluginManager\ConfigInterface;
 use NetiFoundation\Service\PluginManager\License;
-use NetiTags\Struct\PluginConfig;
 
 /**
  * Class View
@@ -24,11 +22,6 @@ class View implements SubscriberInterface
     private $validLicense;
 
     /**
-     * @var PluginConfig
-     */
-    private $pluginConfig;
-
-    /**
      * @var string
      */
     private $pluginDir;
@@ -36,19 +29,16 @@ class View implements SubscriberInterface
     /**
      * View constructor.
      * @param License         $licenseService
-     * @param ConfigInterface $configService
      * @param string          $pluginDir
      * @throws \Exception
      */
     public function __construct(
         License $licenseService,
-        ConfigInterface $configService,
         $pluginDir
     ) {
         $this->validLicense = License::class === get_class($licenseService) ?
             $licenseService->checkLicense($this, false) : false;
 
-        $this->pluginConfig = $configService->getPluginConfig($this);
         $this->pluginDir    = $pluginDir;
     }
 
@@ -67,10 +57,6 @@ class View implements SubscriberInterface
      */
     public function registerTemplateDir(\Enlight_Controller_ActionEventArgs $args)
     {
-        if (!($this->validLicense && $this->pluginConfig->isActiveForSubshop())) {
-            return;
-        }
-
         $args->getSubject()->View()->addTemplateDir($this->pluginDir . '/Resources/views/');
     }
 }

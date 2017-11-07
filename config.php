@@ -93,20 +93,4 @@ return [
             'parent'     => 'Inhalte',
         ],
     ],
-    'form'       => [
-        [
-            'type'        => 'boolean',
-            'name'        => 'activeForSubshop',
-            'label'       => [
-                'de_DE' => 'Plugin für diesen Subshop aktivieren',
-                'en_GB' => 'Enable plugin for this subshop',
-            ],
-            'description' => [
-                'de_DE' => '',
-                'en_GB' => '',
-            ],
-            'value'       => true,
-            'scope'       => Shopware\Models\Config\Element::SCOPE_SHOP,
-        ],
-    ],
 ];

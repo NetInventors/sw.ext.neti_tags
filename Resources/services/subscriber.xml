@@ -8,7 +8,6 @@
         <!-- Event Subscribers -->
         <service class="NetiTags\Subscriber\View" id="neti_tags.subscriber.view">
             <argument id="neti_foundation.plugin_manager_license" type="service"/>
-            <argument id="neti_foundation.plugin_manager_config" type="service"/>
             <argument>%neti_tags.plugin_dir%</argument>
             <tag name="shopware.event_subscriber"/>
         </service>
