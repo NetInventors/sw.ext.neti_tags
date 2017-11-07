@@ -54,7 +54,9 @@ class TableRegistry implements TableRegistryInterface
      * @param Plugin $plugin
      *
      * @return bool
-     * @throws \Exception
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\ORMInvalidArgumentException
+     * @throws ValidationException
      */
     public function register($title, $tableName, Plugin $plugin)
     {
