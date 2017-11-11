@@ -64,10 +64,8 @@ class TableRegistry implements TableRegistryInterface
         $repository = $this->modelManager->getRepository(\NetiTags\Models\TableRegistry::class);
         $qbr        = $repository->createQueryBuilder('t');
         $qbr->andWhere(
-            $qbr->expr()->orX(
-                $qbr->expr()->eq('t.tableName', $qbr->expr()->literal($tableName)),
-                $qbr->expr()->eq('t.entityName', $qbr->expr()->literal($entityName))
-            )
+            $qbr->expr()->eq('t.tableName', $qbr->expr()->literal($tableName)),
+            $qbr->expr()->eq('t.entityName', $qbr->expr()->literal($entityName))
         );
         $model = $qbr->getQuery()->getSingleResult();
 
