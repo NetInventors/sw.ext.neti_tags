@@ -71,9 +71,8 @@ class TableRegistry implements TableRegistryInterface
         );
         $model = $qbr->getQuery()->getSingleResult();
 
-        if (! empty($model)) {
-            //            throw new \Exception(sprintf('Table "%s" already exsists', $tableName));
-            return false;
+        if (empty($model)) {
+            $model = new \NetiTags\Models\TableRegistry();
         }
 
         list($tableName, $entityName) = $this->getNames($name);
@@ -82,7 +81,6 @@ class TableRegistry implements TableRegistryInterface
             return false;
         }
 
-        $model = new \NetiTags\Models\TableRegistry();
         $model->setTableName($tableName)
             ->setEntityName($entityName)
             ->setTitle($title)
@@ -104,14 +102,17 @@ class TableRegistry implements TableRegistryInterface
      *
      * @return array
      */
-    private function getNames($name) {
+    private function getNames($name)
+    {
         $tableName     = null;
         $entityName    = null;
-        $classMetaData = $this->modelManager->getClassMetadata($name);
-        if (! empty($classMetaData)) {
-            $entityName = $classMetaData->getName();
-            $tableName  = $classMetaData->getTableName();
-        } else {
+        $classMetaData = null;
+
+        try {
+            $classMetaData = $this->modelManager->getClassMetadata($name);
+            $entityName    = $classMetaData->getName();
+            $tableName     = $classMetaData->getTableName();
+        } catch (\Exception $exception) {
             foreach ($this->modelManager->getMetadataFactory()->getAllMetadata() as $classMetaData) {
                 /**
                  * @var $classMetaData ClassMetadata
