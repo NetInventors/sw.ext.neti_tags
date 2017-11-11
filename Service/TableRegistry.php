@@ -7,6 +7,7 @@
 
 namespace NetiTags\Service;
 
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Shopware\Components\Api\Exception\ValidationException;
 use Shopware\Components\Model\ModelManager;
 use Shopware\Models\Plugin\Plugin;
@@ -50,7 +51,7 @@ class TableRegistry implements TableRegistryInterface
 
     /**
      * @param string $title
-     * @param string $tableName
+     * @param string $name
      * @param Plugin $plugin
      *
      * @return bool
@@ -58,20 +59,32 @@ class TableRegistry implements TableRegistryInterface
      * @throws \Doctrine\ORM\ORMInvalidArgumentException
      * @throws ValidationException
      */
-    public function register($title, $tableName, Plugin $plugin)
+    public function register($title, $name, Plugin $plugin)
     {
-        $qbr   = $this->modelManager->getRepository(\NetiTags\Models\TableRegistry::class);
-        $model = $qbr->findOneBy(array(
-            'tableName' => $tableName
-        ));
+        $repository = $this->modelManager->getRepository(\NetiTags\Models\TableRegistry::class);
+        $qbr        = $repository->createQueryBuilder('t');
+        $qbr->andWhere(
+            $qbr->expr()->orX(
+                $qbr->expr()->eq('t.tableName', $qbr->expr()->literal($name)),
+                $qbr->expr()->eq('t.entityName', $qbr->expr()->literal($name))
+            )
+        );
+        $model = $qbr->getQuery()->getSingleResult();
 
         if (! empty($model)) {
-//            throw new \Exception(sprintf('Table "%s" already exsists', $tableName));
+            //            throw new \Exception(sprintf('Table "%s" already exsists', $tableName));
+            return false;
+        }
+
+        list($tableName, $entityName) = $this->getNames($name);
+
+        if (empty($tableName) || empty($entityName)) {
             return false;
         }
 
         $model = new \NetiTags\Models\TableRegistry();
         $model->setTableName($tableName)
+            ->setEntityName($entityName)
             ->setTitle($title)
             ->setPlugin($plugin);
 
@@ -84,6 +97,35 @@ class TableRegistry implements TableRegistryInterface
         $this->modelManager->flush($model);
 
         return true;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return array
+     */
+    private function getNames($name) {
+        $tableName     = null;
+        $entityName    = null;
+        $classMetaData = $this->modelManager->getClassMetadata($name);
+        if (! empty($classMetaData)) {
+            $entityName = $classMetaData->getName();
+            $tableName  = $classMetaData->getTableName();
+        } else {
+            foreach ($this->modelManager->getMetadataFactory()->getAllMetadata() as $classMetaData) {
+                /**
+                 * @var $classMetaData ClassMetadata
+                 */
+                if ($name !== $classMetaData->getTableName()) {
+                    continue;
+                }
+
+                $tableName  = $classMetaData->getTableName();
+                $entityName = $classMetaData->getName();
+            }
+        }
+
+        return array($tableName, $entityName);
     }
 
     /**

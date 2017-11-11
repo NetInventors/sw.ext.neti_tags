@@ -41,6 +41,17 @@ class TableRegistry extends AbstractModel
     protected $tableName;
 
     /**
+     * @var string
+     * @ORM\Column(
+     *     type="string",
+     *     name="entity_name",
+     *     nullable=false,
+     *     unique=true
+     * )
+     */
+    protected $entityName;
+
+    /**
      * @var Plugin
      * @ORM\Column(
      *     type="integer",
@@ -168,6 +179,30 @@ class TableRegistry extends AbstractModel
         $this->relations->removeElement($relation);
         // needed to update the owning side of the relationship!
         $relation->setTableRegistry(null);
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of entityName from the record
+     *
+     * @return string
+     */
+    public function getEntityName()
+    {
+        return $this->entityName;
+    }
+
+    /**
+     * Sets the Value to entityName in the record
+     *
+     * @param string $entityName
+     *
+     * @return self
+     */
+    public function setEntityName($entityName)
+    {
+        $this->entityName = $entityName;
 
         return $this;
     }
