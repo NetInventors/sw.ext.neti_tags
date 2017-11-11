@@ -34,6 +34,11 @@ class Category implements RelationsInterface
     /**
      * @var string
      */
+    const ENTITY_NAME = 'Shopware\Models\Category\Category';
+
+    /**
+     * @var string
+     */
     const ATTRIBUTE_TABLE_NAME = 's_categories_attributes';
 
     /**
@@ -108,6 +113,14 @@ class Category implements RelationsInterface
     public function getTableName()
     {
         return self::TABLE_NAME;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntityName()
+    {
+        return self::ENTITY_NAME;
     }
 
     public function getAttributeTableName()

@@ -33,6 +33,11 @@ class Customer implements RelationsInterface
     /**
      * @var string
      */
+    const ENTITY_NAME = 'Shopware\Models\Customer\Customer';
+
+    /**
+     * @var string
+     */
     const ATTRIBUTE_TABLE_NAME = 's_user_attributes';
 
     /**
@@ -106,6 +111,11 @@ class Customer implements RelationsInterface
     public function getTableName()
     {
         return self::TABLE_NAME;
+    }
+
+    public function getEntityName()
+    {
+        return self::ENTITY_NAME;
     }
 
     public function getAttributeTableName()

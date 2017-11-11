@@ -51,34 +51,28 @@ class TableRegistry implements TableRegistryInterface
 
     /**
      * @param string $title
-     * @param string $name
+     * @param string $tableName
+     * @param string $entityName
      * @param Plugin $plugin
      *
      * @return bool
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Doctrine\ORM\ORMInvalidArgumentException
      * @throws ValidationException
+     * @internal param string $name
      */
-    public function register($title, $name, Plugin $plugin)
+    public function register($title, $tableName, $entityName, Plugin $plugin)
     {
         $repository = $this->modelManager->getRepository(\NetiTags\Models\TableRegistry::class);
         $qbr        = $repository->createQueryBuilder('t');
         $qbr->andWhere(
             $qbr->expr()->orX(
-                $qbr->expr()->eq('t.tableName', $qbr->expr()->literal($name)),
-                $qbr->expr()->eq('t.entityName', $qbr->expr()->literal($name))
+                $qbr->expr()->eq('t.tableName', $qbr->expr()->literal($tableName)),
+                $qbr->expr()->eq('t.entityName', $qbr->expr()->literal($entityName))
             )
         );
         $model = $qbr->getQuery()->getSingleResult();
 
         if (empty($model)) {
             $model = new \NetiTags\Models\TableRegistry();
-        }
-
-        list($tableName, $entityName) = $this->getNames($name);
-
-        if (empty($tableName) || empty($entityName)) {
-            return false;
         }
 
         $model->setTableName($tableName)
@@ -108,6 +102,7 @@ class TableRegistry implements TableRegistryInterface
         $entityName    = null;
         $classMetaData = null;
 
+        $this->clearEntityCache();
         try {
             $classMetaData = $this->modelManager->getClassMetadata($name);
             $entityName    = $classMetaData->getName();
@@ -152,5 +147,17 @@ class TableRegistry implements TableRegistryInterface
         $this->modelManager->flush($model);
 
         return true;
+    }
+
+    /**
+     *
+     */
+    protected function clearEntityCache()
+    {
+        $metaDataCache = $this->modelManager->getConfiguration()->getMetadataCacheImpl();
+
+        if (method_exists($metaDataCache, 'deleteAll')) {
+            $metaDataCache->deleteAll();
+        }
     }
 }
