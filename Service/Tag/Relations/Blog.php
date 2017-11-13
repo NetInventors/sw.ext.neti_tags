@@ -34,6 +34,11 @@ class Blog implements RelationsInterface
     /**
      * @var string
      */
+    const ENTITY_NAME = 'Shopware\Models\Blog\Blog';
+
+    /**
+     * @var string
+     */
     const ATTRIBUTE_TABLE_NAME = 's_blog_attributes';
 
     /**
@@ -107,6 +112,11 @@ class Blog implements RelationsInterface
     public function getTableName()
     {
         return self::TABLE_NAME;
+    }
+
+    public function getEntityName()
+    {
+        return self::ENTITY_NAME;
     }
 
     public function getAttributeTableName()

@@ -60,6 +60,7 @@ class Setup
         $tableRegistry->register(
             $articleRelationService->getName(),
             $articleRelationService->getTableName(),
+            $articleRelationService->getEntityName(),
             $plugin
         );
 
@@ -67,6 +68,7 @@ class Setup
         $tableRegistry->register(
             $customerRelationService->getName(),
             $customerRelationService->getTableName(),
+            $customerRelationService->getEntityName(),
             $plugin
         );
 
@@ -74,6 +76,7 @@ class Setup
         $tableRegistry->register(
             $customerRelationService->getName(),
             $customerRelationService->getTableName(),
+            $customerRelationService->getEntityName(),
             $plugin
         );
 
@@ -81,6 +84,7 @@ class Setup
         $tableRegistry->register(
             $customerRelationService->getName(),
             $customerRelationService->getTableName(),
+            $customerRelationService->getEntityName(),
             $plugin
         );
 
@@ -88,6 +92,7 @@ class Setup
         $tableRegistry->register(
             $customerRelationService->getName(),
             $customerRelationService->getTableName(),
+            $customerRelationService->getEntityName(),
             $plugin
         );
     }

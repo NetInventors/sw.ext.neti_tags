@@ -42,6 +42,11 @@ interface RelationsInterface
     /**
      * @return string
      */
+    public function getEntityName();
+
+    /**
+     * @return string
+     */
     public function getAttributeTableName();
 
     /**

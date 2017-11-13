@@ -35,6 +35,11 @@ class Cms implements RelationsInterface
     /**
      * @var string
      */
+    const ENTITY_NAME = 'Shopware\Models\Site\Site';
+
+    /**
+     * @var string
+     */
     const ATTRIBUTE_TABLE_NAME = 's_cms_static_attributes';
 
     /**
@@ -108,6 +113,11 @@ class Cms implements RelationsInterface
     public function getTableName()
     {
         return self::TABLE_NAME;
+    }
+
+    public function getEntityName()
+    {
+        return self::ENTITY_NAME;
     }
 
     public function getAttributeTableName()

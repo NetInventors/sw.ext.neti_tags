@@ -26,12 +26,13 @@ interface TableRegistryInterface
     /**
      * @param string $title
      * @param string $tableName
+     * @param string $entityName
      * @param Plugin $plugin
      *
      * @return bool
-     * @throws \Exception
+     * @internal param string $name
      */
-    public function register($title, $tableName, Plugin $plugin);
+    public function register($title, $tableName, $entityName, Plugin $plugin);
 
     /**
      * @param string $tableName

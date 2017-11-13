@@ -31,6 +31,11 @@ class Article implements RelationsInterface
     const TABLE_NAME = 's_articles_details';
 
     /**
+     * @var string
+     */
+    const ENTITY_NAME = 'Shopware\Models\Article\Detail';
+
+    /**
      * @var  string
      */
     const ATTRIBUTE_TABLE_NAME = 's_articles_attributes';
@@ -107,6 +112,14 @@ class Article implements RelationsInterface
     public function getTableName()
     {
         return self::TABLE_NAME;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntityName()
+    {
+        return self::ENTITY_NAME;
     }
 
     public function getAttributeTableName()
