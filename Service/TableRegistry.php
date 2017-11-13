@@ -67,7 +67,7 @@ class TableRegistry implements TableRegistryInterface
             $qbr->expr()->eq('t.tableName', $qbr->expr()->literal($tableName)),
             $qbr->expr()->eq('t.entityName', $qbr->expr()->literal($entityName))
         );
-        $model = $qbr->getQuery()->getSingleResult();
+        $model = $qbr->getQuery()->getOneOrNullResult();
 
         if (empty($model)) {
             $model = new \NetiTags\Models\TableRegistry();
