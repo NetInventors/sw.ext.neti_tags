@@ -70,7 +70,9 @@ class AttributeDataLoader extends CoreService
     {
         $data = $this->coreService->load($table, $foreignKey);
 
-        $this->loadRelations($table, $data, $foreignKey);
+        if (is_array($data) && !empty($data)) {
+            $this->loadRelations($table, $data, $foreignKey);
+        }
 
         return $data;
     }
@@ -80,7 +82,7 @@ class AttributeDataLoader extends CoreService
      * @param array  $data
      * @param int    $foreignKey
      */
-    private function loadRelations($table, &$data, $foreignKey)
+    private function loadRelations($table, array &$data, $foreignKey)
     {
         $relationHandler = $this->relationCollector->getByAttributeTableName($table);
         if (empty($relationHandler)) {

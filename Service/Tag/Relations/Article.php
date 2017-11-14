@@ -17,6 +17,7 @@ use NetiTags\Service\TableRegistryInterface;
 use Shopware\Components\Api\Exception\ValidationException;
 use Shopware\Components\Model\ModelManager;
 use Shopware\Models\Article\Detail;
+use Shopware\Models\Attribute\Article as DetailAttribute;
 
 /**
  * Class Article
@@ -207,6 +208,12 @@ class Article implements RelationsInterface
             $tableRegistryModel = $this->tableRegistry->getByTableName($this->getTableName());
             if (empty($tableRegistryModel)) {
                 continue;
+            }
+
+            if (empty($model->getAttribute())) {
+                $attribute = new DetailAttribute();
+                $this->modelManager->persist($attribute);
+                $model->setAttribute($attribute);
             }
 
             $relationModel = new Relation();

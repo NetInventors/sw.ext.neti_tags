@@ -18,6 +18,7 @@ use Shopware\Components\Api\Exception\ValidationException;
 use Shopware\Components\Model\ModelManager;
 use Shopware\Components\Model\QueryBuilder;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Shopware\Models\Attribute\Blog as BlogAttribute;
 
 /**
  * Class Blog
@@ -203,6 +204,12 @@ class Blog implements RelationsInterface
             $tableRegistryModel = $this->tableRegistry->getByTableName($this->getTableName());
             if (!$tableRegistryModel instanceof TableRegistry) {
                 continue;
+            }
+
+            if (empty($model->getAttribute())) {
+                $attribute = new BlogAttribute();
+                $this->modelManager->persist($attribute);
+                $model->setAttribute($attribute);
             }
 
             /** @var Relation $relationModel */

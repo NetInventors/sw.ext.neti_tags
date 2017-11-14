@@ -19,6 +19,7 @@ use Shopware\Components\Model\ModelManager;
 use Shopware\Components\Model\QueryBuilder;
 use Shopware\Models\Site\Group;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Shopware\Models\Attribute\Site as SiteAttribute;
 
 /**
  * Class Cms
@@ -210,6 +211,12 @@ class Cms implements RelationsInterface
             $tableRegistryModel = $this->tableRegistry->getByTableName($this->getTableName());
             if (!$tableRegistryModel instanceof TableRegistry) {
                 continue;
+            }
+
+            if (empty($model->getAttribute())) {
+                $attribute = new SiteAttribute();
+                $this->modelManager->persist($attribute);
+                $model->setAttribute($attribute);
             }
 
             /** @var Relation $relationModel */
