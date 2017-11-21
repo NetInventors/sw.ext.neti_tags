@@ -348,7 +348,7 @@ class Category implements RelationsInterface
         $qbr = $this->getTagsQuery($relationId);
         $qbr->select(array(
             't.id',
-            't.name',
+            't.title',
         ));
 
         try {
