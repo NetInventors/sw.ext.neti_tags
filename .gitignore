@@ -1,0 +1,7 @@
+sftp-config.json
+/nbproject/
+.project
+.idea
+/nbproject/private/
+
+/vendor/

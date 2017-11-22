@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service decorates="shopware_storefront.category_service"
+                 id="neti_tags.service.decorations.category_service"
+                 class="NetiTags\Service\Decorations\CategoryService"
+                 public="false">
+            <argument type="service" id="neti_tags.service.decorations.category_service.inner"/>
+            <argument type="service" id="neti_tags.service.relation"/>
+        </service>
+
+        <service decorates="shopware_attribute.table_mapping"
+                 id="neti_tags.service.decorations.attribute_table_mapping"
+                 class="NetiTags\Service\Decorations\AttributeTableMapping"
+                 public="false">
+            <argument type="service" id="neti_tags.service.decorations.attribute_table_mapping.inner"/>
+            <argument type="service" id="dbal_connection"/>
+            <argument type="service" id="neti_tags.service.tag.relation_collector"/>
+            <argument>%kernel.root_dir%/engine/Shopware/Bundle/AttributeBundle/DependencyInjection/Resources/table_entity_mapping.php</argument>
+        </service>
+
+        <service decorates="shopware_attribute.data_loader"
+                 id="neti_tags.service.decorations.attribute_data_loader"
+                 class="NetiTags\Service\Decorations\AttributeDataLoader"
+                 public="false">
+            <argument type="service" id="neti_tags.service.decorations.attribute_data_loader.inner"/>
+            <argument type="service" id="shopware_attribute.table_mapping"/>
+            <argument type="service" id="dbal_connection"/>
+            <argument type="service" id="neti_tags.service.tag.relation_collector"/>
+        </service>
+
+        <service decorates="shopware_attribute.data_persister"
+                 id="neti_tags.service.decorations.attribute_data_persister"
+                 class="NetiTags\Service\Decorations\AttributeDataPersister"
+                 public="false">
+            <argument type="service" id="neti_tags.service.decorations.attribute_data_persister.inner"/>
+            <argument type="service" id="dbal_connection"/>
+            <argument type="service" id="shopware_attribute.table_mapping"/>
+            <argument type="service" id="shopware_attribute.data_loader"/>
+            <argument type="service" id="neti_tags.service.tag.relation_collector"/>
+        </service>
+
+        <service decorates="shopware_storefront.list_product_service"
+                 id="neti_tags.service.decorations.storefront_list_product_service"
+                 class="NetiTags\Service\Decorations\StorefrontListProductService"
+                 public="false">
+            <argument type="service" id="neti_tags.service.decorations.storefront_list_product_service.inner"/>
+            <argument type="service" id="neti_tags.service.tag.product"/>
+        </service>
+
+        <service decorates="shopware_storefront.product_service"
+                 id="neti_tags.service.decorations.storefront_product_service"
+                 class="NetiTags\Service\Decorations\StorefrontProductService"
+                 public="false">
+            <argument type="service" id="neti_tags.service.decorations.storefront_product_service.inner"/>
+            <argument type="service" id="neti_tags.service.tag.product"/>
+        </service>
+    </services>
+</container>
