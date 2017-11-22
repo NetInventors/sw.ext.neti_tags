@@ -11,11 +11,11 @@
     <compatibility minVersion="5.2.6"/>
 
     <changelog version="1.0.0">
-        <changes lang="de"><![CDATA[]]></changes>
-        <changes lang="en"><![CDATA[]]></changes>
+        <changes lang="de"><![CDATA[Erstes Release]]></changes>
+        <changes lang="en"><![CDATA[First release]]></changes>
     </changelog>
 
     <requiredPlugins>
-        <requiredPlugin pluginName="NetiFoundation" minVersion="2.3.2"/>
+        <requiredPlugin pluginName="NetiFoundation" minVersion="2.3.5"/>
     </requiredPlugins>
 </plugin>
