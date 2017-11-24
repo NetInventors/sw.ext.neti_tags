@@ -9,7 +9,6 @@ namespace NetiTags\Subscriber;
 
 use Enlight\Event\SubscriberInterface;
 use Enlight_Event_EventArgs;
-use NetiFoundation\Service\PluginManager\License;
 
 /**
  * Class Backend
@@ -29,25 +28,14 @@ class Backend implements SubscriberInterface
     protected $templateManager;
 
     /**
-     * @var bool
-     */
-    protected $validLicense;
-
-    /**
      * Backend constructor.
      *
      * @param string  $pluginDir
-     * @param License $licenseService
      */
     public function __construct(
-        $pluginDir,
-        License $licenseService
+        $pluginDir
     ) {
         $this->pluginDir = $pluginDir;
-
-        if ('NetiFoundation\Service\PluginManager\License' === get_class($licenseService)) {
-            $this->validLicense = $licenseService->checkLicense($this, false);
-        }
     }
 
     /**
@@ -65,10 +53,6 @@ class Backend implements SubscriberInterface
      */
     public function onPostDispatch(Enlight_Event_EventArgs $args)
     {
-        if (! $this->validLicense) {
-            return;
-        }
-
         /**
          * @var \Enlight_Controller_Request_RequestHttp   $request
          * @var \Enlight_Controller_Response_ResponseHttp $response

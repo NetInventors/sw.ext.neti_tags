@@ -18,7 +18,5 @@ class Shopware_Controllers_Backend_NetiTags extends AbstractBackendExtJsControll
     {
         // Load the ExtJs-Application
         $this->View()->loadTemplate('backend/neti_tags/app.js');
-
-        $this->validateLicense('NetiTags');
     }
 }
