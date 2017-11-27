@@ -6,7 +6,7 @@
 
 * PluginKey: NetiTags
 * ProjectId: [000000-012-266](https://redmine.netinventors.de/projects/000000-012-266)
-* [Plugin in shopware store](http://store.shopware.com/detail/index/sArticle/162715)
+* [Plugin in shopware store](http://store.shopware.com/detail/index/sArticle/164425)
 * [Plugin landing page](http://www.shopinventors.de/shopware-plugins/tags/)
 
 ## GitHub

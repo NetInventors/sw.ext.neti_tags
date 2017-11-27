@@ -5,10 +5,19 @@
     <label lang="de">Tags</label>
     <label lang="en">Tags</label>
 
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <link>http://www.netinventors.de</link>
     <author>Net Inventors GmbH</author>
     <compatibility minVersion="5.2.6"/>
+
+    <changelog version="1.0.1">
+        <changes lang="de"><![CDATA[
+[#27771] Lizenzprüfung entfernen
+]]></changes>
+        <changes lang="en"><![CDATA[
+[#27771] Remove license check
+]]></changes>
+    </changelog>
 
     <changelog version="1.0.0">
         <changes lang="de"><![CDATA[Erstes Release]]></changes>
