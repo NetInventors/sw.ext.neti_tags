@@ -8,7 +8,6 @@
 namespace NetiTags\Subscriber;
 
 use Enlight\Event\SubscriberInterface;
-use NetiFoundation\Service\PluginManager\License;
 
 /**
  * Class View
@@ -17,29 +16,19 @@ use NetiFoundation\Service\PluginManager\License;
 class View implements SubscriberInterface
 {
     /**
-     * @var boolean
-     */
-    private $validLicense;
-
-    /**
      * @var string
      */
     private $pluginDir;
 
     /**
      * View constructor.
-     * @param License         $licenseService
      * @param string          $pluginDir
      * @throws \Exception
      */
     public function __construct(
-        License $licenseService,
         $pluginDir
     ) {
-        $this->validLicense = License::class === get_class($licenseService) ?
-            $licenseService->checkLicense($this, false) : false;
-
-        $this->pluginDir    = $pluginDir;
+        $this->pluginDir  = $pluginDir;
     }
 
     /**

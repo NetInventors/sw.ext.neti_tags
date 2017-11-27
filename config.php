@@ -1,13 +1,5 @@
 <?php
 return [
-    'licenses'   => [
-        [
-            // TODO: Fill in the localKey from the NetiLocalKey Plugin and the license keys from the shopware account dashboard
-            's'        => 'Vu+IjjtvHGD2ZGAhx5AZAfz9Q+o=',
-            'c'        => 'a2Z/Mlao26bzx/uSUQBtX9erzt8=',
-            'localKey' => '7ad8fd3fd828898bee9fbe00c9cfd2e3',
-        ],
-    ],
     'models'     => [
         NetiTags\Models\Tag::class,
         NetiTags\Models\TableRegistry::class,
