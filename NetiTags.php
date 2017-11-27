@@ -22,6 +22,26 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 class NetiTags extends Plugin
 {
     /**
+     * Plugin can be installed from github, so the license check should be skipped
+     *
+     * @return bool
+     */
+    public function isChargeable()
+    {
+        return false;
+    }
+
+    /**
+     * Secret key to allow akipping the license check
+     *
+     * @return string
+     */
+    public function getSecret()
+    {
+        return '__SECRET__';
+    }
+
+    /**
      * @param ContainerBuilder $container
      */
     public function build(ContainerBuilder $container)
