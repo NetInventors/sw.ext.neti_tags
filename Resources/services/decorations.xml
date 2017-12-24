@@ -12,16 +12,6 @@
             <argument type="service" id="neti_tags.service.relation"/>
         </service>
 
-        <service decorates="shopware_attribute.table_mapping"
-                 id="neti_tags.service.decorations.attribute_table_mapping"
-                 class="NetiTags\Service\Decorations\AttributeTableMapping"
-                 public="false">
-            <argument type="service" id="neti_tags.service.decorations.attribute_table_mapping.inner"/>
-            <argument type="service" id="dbal_connection"/>
-            <argument type="service" id="neti_tags.service.tag.relation_collector"/>
-            <argument>%kernel.root_dir%/engine/Shopware/Bundle/AttributeBundle/DependencyInjection/Resources/table_entity_mapping.php</argument>
-        </service>
-
         <service decorates="shopware_attribute.data_loader"
                  id="neti_tags.service.decorations.attribute_data_loader"
                  class="NetiTags\Service\Decorations\AttributeDataLoader"
