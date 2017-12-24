@@ -19,5 +19,9 @@
         <service class="NetiTags\Service\Tag\Product" id="neti_tags.service.tag.product">
             <argument id="neti_tags.service.relation" type="service"/>
         </service>
+
+        <service class="NetiTags\Service\Controller" id="neti_tags.service.controller">
+            <argument type="service" id="neti_tags.service.tag.relation_collector"/>
+        </service>
     </services>
 </container>
