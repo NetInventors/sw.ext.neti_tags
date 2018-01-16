@@ -215,7 +215,10 @@ abstract class AbstractModel extends ModelEntity
         /** @var Container $container */
         $container = Shopware()->Container();
 
-        if (!$container->has('auth')) {
+        /** @var \Enlight_Controller_Front $frontController */
+        $frontController = $container->get('front');
+
+        if ('backend' !== $frontController->Request()->getModuleName()) {
             return $this;
         }
 
