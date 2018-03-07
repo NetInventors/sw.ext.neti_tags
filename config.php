@@ -71,6 +71,19 @@ return [
                 'displayInBackend' => true
             ]
         ],
+        [
+            'table'  => 's_product_streams_attributes',
+            'suffix' => 'tags',
+            'type'   => 'int',
+            'data'   => [
+                'label'            => [
+                    'de_DE' => 'Tags',
+                    'en_GB' => 'Tags',
+                ],
+                'entity'           => 'NetiTags\Models\Tag',
+                'displayInBackend' => true
+            ]
+        ],
     ],
     'menu'       => [
         [
