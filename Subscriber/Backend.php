@@ -103,6 +103,8 @@ class Backend implements SubscriberInterface
             'backend/neti_tags/extensions/view/base/attribute/cms/field/handler.js',
             'backend/neti_tags/extensions/view/base/attribute/product_stream/field.js',
             'backend/neti_tags/extensions/view/base/attribute/product_stream/field/handler.js',
+            'backend/neti_tags/extensions/view/base/attribute/customer_stream/field.js',
+            'backend/neti_tags/extensions/view/base/attribute/customer_stream/field/handler.js',
             'backend/neti_tags/extensions/view/base/attribute/form.js',
         );
     }
