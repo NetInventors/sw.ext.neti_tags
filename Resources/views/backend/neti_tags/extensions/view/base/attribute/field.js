@@ -32,6 +32,7 @@ Ext.define('Shopware.apps.NetiTagsExtensions.view.base.attribute.tags.Field', {
 
         me.grid = Ext.create('Shopware.form.field.Grid', {
             'store': me.store,
+            'flex': 1,
             'searchStore': me.searchStore
         });
 
