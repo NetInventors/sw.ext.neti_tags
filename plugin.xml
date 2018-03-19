@@ -52,6 +52,6 @@ Remove license check - part II
     </changelog>
 
     <requiredPlugins>
-        <requiredPlugin pluginName="NetiFoundation" minVersion="2.3.5"/>
+        <requiredPlugin pluginName="NetiFoundation" minVersion="2.4.1"/>
     </requiredPlugins>
 </plugin>
