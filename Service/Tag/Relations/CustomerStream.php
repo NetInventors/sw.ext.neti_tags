@@ -254,7 +254,7 @@ class CustomerStream implements RelationsInterface
         $result = $qbr->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_ARRAY);
 
         if (empty($result)) {
-            return;
+            return null;
         }
 
         return $result;
@@ -320,7 +320,7 @@ class CustomerStream implements RelationsInterface
     {
         $tableRegistryId = $this->getTableRegistrationIdForTable();
         if (empty($tableRegistryId)) {
-            return;
+            return null;
         }
 
         $qbr = $this->getTagsQuery($relationId);
@@ -332,11 +332,11 @@ class CustomerStream implements RelationsInterface
         try {
             $results = $qbr->getQuery()->getArrayResult();
         } catch (\Exception $e) {
-            $results = null;
+            return null;
         }
 
         if (empty($results)) {
-            return;
+            return null;
         }
 
         return $results;
