@@ -255,7 +255,7 @@ class ProductStream implements RelationsInterface
     /**
      * @param int $relationId
      *
-     * @return array|null
+     * @return array
      */
     public function loadRelation($relationId)
     {
@@ -312,7 +312,7 @@ class ProductStream implements RelationsInterface
     {
         $tableRegistryId = $this->getTableRegistrationIdForTable();
         if (empty($tableRegistryId)) {
-            return;
+            return null;
         }
 
         $qbr = $this->getTagsQuery($relationId);
@@ -324,11 +324,11 @@ class ProductStream implements RelationsInterface
         try {
             $results = $qbr->getQuery()->getArrayResult();
         } catch (\Exception $e) {
-            $results = null;
+            return null;
         }
 
         if (empty($results)) {
-            return;
+            return null;
         }
 
         return $results;

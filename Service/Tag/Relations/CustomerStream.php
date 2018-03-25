@@ -263,7 +263,7 @@ class CustomerStream implements RelationsInterface
     /**
      * @param int $relationId
      *
-     * @return array|null
+     * @return array
      */
     public function loadRelation($relationId)
     {
