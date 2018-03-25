@@ -137,13 +137,13 @@ class ProductStream implements RelationsInterface
     }
 
     /**
-     * @param string $search
-     * @param string $association
-     * @param int    $offset
-     * @param int    $limit
-     * @param null   $id
-     * @param array  $filter
-     * @param array  $sort
+     * @param string      $search
+     * @param string      $association
+     * @param int         $offset
+     * @param int         $limit
+     * @param string|null $id
+     * @param array       $filter
+     * @param array       $sort
      *
      * @return array
      */
