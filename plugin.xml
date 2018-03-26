@@ -5,10 +5,19 @@
     <label lang="de">Tags</label>
     <label lang="en">Tags</label>
 
-    <version>1.0.3</version>
+    <version>1.1.0</version>
     <link>http://www.netinventors.de</link>
     <author>Net Inventors GmbH</author>
     <compatibility minVersion="5.2.6"/>
+
+    <changelog version="1.0.3">
+        <changes lang="de"><![CDATA[
+[#28251] Tags zu Product und Customer Streams hinzugefügt
+]]></changes>
+        <changes lang="en"><![CDATA[
+[#28251] Added tags to Product and Customer stream
+]]></changes>
+    </changelog>
 
     <changelog version="1.0.3">
         <changes lang="de"><![CDATA[
@@ -43,6 +52,6 @@ Remove license check - part II
     </changelog>
 
     <requiredPlugins>
-        <requiredPlugin pluginName="NetiFoundation" minVersion="2.3.5"/>
+        <requiredPlugin pluginName="NetiFoundation" minVersion="2.4.1"/>
     </requiredPlugins>
 </plugin>

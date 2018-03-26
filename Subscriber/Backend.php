@@ -30,7 +30,7 @@ class Backend implements SubscriberInterface
     /**
      * Backend constructor.
      *
-     * @param string  $pluginDir
+     * @param string $pluginDir
      */
     public function __construct(
         $pluginDir
@@ -44,8 +44,43 @@ class Backend implements SubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'Enlight_Controller_Action_PostDispatch' => array('onPostDispatch', 10),
+            'Enlight_Controller_Action_PostDispatch'                  => array('onPostDispatch', 10),
+            'Enlight_Controller_Action_PostDispatch_Backend_Customer' => 'onPostDispatchCustomerStream',
         );
+    }
+
+    /**
+     * @param Enlight_Event_EventArgs $args
+     */
+    public function onPostDispatchCustomerStream(\Enlight_Event_EventArgs $args)
+    {
+        /**
+         * @var \Shopware_Controllers_Backend_CustomerStream $subject
+         * @var \Enlight_Controller_Request_RequestHttp      $request
+         * @var \Enlight_Controller_Response_ResponseHttp    $response
+         */
+        $subject  = $args->getSubject();
+        $request  = $args->get('subject')->Request();
+        $response = $args->get('subject')->Response();
+        if (! $request->isDispatched() || $response->isException()) {
+            return;
+        }
+
+        $module = $request->getModuleName();
+        if ('backend' !== $module) {
+            return;
+        }
+
+        /**
+         * @var \Enlight_View_Default $view
+         */
+        $view = $subject->View();
+
+        $view->addTemplateDir(
+            $this->pluginDir . '/Resources/views/'
+        );
+
+        $view->extendsTemplate('backend/neti_tags/extensions/view/customer/customer_stream/listing.js');
     }
 
     /**
@@ -101,6 +136,10 @@ class Backend implements SubscriberInterface
             'backend/neti_tags/extensions/view/base/attribute/category/field/handler.js',
             'backend/neti_tags/extensions/view/base/attribute/cms/field.js',
             'backend/neti_tags/extensions/view/base/attribute/cms/field/handler.js',
+            'backend/neti_tags/extensions/view/base/attribute/product_stream/field.js',
+            'backend/neti_tags/extensions/view/base/attribute/product_stream/field/handler.js',
+            'backend/neti_tags/extensions/view/base/attribute/customer_stream/field.js',
+            'backend/neti_tags/extensions/view/base/attribute/customer_stream/field/handler.js',
             'backend/neti_tags/extensions/view/base/attribute/form.js',
         );
     }
