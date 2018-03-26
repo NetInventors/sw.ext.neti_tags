@@ -40,5 +40,19 @@
             <argument id="neti_tags.service.table_registry" type="service"/>
             <tag name="neti_tags.relation" alias="categories"/>
         </service>
+
+        <service class="NetiTags\Service\Tag\Relations\ProductStream" id="neti_tags.service.tag.relations.product_stream">
+            <argument id="models" type="service"/>
+            <argument id="snippets" type="service"/>
+            <argument id="neti_tags.service.table_registry" type="service"/>
+            <tag name="neti_tags.relation" alias="product_stream"/>
+        </service>
+
+        <service class="NetiTags\Service\Tag\Relations\CustomerStream" id="neti_tags.service.tag.relations.customer_stream">
+            <argument id="models" type="service"/>
+            <argument id="snippets" type="service"/>
+            <argument id="neti_tags.service.table_registry" type="service"/>
+            <tag name="neti_tags.relation" alias="customer_stream"/>
+        </service>
     </services>
 </container>

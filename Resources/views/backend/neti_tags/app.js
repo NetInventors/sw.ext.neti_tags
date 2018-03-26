@@ -24,7 +24,9 @@ Ext.define('Shopware.apps.NetiTags', {
         'relations.Cms',
         'relations.Article',
         'relations.Category',
-        'relations.Customer'
+        'relations.Customer',
+        'relations.CustomerStream',
+        'relations.ProductStream'
     ],
 
     views: [
@@ -35,6 +37,8 @@ Ext.define('Shopware.apps.NetiTags', {
         'overview.detail.container.relations.cms.Grid',
         'overview.detail.container.relations.customer.Grid',
         'overview.detail.container.relations.category.Grid',
+        'overview.detail.container.relations.productStream.Grid',
+        'overview.detail.container.relations.customerStream.Grid',
         'overview.detail.container.Relations',
         'overview.detail.Container',
         'overview.detail.Window'
@@ -46,7 +50,9 @@ Ext.define('Shopware.apps.NetiTags', {
         'relations.Cms',
         'relations.Article',
         'relations.Category',
-        'relations.Customer'
+        'relations.Customer',
+        'relations.CustomerStream',
+        'relations.ProductStream'
     ],
 
     launch: function() {

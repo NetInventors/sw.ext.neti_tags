@@ -29,6 +29,12 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
             },
             'category': {
                 'title': '{s name="tab_panel_title_category"}Category{/s}'
+            },
+            'product_stream': {
+                'title': '{s name="tab_panel_title_product_stream"}Product Stream{/s}'
+            },
+            'customer_stream': {
+                'title': '{s name="tab_panel_title_customer_stream"}Customer Stream{/s}'
             }
         }
     },
@@ -80,10 +86,23 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         items.push(me.getBlogTabPanel());
         items.push(me.getCmsTabPanel());
         items.push(me.getCategoryTabPanel());
+        items.push(me.getProductStreamTabPanel());
+        items.push(me.getCustomerStreamTabPanel());
 
         return items;
     },
 
+    'getProductStreamTabPanel': function () {
+        var me = this;
+
+        return me.productStreamTabPanel || me.createProductStreamTabPanel();
+    },
+
+    'getCustomerStreamTabPanel': function () {
+        var me = this;
+
+        return me.customerStreamTabPanel || me.createCustomerStreamTabPanel();
+    },
     'getArticleTabPanel': function () {
         var me = this;
 
@@ -120,6 +139,34 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         });
 
         return me.cmsTabPanel;
+    },
+
+    'createProductStreamTabPanel': function () {
+        var me = this;
+
+        me.productStreamTabPanel = Ext.create('Ext.panel.Panel', {
+            'title': me.snippets.tab_panel.product_stream.title,
+            'border': null,
+            'closable': false,
+            'layout': 'fit',
+            'items': me.getProductStreamTabPanelItems()
+        });
+
+        return me.productStreamTabPanel;
+    },
+
+    'createCustomerStreamTabPanel': function () {
+        var me = this;
+
+        me.customerStreamTabPanel = Ext.create('Ext.panel.Panel', {
+            'title': me.snippets.tab_panel.customer_stream.title,
+            'border': null,
+            'closable': false,
+            'layout': 'fit',
+            'items': me.getCustomerStreamTabPanelItems()
+        });
+
+        return me.customerStreamTabPanel;
     },
     'getCategoryTabPanel': function () {
         var me = this;
@@ -193,6 +240,29 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
 
         return items;
     },
+
+    'getProductStreamTabPanelItems': function () {
+        var me = this,
+            items = [];
+
+        items.push(
+            me.getProductStreamGrid()
+        );
+
+        return items;
+    },
+
+    'getCustomerStreamTabPanelItems': function () {
+        var me = this,
+            items = [];
+
+        items.push(
+            me.getCustomerStreamGrid()
+        );
+
+        return items;
+    },
+
     'getArticleTabPanelItems': function () {
         var me = this,
             items = [];
@@ -243,6 +313,18 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         return me.cmsGrid || me.createCmsGrid();
     },
 
+    'getProductStreamGrid': function () {
+        var me = this;
+
+        return me.productStreamGrid || me.createProductStreamGrid();
+    },
+
+    'getCustomerStreamGrid': function () {
+        var me = this;
+
+        return me.customerStreamGrid || me.createCustomerStreamGrid();
+    },
+
     'getBlogGrid': function () {
         var me = this;
 
@@ -275,6 +357,26 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         });
 
         return me.blogGrid;
+    },
+
+    'createProductStreamGrid': function () {
+        var me = this;
+
+        me.productStreamGrid = Ext.create('Shopware.apps.NetiTags.view.overview.detail.container.relations.productStream.Grid', {
+            'store': me.getStore('product_stream')
+        });
+
+        return me.productStreamGrid;
+    },
+
+    'createCustomerStreamGrid': function () {
+        var me = this;
+
+        me.customerStreamGrid = Ext.create('Shopware.apps.NetiTags.view.overview.detail.container.relations.customerStream.Grid', {
+            'store': me.getStore('customer_stream')
+        });
+
+        return me.customerStreamGrid;
     },
 
     'createCmsGrid': function () {
@@ -352,6 +454,12 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
                 break;
             case 'categories':
                 store = me.subApp.getStore('relations.Category');
+                break;
+            case 'product_stream':
+                store = me.subApp.getStore('relations.ProductStream');
+                break;
+            case 'customer_stream':
+                store = me.subApp.getStore('relations.CustomerStream');
                 break;
         }
 

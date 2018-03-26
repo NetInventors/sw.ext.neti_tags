@@ -14,6 +14,8 @@ use NetiTags\Service\Tag\Relations\Blog;
 use NetiTags\Service\Tag\Relations\Category;
 use NetiTags\Service\Tag\Relations\Cms;
 use NetiTags\Service\Tag\Relations\Customer;
+use NetiTags\Service\Tag\Relations\CustomerStream;
+use NetiTags\Service\Tag\Relations\ProductStream;
 use Shopware\Components\Model\ModelManager;
 use Shopware\Models\Plugin\Plugin;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -93,6 +95,22 @@ class Setup
             $customerRelationService->getName(),
             $customerRelationService->getTableName(),
             $customerRelationService->getEntityName(),
+            $plugin
+        );
+
+        $productStreamRelationService = new ProductStream($modelManager, $snippets, $tableRegistry);
+        $tableRegistry->register(
+            $productStreamRelationService->getName(),
+            $productStreamRelationService->getTableName(),
+            $productStreamRelationService->getEntityName(),
+            $plugin
+        );
+
+        $customerStreamRelationService = new CustomerStream($modelManager, $snippets, $tableRegistry);
+        $tableRegistry->register(
+            $customerStreamRelationService->getName(),
+            $customerStreamRelationService->getTableName(),
+            $customerStreamRelationService->getEntityName(),
             $plugin
         );
     }

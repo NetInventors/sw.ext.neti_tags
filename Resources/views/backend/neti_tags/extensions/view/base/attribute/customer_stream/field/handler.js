@@ -1,12 +1,12 @@
 //{block name="backend/base/attribute/form" append}
-Ext.define('Shopware.apps.NetiTagsExtensions.view.base.attribute.blog.field.Handler', {
+Ext.define('Shopware.apps.NetiTagsExtensions.view.base.attribute.customerStream.field.Handler', {
     'extend': 'Shopware.attribute.FieldHandlerInterface',
     'mixins': {
         'factory': 'Shopware.attribute.SelectionFactory'
     },
     'supports': function (attribute) {
         var columnName = attribute.get('columnName');
-        if (attribute.get('tableName') !== 's_blog_attributes') {
+        if (attribute.get('tableName') !== 's_customer_streams_attributes') {
             return false;
         }
 
@@ -15,7 +15,7 @@ Ext.define('Shopware.apps.NetiTagsExtensions.view.base.attribute.blog.field.Hand
 
     'create': function (field, attribute) {
         return Ext.apply(field, {
-            'xtype': 'neti_tags_blog_attribute',
+            'xtype': 'neti_tags_customer_stream_attribute',
             'flex': 1,
             'store': this.createDynamicSearchStore(attribute),
             'searchStore': this.createDynamicSearchStore(attribute)

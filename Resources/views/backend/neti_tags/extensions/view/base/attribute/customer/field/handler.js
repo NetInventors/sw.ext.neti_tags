@@ -20,14 +20,6 @@ Ext.define('Shopware.apps.NetiTagsExtensions.view.base.attribute.customer.field.
             'store': this.createDynamicSearchStore(attribute),
             'searchStore': this.createDynamicSearchStore(attribute)
         });
-
-        return this.createSelection(
-            field,
-            attribute,
-            'Shopware.form.field.Grid',
-            this.createDynamicSearchStore(attribute),
-            this.createDynamicSearchStore(attribute)
-        );
     }
 });
 //{/block}
