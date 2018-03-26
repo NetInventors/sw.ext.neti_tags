@@ -229,6 +229,7 @@ class ProductStream implements RelationsInterface
      * @param array $relation
      *
      * @return array|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function fetchRelations(array $relation)
     {
@@ -272,6 +273,7 @@ class ProductStream implements RelationsInterface
     /**
      * @param array $data
      * @param int   $relationId
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function persistRelations(array $data, $relationId)
     {
@@ -355,6 +357,8 @@ class ProductStream implements RelationsInterface
 
     /**
      * @return int
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     private function getTableRegistrationIdForTable()
     {
