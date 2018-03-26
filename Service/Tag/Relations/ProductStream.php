@@ -228,7 +228,7 @@ class ProductStream implements RelationsInterface
     /**
      * @param array $relation
      *
-     * @return array|null
+     * @return array
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function fetchRelations(array $relation)
@@ -246,11 +246,7 @@ class ProductStream implements RelationsInterface
 
         $result = $qbr->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_ARRAY);
 
-        if (empty($result)) {
-            return;
-        }
-
-        return $result;
+        return empty($result) ? array() : $result;
     }
 
     /**
@@ -273,6 +269,8 @@ class ProductStream implements RelationsInterface
     /**
      * @param array $data
      * @param int   $relationId
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function persistRelations(array $data, $relationId)
@@ -308,13 +306,15 @@ class ProductStream implements RelationsInterface
     /**
      * @param int $relationId
      *
-     * @return array|null
+     * @return array
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getTags($relationId)
     {
         $tableRegistryId = $this->getTableRegistrationIdForTable();
         if (empty($tableRegistryId)) {
-            return null;
+            return array();
         }
 
         $qbr = $this->getTagsQuery($relationId);
@@ -323,17 +323,7 @@ class ProductStream implements RelationsInterface
             't.title'
         ));
 
-        try {
-            $results = $qbr->getQuery()->getArrayResult();
-        } catch (\Exception $e) {
-            return null;
-        }
-
-        if (empty($results)) {
-            return null;
-        }
-
-        return $results;
+        return $qbr->getQuery()->getArrayResult();
     }
 
     /**

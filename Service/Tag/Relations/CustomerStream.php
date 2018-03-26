@@ -281,6 +281,8 @@ class CustomerStream implements RelationsInterface
     /**
      * @param array $data
      * @param int   $relationId
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function persistRelations(array $data, $relationId)
@@ -316,13 +318,15 @@ class CustomerStream implements RelationsInterface
     /**
      * @param int $relationId
      *
-     * @return array|null
+     * @return array
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getTags($relationId)
     {
         $tableRegistryId = $this->getTableRegistrationIdForTable();
         if (empty($tableRegistryId)) {
-            return null;
+            return array();
         }
 
         $qbr = $this->getTagsQuery($relationId);
@@ -331,17 +335,7 @@ class CustomerStream implements RelationsInterface
             't.title'
         ));
 
-        try {
-            $results = $qbr->getQuery()->getArrayResult();
-        } catch (\Exception $e) {
-            return null;
-        }
-
-        if (empty($results)) {
-            return null;
-        }
-
-        return $results;
+        return $qbr->getQuery()->getArrayResult();
     }
 
     /**
