@@ -14,5 +14,9 @@
             <argument>%neti_tags.plugin_dir%</argument>
             <tag name="shopware.event_subscriber"/>
         </service>
+        <service class="NetiTags\Subscriber\CustomerSubscriber" id="neti_tags.subscriber.customer_subscriber">
+            <argument type="service" id="neti_tags.service.table_registry" />
+            <tag name="shopware.event_subscriber"/>
+        </service>
     </services>
 </container>
