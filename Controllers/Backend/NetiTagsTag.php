@@ -14,6 +14,25 @@ class Shopware_Controllers_Backend_NetiTagsTag
     protected $model = 'NetiTags\Models\Tag';
 
     /**
+     * @return \Shopware\Components\Model\QueryBuilder
+     */
+    protected function getListQuery()
+    {
+        $builder = parent::getListQuery();
+
+        $builder->select(array(
+            $this->alias . '.id',
+            $this->alias . '.title',
+            $this->alias . '.enabled',
+            'COUNT(relations) as relationCount'
+        ));
+        $builder->groupBy($this->alias . '.id');
+        $builder->leftJoin($this->alias . '.relations', 'relations');
+
+        return $builder;
+    }
+
+    /**
      * @param int $id
      *
      * @return \Doctrine\ORM\QueryBuilder|\Shopware\Components\Model\QueryBuilder
