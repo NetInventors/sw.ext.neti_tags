@@ -6,7 +6,11 @@
  */
 
 use NetiFoundation\Controllers\Backend\AbstractBackendExtJsController;
+use NetiTags\Struct\PluginConfig;
 
+/**
+ * Class Shopware_Controllers_Backend_NetiTags
+ */
 class Shopware_Controllers_Backend_NetiTags extends AbstractBackendExtJsController
 {
     /**
@@ -18,5 +22,17 @@ class Shopware_Controllers_Backend_NetiTags extends AbstractBackendExtJsControll
     {
         // Load the ExtJs-Application
         $this->View()->loadTemplate('backend/neti_tags/app.js');
+
+        $this->View()->assign('neti_tags_plugin_config', array(
+            'deletprotecting' => $this->getPluginConfig()->isDeletprotecting()
+        ));
+    }
+
+    /**
+     * @return PluginConfig
+     */
+    protected function getPluginConfig()
+    {
+        return $this->container->get('neti_foundation.plugin_manager_config')->getPluginConfig('NetiPrepaid');
     }
 }
