@@ -33,6 +33,6 @@ class Shopware_Controllers_Backend_NetiTags extends AbstractBackendExtJsControll
      */
     protected function getPluginConfig()
     {
-        return $this->container->get('neti_foundation.plugin_manager_config')->getPluginConfig('NetiPrepaid');
+        return $this->container->get('neti_foundation.plugin_manager_config')->getPluginConfig('NetiTags');
     }
 }
