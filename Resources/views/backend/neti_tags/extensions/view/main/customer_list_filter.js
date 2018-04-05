@@ -10,7 +10,7 @@ Ext.override(Shopware.apps.Customer.view.main.CustomerListFilter, {
 
         configuration.fields.tags = {
             'fieldLabel': '{s name="customer_list_filter_field_label"}Tags{/s}',
-            'xtype': 'combobox',
+            'xtype': 'netipagingcombobox',
             'displayField': 'title',
             'valueField': 'id',
             'store': tagsStore
