@@ -12,6 +12,15 @@
 
     <changelog version="1.2.0">
         <changes lang="de"><![CDATA[
+[#28762] Löschschutz
+]]></changes>
+        <changes lang="en"><![CDATA[
+[#28762] Deletprotecting
+]]></changes>
+    </changelog>
+
+    <changelog version="1.2.0">
+        <changes lang="de"><![CDATA[
 [#28761] Tags zum Kundenlistenfilter hinzugefügt
 ]]></changes>
         <changes lang="en"><![CDATA[
