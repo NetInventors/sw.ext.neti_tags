@@ -5,11 +5,19 @@
     <label lang="de">Tags</label>
     <label lang="en">Tags</label>
 
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <link>http://www.netinventors.de</link>
     <author>Net Inventors GmbH</author>
     <compatibility minVersion="5.2.6"/>
 
+    <changelog version="1.2.0">
+        <changes lang="de"><![CDATA[
+[#28761] Tags zum Kundenlistenfilter hinzugefügt
+]]></changes>
+        <changes lang="en"><![CDATA[
+[#28761] Added tags to customer list filter
+]]></changes>
+    </changelog>
     <changelog version="1.1.0">
         <changes lang="de"><![CDATA[
 [#28251] Tags zu Product und Customer Streams hinzugefügt
