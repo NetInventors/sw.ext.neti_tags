@@ -81,6 +81,8 @@ class Backend implements SubscriberInterface
         );
 
         $view->extendsTemplate('backend/neti_tags/extensions/view/customer/customer_stream/listing.js');
+        $view->extendsTemplate('backend/neti_tags/extensions/view/model/customer/quick_view.js');
+        $view->extendsTemplate('backend/neti_tags/extensions/view/main/customer_list_filter.js');
     }
 
     /**
