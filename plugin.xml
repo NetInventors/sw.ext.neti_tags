@@ -12,10 +12,10 @@
 
     <changelog version="1.2.0">
         <changes lang="de"><![CDATA[
-[#2876] Tags zum Kundenlistenfilter hinzugefügt
+[#28761] Tags zum Kundenlistenfilter hinzugefügt
 ]]></changes>
         <changes lang="en"><![CDATA[
-[#2876] Added tags to customer list filter
+[#28761] Added tags to customer list filter
 ]]></changes>
     </changelog>
     <changelog version="1.1.0">
