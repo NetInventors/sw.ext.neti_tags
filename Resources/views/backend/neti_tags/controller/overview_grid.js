@@ -14,10 +14,6 @@ Ext.define('Shopware.apps.NetiTags.controller.OverviewGrid', {
         me.callParent(arguments);
 
         me.deleteConfirmTextOriginal = me.deleteConfirmText;
-
-        // if(true === me.deletprotecting) {
-        //     me.deleteConfirmText = '{s name="grid_controller/delete_confirm_text"}Attention, this tag is linked to at least one more element, really delete?{/s}';
-        // }
     },
 
     onDeleteItem: function (grid, record) {
