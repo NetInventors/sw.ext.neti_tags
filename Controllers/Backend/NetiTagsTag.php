@@ -14,6 +14,20 @@ class Shopware_Controllers_Backend_NetiTagsTag
     protected $model = 'NetiTags\Models\Tag';
 
     /**
+     * @param $id
+     *
+     * @return array
+     */
+    public function delete($id)
+    {
+        try {
+            return parent::delete($id);
+        } catch (\Exception $exception) {
+            return ['success' => false, 'error' => $exception->getMessage()];
+        }
+    }
+
+    /**
      * @return \Shopware\Components\Model\QueryBuilder
      */
     protected function getListQuery()
