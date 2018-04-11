@@ -41,7 +41,42 @@ Ext.define('Shopware.apps.NetiTags.controller.OverviewGrid', {
             }
         }
 
-        me.callParent(arguments);
+        me.parentOnDeleteItem(grid, record);
+    },
+
+    parentOnDeleteItem: function (grid, record) {
+        var me = this,
+            text = me.deleteConfirmText,
+            title = me.deleteConfirmTitle;
+
+        if (grid.getConfig('displayProgressOnSingleDelete')) {
+            me.onDeleteItems(grid, [ record ], null);
+            return;
+        }
+
+        Ext.MessageBox.confirm(title, text, function (response) {
+            if (response !== 'yes') {
+                return false;
+            }
+
+            if (!me.hasModelAction(record, 'destroy')) {
+                grid.getStore().remove(record);
+                return true;
+            }
+
+            record.destroy({
+                success: function (result, operation) {
+                    grid.getStore().load();
+                },
+                failure: function (result, operation) {
+                    Shopware.Notification.createGrowlMessage(
+                        me.deleteConfirmTitle,
+                        '{s name="grid_controller/deletprotecting_enabled_text"}Attention, this tag is linked to at least one more element, and therefore cannot delete!{/s}',
+                        'NetiTags'
+                    );
+                }
+            });
+        });
     }
 });
 //{/block}
