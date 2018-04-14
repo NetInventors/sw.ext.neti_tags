@@ -14,7 +14,7 @@ class Shopware_Controllers_Backend_NetiTagsTag
     protected $model = 'NetiTags\Models\Tag';
 
     /**
-     * @param $id
+     * @param string|null $id
      *
      * @return array
      */
