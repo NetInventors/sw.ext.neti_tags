@@ -66,6 +66,7 @@ class Shopware_Controllers_Backend_NetiTagsTag
      * @param array $data
      *
      * @return array
+     * @throws Exception
      */
     protected function getAdditionalDetailData(array $data)
     {
@@ -79,6 +80,7 @@ class Shopware_Controllers_Backend_NetiTagsTag
      * @param array $relations
      *
      * @return array
+     * @throws Exception
      */
     private function fetchRelations($relations)
     {
@@ -110,6 +112,7 @@ class Shopware_Controllers_Backend_NetiTagsTag
      * @param array $data
      *
      * @return array
+     * @throws Exception
      */
     protected function resolveExtJsData($data)
     {
