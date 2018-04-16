@@ -90,7 +90,7 @@ class TagsSubscriber implements SubscriberInterface
          */
         $tag = $args->get('tag');
 
-        if (true !== $this->getConfig()->isDeletprotecting()) {
+        if (true !== $this->getConfig()->isDeleteprotecting()) {
             return;
         }
 
@@ -102,7 +102,7 @@ class TagsSubscriber implements SubscriberInterface
 
         throw new \Exception(
             $snipetsNamespace->get(
-                'grid_controller/deletprotecting_exception',
+                'grid_controller/deleteprotecting_exception',
                 'Attention, this tag is linked to at least one more element, and therefore cannot delete!'
             )
         );

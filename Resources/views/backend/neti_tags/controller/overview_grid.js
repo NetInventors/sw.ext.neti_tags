@@ -19,12 +19,12 @@ Ext.define('Shopware.apps.NetiTags.controller.OverviewGrid', {
     onDeleteItem: function (grid, record) {
         var me = this,
             relationCount = record.get('relationCount'),
-            deletprotecting = Shopware.apps.NetiFoundationExtensions.Helper.getPluginConfig(
+            deleteprotecting = Shopware.apps.NetiFoundationExtensions.Helper.getPluginConfig(
             'Shopware.apps.NetiTags',
-            'deletprotecting'
+            'deleteprotecting'
         );
 
-        if(false === deletprotecting) {
+        if(false === deleteprotecting) {
             if (relationCount > 0) {
                 me.deleteConfirmText = '{s name="grid_controller/delete_confirm_text"}Attention, this tag is linked to at least one more element, really delete?{/s}';
             } else {
@@ -34,7 +34,7 @@ Ext.define('Shopware.apps.NetiTags.controller.OverviewGrid', {
             if (relationCount > 0) {
                 Ext.MessageBox.alert(
                     me.deleteConfirmTitle,
-                    '{s name="grid_controller/deletprotecting_enabled_text"}Attention, this tag is linked to at least one more element, and therefore cannot delete!{/s}'
+                    '{s name="grid_controller/deleteprotecting_enabled_text"}Attention, this tag is linked to at least one more element, and therefore cannot delete!{/s}'
                 );
 
                 return;
@@ -71,7 +71,7 @@ Ext.define('Shopware.apps.NetiTags.controller.OverviewGrid', {
                 failure: function (result, operation) {
                     Shopware.Notification.createGrowlMessage(
                         me.deleteConfirmTitle,
-                        '{s name="grid_controller/deletprotecting_enabled_text"}Attention, this tag is linked to at least one more element, and therefore cannot delete!{/s}',
+                        '{s name="grid_controller/deleteprotecting_enabled_text"}Attention, this tag is linked to at least one more element, and therefore cannot delete!{/s}',
                         'NetiTags'
                     );
                 }

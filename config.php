@@ -114,16 +114,16 @@ return [
     'form' => [
         [
             'scope'       => \Shopware\Models\Config\Element::SCOPE_SHOP,
-            'name'        => 'deletprotecting',
+            'name'        => 'deleteprotecting',
             'value'       => true,
             'isRequired'  => true,
             'type'        => 'checkbox',
             'label'       => [
                 'de_DE' => 'Löschschutz',
-                'en_GB' => 'Deletprotecting',
+                'en_GB' => 'Delete protection',
             ],
             'description' => [
-                'de_DE' => 'Ist der Löschschutz aktiviert, kann ein Tag nicht gelöscht werden sofern dieser Tag noch irgendwelchen Entitäten zugewiesen ist',
+                'de_DE' => 'Ist der Löschschutz aktiviert, kann ein Tag nicht gelöscht werden sofern dieser Tag noch Entitäten zugewiesen ist',
                 'en_GB' => 'If the protection is enabled, a tag can not be deleted if that tag is still assigned to any entities'
             ],
         ],

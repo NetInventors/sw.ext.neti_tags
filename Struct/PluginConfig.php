@@ -19,15 +19,15 @@ class PluginConfig extends AbstractClass
     /**
      * @var boolean
      */
-    protected $deletprotecting = true;
+    protected $deleteprotecting = true;
 
     /**
-     * Gets the value of deletprotecting from the record
+     * Gets the value of deleteprotecting from the record
      *
      * @return bool
      */
-    public function isDeletprotecting()
+    public function isDeleteprotecting()
     {
-        return $this->deletprotecting;
+        return $this->deleteprotecting;
     }
 }
