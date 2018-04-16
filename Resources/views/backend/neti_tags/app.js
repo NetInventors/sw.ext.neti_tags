@@ -55,6 +55,8 @@ Ext.define('Shopware.apps.NetiTags', {
         'relations.ProductStream'
     ],
 
+    'pluginConfig': {$neti_tags_plugin_config|@json_encode},
+
     launch: function() {
         var me = this;
 

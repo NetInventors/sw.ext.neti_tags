@@ -14,6 +14,8 @@ Ext.define('Shopware.apps.NetiTags.view.overview.List', {
     configure: function () {
         return {
             detailWindow: 'Shopware.apps.NetiTags.view.overview.detail.Window',
+            displayProgressOnSingleDelete: false,
+            deleteButton: false,
             columns: {
 
                 id: {
@@ -35,6 +37,29 @@ Ext.define('Shopware.apps.NetiTags.view.overview.List', {
                 }
             }
         };
+    },
+
+    createDefaultController: function () {
+        var me = this,
+            id = Ext.id();
+
+        me.controller = Ext.create('Shopware.apps.NetiTags.controller.OverviewGrid', {
+            application: me.subApp,
+            subApplication: me.subApp,
+            subApp: me.subApp,
+            $controllerId: id,
+            id: id,
+            configure: function () {
+                return {
+                    gridClass: me.$className,
+                    eventAlias: me.eventAlias
+                };
+            }
+        });
+        me.controller.init();
+        me.subApp.controllers.add(me.controller.$controllerId, me.controller);
+
+        return me.controller;
     }
 });
 //{/block}
