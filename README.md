@@ -1,5 +1,5 @@
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_tags/badges/quality-score.png?b=develop&s=145eab19bf396bdd889e1e41a77a42756fe8a115)](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_tags/?branch=develop)
-[![Build Status](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_tags/badges/build.png?b=develop&s=8c36927f2ac5c5ee577b3f15990c74b13374efa1)](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_tags/build-status/develop)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_tags/badges/quality-score.png?b=master&s=145eab19bf396bdd889e1e41a77a42756fe8a115)](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_tags/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_tags/badges/build.png?b=master&s=8c36927f2ac5c5ee577b3f15990c74b13374efa1)](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_tags/build-status/master)
 
 # Tags
 > Relate everything with tags
@@ -38,6 +38,9 @@
 * Blog
 * Pages
 * Customer
+* Blog
+* Product Stream
+* Customer Stream
 
 ## Supported Entities by Plugin:
 * CrossSelling (Net Inventors)
