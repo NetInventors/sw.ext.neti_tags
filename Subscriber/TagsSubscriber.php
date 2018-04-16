@@ -90,11 +90,10 @@ class TagsSubscriber implements SubscriberInterface
          */
         $tag = $args->get('tag');
 
-        if (true !== $this->getConfig()->isDeleteprotecting()) {
-            return;
-        }
-
-        if (0 === $tag->getRelations()->count()) {
+        if (
+            true !== $this->getConfig()->isDeletprotecting()
+            || 0 === $tag->getRelations()->count()
+        ) {
             return;
         }
 
