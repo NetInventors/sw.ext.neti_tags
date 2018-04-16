@@ -14,6 +14,39 @@ class Shopware_Controllers_Backend_NetiTagsTag
     protected $model = 'NetiTags\Models\Tag';
 
     /**
+     * @param string|null $id
+     *
+     * @return array
+     */
+    public function delete($id)
+    {
+        try {
+            return parent::delete($id);
+        } catch (\Exception $exception) {
+            return ['success' => false, 'error' => $exception->getMessage()];
+        }
+    }
+
+    /**
+     * @return \Shopware\Components\Model\QueryBuilder
+     */
+    protected function getListQuery()
+    {
+        $builder = parent::getListQuery();
+
+        $builder->select(array(
+            $this->alias . '.id',
+            $this->alias . '.title',
+            $this->alias . '.enabled',
+            'COUNT(relations) as relationCount'
+        ));
+        $builder->groupBy($this->alias . '.id');
+        $builder->leftJoin($this->alias . '.relations', 'relations');
+
+        return $builder;
+    }
+
+    /**
      * @param int $id
      *
      * @return \Doctrine\ORM\QueryBuilder|\Shopware\Components\Model\QueryBuilder
@@ -33,6 +66,7 @@ class Shopware_Controllers_Backend_NetiTagsTag
      * @param array $data
      *
      * @return array
+     * @throws Exception
      */
     protected function getAdditionalDetailData(array $data)
     {
@@ -46,6 +80,7 @@ class Shopware_Controllers_Backend_NetiTagsTag
      * @param array $relations
      *
      * @return array
+     * @throws Exception
      */
     private function fetchRelations($relations)
     {
@@ -77,6 +112,7 @@ class Shopware_Controllers_Backend_NetiTagsTag
      * @param array $data
      *
      * @return array
+     * @throws Exception
      */
     protected function resolveExtJsData($data)
     {

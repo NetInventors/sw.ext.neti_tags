@@ -36,6 +36,10 @@ Ext.define('Shopware.apps.NetiTags.model.Tag', {
             name: 'enabled',
             type: 'bool',
             defaultValue:true
+        },
+        {
+            name: 'relationCount',
+            type: 'integer'
         }
     ]
 });

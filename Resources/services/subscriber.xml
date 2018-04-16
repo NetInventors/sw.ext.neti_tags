@@ -18,5 +18,16 @@
             <argument type="service" id="neti_tags.service.table_registry" />
             <tag name="shopware.event_subscriber"/>
         </service>
+
+        <service class="NetiTags\Subscriber\DoctrineSubscriber" id="neti_tags.subscriber.doctrine_subscriber">
+            <argument id="events" type="service"/>
+            <tag name="doctrine.event_subscriber"/>
+        </service>
+
+        <service class="NetiTags\Subscriber\TagsSubscriber" id="neti_tags.subscriber.tags_subscriber">
+            <argument id="neti_foundation.plugin_manager_config" type="service"/>
+            <argument type="service" id="snippets"/>
+            <tag name="shopware.event_subscriber"/>
+        </service>
     </services>
 </container>
