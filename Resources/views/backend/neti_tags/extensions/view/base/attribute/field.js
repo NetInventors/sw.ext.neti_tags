@@ -11,6 +11,7 @@ Ext.define('Shopware.apps.NetiTagsExtensions.view.base.attribute.tags.Field', {
         'field': 'Ext.form.field.Field'
     },
     'value': null,
+    'allowBlank': true,
     'initComponent': function () {
         var me = this;
 
@@ -47,6 +48,10 @@ Ext.define('Shopware.apps.NetiTagsExtensions.view.base.attribute.tags.Field', {
 
     'isValid': function () {
         var me = this;
+
+        if (false === me.allowBlank && 0 === me.grid.store.data.length) {
+            return false;
+        }
 
         return me.grid.isValid();
     },
