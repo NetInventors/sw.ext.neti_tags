@@ -1,6 +1,9 @@
+**NOTE**: If you are viewing this on GitHub, please be advised that the repo has been moved to [GitLab](https://gitlab.netinventors.de/shopware/labs/NetiTags) and we will no longer respond to Pull Requests on this repo, as it is only a mirror of the GitLab repository.
+
+
 # Get involved
 
-If you want to contribute code (features or bugfixes), you have to create a pull request. 
+If you want to contribute code (features or bugfixes), you have to create a merge request. 
 
 # Pull Requests
 
