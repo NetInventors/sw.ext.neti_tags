@@ -1,5 +1,5 @@
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_tags/badges/quality-score.png?b=master&s=145eab19bf396bdd889e1e41a77a42756fe8a115)](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_tags/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_tags/badges/build.png?b=master&s=8c36927f2ac5c5ee577b3f15990c74b13374efa1)](https://scrutinizer-ci.com/g/NetInventors/sw.ext.neti_tags/build-status/master)
+**NOTE**: If you are viewing this on GitHub, please be advised that the repo has been moved to [GitLab](https://gitlab.netinventors.de/shopware/labs/NetiTags) and we will no longer respond to Pull Requests on this repo, as it is only a mirror of the GitLab repository.
+
 
 # Tags
 > Relate everything with tags
@@ -8,11 +8,6 @@
 * ProjectId: [000000-012-266](https://redmine.netinventors.de/projects/000000-012-266)
 * [Plugin in shopware store](http://store.shopware.com/detail/index/sArticle/164425)
 * [Plugin landing page](http://www.shopinventors.de/shopware-plugins/tags/)
-
-## GitHub
-* [GitHub Repository](https://github.com/NetInventors/sw.ext.neti_tags/) 
-* [ChangeLog](https://github.com/NetInventors/sw.ext.neti_tags/commits)
-* [Issues](https://github.com/NetInventors/sw.ext.neti_tags/issues)
 
 ## Requirements
 * Shopware version >= 5.2.6
@@ -25,9 +20,6 @@
 ## Configuration
 * Install
 * Configure
-
-## Report bugs or request features
-* [GitHub issue tracker](https://github.com/NetInventors/sw.ext.neti_tags/issues)
 
 ## Support
 * [Support](https://support.netinventors.de/hc/de/sections/115000761434)
