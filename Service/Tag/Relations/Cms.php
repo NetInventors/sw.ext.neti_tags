@@ -300,14 +300,13 @@ class Cms implements RelationsInterface
         /** @var QueryBuilder $qbr */
         $qbr = $this->getTagsQuery($relationId);
         $qbr->select([
-            't.id',
-            't.title',
-            't.description',
-            't.createdBy'
+            't.id'
         ]);
 
         /** @var array $results */
-        return $qbr->getQuery()->getArrayResult();
+        $results = $qbr->getQuery()->getArrayResult();
+
+        return array_column($results, 'id');
     }
 
     /**
