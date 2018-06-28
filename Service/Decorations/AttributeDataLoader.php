@@ -75,6 +75,7 @@ class AttributeDataLoader extends CoreService
      * @param string $foreignKey
      *
      * @return array
+     * @throws \Exception
      */
     public function load($table, $foreignKey)
     {
@@ -126,6 +127,7 @@ class AttributeDataLoader extends CoreService
      * @param int    $foreignKey
      *
      * @return array[]
+     * @throws \Exception
      */
     public function loadTranslations($table, $foreignKey)
     {
