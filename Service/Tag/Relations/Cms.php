@@ -301,12 +301,13 @@ class Cms implements RelationsInterface
         $qbr = $this->getTagsQuery($relationId);
         $qbr->select([
             't.id',
+            't.title',
+            't.description',
+            't.createdBy'
         ]);
 
         /** @var array $results */
-        $results = $qbr->getQuery()->getArrayResult();
-
-        return array_column($results, 'id');
+        return $qbr->getQuery()->getArrayResult();
     }
 
     /**

@@ -97,7 +97,7 @@ class AttributeDataLoader extends CoreService
             return;
         }
 
-        $data['neti_tags'] = sprintf('|%s|', implode('|', $relations));
+        $data['neti_tags'] = $relations;
     }
 
     /**
