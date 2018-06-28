@@ -17,6 +17,7 @@ class Shopware_Controllers_Backend_NetiTags extends AbstractBackendExtJsControll
      * Load the backend-Main-Application
      *
      * @return void
+     * @throws Exception
      */
     public function indexAction()
     {
@@ -30,6 +31,7 @@ class Shopware_Controllers_Backend_NetiTags extends AbstractBackendExtJsControll
 
     /**
      * @return PluginConfig
+     * @throws Exception
      */
     protected function getPluginConfig()
     {
