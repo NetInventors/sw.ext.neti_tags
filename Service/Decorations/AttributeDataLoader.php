@@ -7,10 +7,12 @@
 
 namespace NetiTags\Service\Decorations;
 
+use NetiTags\Models\Tag;
 use NetiTags\Service\Tag\RelationCollectorInterface;
 use Shopware\Bundle\AttributeBundle\Service\DataLoader as CoreService;
 use Shopware\Bundle\AttributeBundle\Service\TableMapping;
 use Doctrine\DBAL\Connection;
+use Shopware\Components\Model\ModelManager;
 
 /**
  * Class AttributeDataLoader
@@ -40,24 +42,32 @@ class AttributeDataLoader extends CoreService
     protected $relationCollector;
 
     /**
+     * @var ModelManager
+     */
+    protected $em;
+
+    /**
      * AttributeDataLoader constructor.
      *
-     * @param CoreService                $coreService
-     * @param TableMapping               $mapping
-     * @param Connection                 $connection
+     * @param CoreService $coreService
+     * @param TableMapping $mapping
+     * @param Connection $connection
      * @param RelationCollectorInterface $relationCollector
+     * @param ModelManager $em
      */
     public function __construct(
         CoreService $coreService,
         TableMapping $mapping,
         Connection $connection,
-        RelationCollectorInterface $relationCollector
+        RelationCollectorInterface $relationCollector,
+        ModelManager $em
     ) {
         parent::__construct($connection, $mapping);
         $this->coreService       = $coreService;
         $this->mapping           = $mapping;
         $this->connection        = $connection;
         $this->relationCollector = $relationCollector;
+        $this->em                = $em;
     }
 
     /**
@@ -93,11 +103,22 @@ class AttributeDataLoader extends CoreService
 
         if (empty($relations)) {
             $data['neti_tags'] = array();
+            $data['neti_tags_formated'] = array();
 
             return;
         }
 
         $data['neti_tags'] = sprintf('|%s|', implode('|', $relations));
+        $data['neti_tags_formated'] = $this->loadRelationData($relations);
+    }
+
+    private function loadRelationData($tagIds)
+    {
+        $qb   = $this->em->getRepository(Tag::class)->createQueryBuilder('t');
+        return $qb->select(['t.id', 't.title', 't.description'])
+            ->where($qb->expr()->in('t.id', ':ids'))
+            ->setParameter('ids', $tagIds)
+            ->getQuery()->getArrayResult();
     }
 
     /**
