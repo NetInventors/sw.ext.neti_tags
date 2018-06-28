@@ -103,13 +103,13 @@ class AttributeDataLoader extends CoreService
 
         if (empty($relations)) {
             $data['neti_tags'] = array();
-            $data['neti_tags_formated'] = array();
+            $data['neti_tags_complete'] = array();
 
             return;
         }
 
         $data['neti_tags'] = sprintf('|%s|', implode('|', $relations));
-        $data['neti_tags_formated'] = $this->loadRelationData($relations);
+        $data['neti_tags_complete'] = $this->loadRelationData($relations);
     }
 
     private function loadRelationData($tagIds)
