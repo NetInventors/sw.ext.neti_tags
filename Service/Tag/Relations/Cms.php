@@ -300,7 +300,7 @@ class Cms implements RelationsInterface
         /** @var QueryBuilder $qbr */
         $qbr = $this->getTagsQuery($relationId);
         $qbr->select([
-            't.id',
+            't.id'
         ]);
 
         /** @var array $results */
@@ -312,7 +312,8 @@ class Cms implements RelationsInterface
     /**
      * @param array $data
      * @param int   $relationId
-     * @throws \Doctrine\ORM\ORMInvalidArgumentException
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function persistRelations(array $data, $relationId)
@@ -352,6 +353,8 @@ class Cms implements RelationsInterface
      * @param int $relationId
      *
      * @return array|null
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getTags($relationId)
     {

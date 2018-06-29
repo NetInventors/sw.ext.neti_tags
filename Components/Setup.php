@@ -45,6 +45,7 @@ class Setup
      * @throws \Doctrine\ORM\ORMInvalidArgumentException
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Shopware\Components\Api\Exception\ValidationException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function registerRelationTables(Plugin $plugin)
     {

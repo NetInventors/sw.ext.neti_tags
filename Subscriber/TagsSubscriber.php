@@ -109,6 +109,7 @@ class TagsSubscriber implements SubscriberInterface
 
     /**
      * @return PluginConfig
+     * @throws \Exception
      */
     protected function getConfig()
     {

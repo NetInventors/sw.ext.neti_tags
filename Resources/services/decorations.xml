@@ -20,6 +20,7 @@
             <argument type="service" id="shopware_attribute.table_mapping"/>
             <argument type="service" id="dbal_connection"/>
             <argument type="service" id="neti_tags.service.tag.relation_collector"/>
+            <argument type="service" id="models" />
         </service>
 
         <service decorates="shopware_attribute.data_persister"

@@ -5,12 +5,21 @@
     <label lang="de">Tags</label>
     <label lang="en">Tags</label>
 
-    <version>1.3.1</version>
+    <version>1.3.2</version>
     <link>http://www.netinventors.de</link>
     <author>Net Inventors GmbH</author>
     <compatibility minVersion="5.2.6"/>
 
-    <changelog version="1.3.1">
+    <changelog version="1.3.2">
+        <changes lang="de"><![CDATA[
+[#29235] Übergabe der Tags an Smarty umwandeln
+]]></changes>
+        <changes lang="en"><![CDATA[
+[#29235] Convert handover of tags to smarty
+]]></changes>
+    </changelog>
+
+<changelog version="1.3.1">
         <changes lang="de"><![CDATA[
 [#29012] widget.neti_tags_field um allowBlank erweitern
 ]]></changes>
