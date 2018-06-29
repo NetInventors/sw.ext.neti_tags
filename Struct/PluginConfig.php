@@ -26,7 +26,7 @@ class PluginConfig extends AbstractClass
      *
      * @return bool
      */
-    public function isDeleteprotecting()
+    public function DeleteProtection()
     {
         return $this->deleteprotecting;
     }
