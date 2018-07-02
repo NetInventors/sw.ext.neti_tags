@@ -25,7 +25,7 @@ class Shopware_Controllers_Backend_NetiTags extends AbstractBackendExtJsControll
         $this->View()->loadTemplate('backend/neti_tags/app.js');
 
         $this->View()->assign('neti_tags_plugin_config', array(
-            'deleteprotecting' => $this->getPluginConfig()->DeleteProtection()
+            'deleteprotecting' => $this->getPluginConfig()->isDeletionProtected()
         ));
     }
 
