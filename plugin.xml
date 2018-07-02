@@ -14,9 +14,11 @@
         <changes lang="de"><![CDATA[
 [#29235] Übergabe der Tags an Smarty umwandeln
 [#29243] Im Backend-Detailview werden nun Name und ID des Tags im Titel angezeigt
+[#29241] Löschschutz optimiert
 ]]></changes>
         <changes lang="en"><![CDATA[
 [#29235] Convert handover of tags to smarty
+[#29241] Optimized delete protection
 [#29243] Will now display tag id and name in the backend detail view title
 ]]></changes>
     </changelog>
