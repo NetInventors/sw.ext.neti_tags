@@ -9,7 +9,7 @@
                  class="NetiTags\Service\Decorations\CategoryService"
                  public="false">
             <argument type="service" id="neti_tags.service.decorations.category_service.inner"/>
-            <argument type="service" id="neti_tags.service.relation"/>
+            <argument type="service" id="neti_tags.service.tags_cache" />
         </service>
 
         <service decorates="shopware_attribute.data_loader"

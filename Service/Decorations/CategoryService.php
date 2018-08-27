@@ -8,6 +8,7 @@
 namespace NetiTags\Service\Decorations;
 
 use NetiTags\Service\RelationInterface;
+use NetiTags\Service\TagsCache;
 use Shopware\Bundle\StoreFrontBundle\Service\CategoryServiceInterface as CoreService;
 use Shopware\Bundle\StoreFrontBundle\Struct;
 
@@ -19,27 +20,27 @@ use Shopware\Bundle\StoreFrontBundle\Struct;
 class CategoryService implements CoreService
 {
     /**
-     * @var RelationInterface
-     */
-    private $relationService;
-
-    /**
      * @var CoreService
      */
     private $coreService;
 
     /**
+     * @var TagsCache
+     */
+    private $tagsCache;
+
+    /**
      * CategoryService constructor.
      *
-     * @param CoreService       $coreService
-     * @param RelationInterface $relationService
+     * @param CoreService $coreService
+     * @param TagsCache   $tagsCache
      */
     public function __construct(
         CoreService $coreService,
-        RelationInterface $relationService
+        TagsCache $tagsCache
     ) {
-        $this->coreService     = $coreService;
-        $this->relationService = $relationService;
+        $this->coreService = $coreService;
+        $this->tagsCache   = $tagsCache;
     }
 
     /**
@@ -58,6 +59,7 @@ class CategoryService implements CoreService
     {
         $results = $this->coreService->getList($ids, $context);
 
+        $this->tagsCache->warmupTagsCache($ids, 'categories');
         foreach ($results as $result) {
             if ($result === null) {
                 continue;
@@ -85,7 +87,7 @@ class CategoryService implements CoreService
     {
         $result = $this->coreService->get($id, $context);
 
-        if (! empty($result)) {
+        if ($result !== null) {
             $this->addTags($result);
         }
 
@@ -122,7 +124,7 @@ class CategoryService implements CoreService
      */
     private function addTags(Struct\Category $result)
     {
-        $tags = $this->relationService->getTags('categories', $result->getId());
+        $tags = $this->tagsCache->searchTagsCache([$result->getId()], 'categories');
         if (empty($tags)) {
             return;
         }

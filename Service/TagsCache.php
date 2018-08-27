@@ -33,6 +33,23 @@ class TagsCache
      */
     private $relationCollector;
 
+    /**
+     * TagsCache constructor.
+     *
+     * @param Relation                   $relationService
+     * @param ModelManager               $modelManager
+     * @param RelationCollectorInterface $relationCollector
+     */
+    public function __construct(
+        Relation $relationService,
+        ModelManager $modelManager,
+        RelationCollectorInterface $relationCollector
+    ) {
+        $this->relationService   = $relationService;
+        $this->modelManager      = $modelManager;
+        $this->relationCollector = $relationCollector;
+    }
+
     public function searchTagsCache(array $ids, $relation)
     {
         if (!isset(self::$tagsCache[$relation])) {
