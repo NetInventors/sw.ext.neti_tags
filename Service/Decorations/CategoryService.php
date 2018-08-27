@@ -52,13 +52,14 @@ class CategoryService implements CoreService
      * @param Struct\ShopContextInterface $context
      *
      * @return Struct\Category[] Indexed by the category id.
+     * @throws \Exception
      */
     public function getList($ids, Struct\ShopContextInterface $context)
     {
         $results = $this->coreService->getList($ids, $context);
 
-        foreach ($results as &$result) {
-            if (empty($result)) {
+        foreach ($results as $result) {
+            if ($result === null) {
                 continue;
             }
 
@@ -78,6 +79,7 @@ class CategoryService implements CoreService
      * @param Struct\ShopContextInterface $context
      *
      * @return Struct\Category
+     * @throws \Exception
      */
     public function get($id, Struct\ShopContextInterface $context)
     {
@@ -95,13 +97,14 @@ class CategoryService implements CoreService
      * @param Struct\ShopContextInterface $context
      *
      * @return array Indexed by product number, contains all categories of a product
+     * @throws \Exception
      */
     public function getProductsCategories(array $products, Struct\ShopContextInterface $context)
     {
         $categories = $this->coreService->getProductsCategories($products, $context);
 
         foreach ($categories as $key => $productCategories) {
-            foreach ($productCategories as &$result) {
+            foreach ($productCategories as $result) {
                 if (empty($result)) {
                     continue;
                 }
@@ -114,6 +117,8 @@ class CategoryService implements CoreService
 
     /**
      * @param Struct\Category $result
+     *
+     * @throws \Exception
      */
     private function addTags(Struct\Category $result)
     {
@@ -126,7 +131,7 @@ class CategoryService implements CoreService
          * @var \Shopware\Bundle\StoreFrontBundle\Struct\Attribute $coreAttribute
          */
         $coreAttribute = $result->getAttribute('core');
-        if (empty($coreAttribute)) {
+        if ($coreAttribute === null) {
             return;
         }
 
