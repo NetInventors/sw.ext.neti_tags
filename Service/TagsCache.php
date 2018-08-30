@@ -50,8 +50,18 @@ class TagsCache
         $this->relationCollector = $relationCollector;
     }
 
+    /**
+     * @param array  $ids
+     * @param string $relation
+     *
+     * @return array
+     */
     public function searchTagsCache(array $ids, $relation)
     {
+        if (\count($ids) < 1) {
+            return [];
+        }
+
         if (!isset(self::$tagsCache[$relation])) {
             $this->warmupTagsCache($ids, $relation);
         }
