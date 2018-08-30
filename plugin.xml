@@ -5,10 +5,19 @@
     <label lang="de">Tags</label>
     <label lang="en">Tags</label>
 
-    <version>1.3.2</version>
+    <version>1.3.3</version>
     <link>http://www.netinventors.de</link>
     <author>Net Inventors GmbH</author>
     <compatibility minVersion="5.2.6"/>
+
+    <changelog version="1.3.3">
+        <changes lang="de"><![CDATA[
+[#29418] Die Performance beim Laden mehrerer Tags wurde verbessert
+]]></changes>
+        <changes lang="en"><![CDATA[
+[#29418] Improved performance when loading multiple tags
+]]></changes>
+    </changelog>
 
     <changelog version="1.3.2">
         <changes lang="de"><![CDATA[
