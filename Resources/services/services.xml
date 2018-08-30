@@ -17,11 +17,17 @@
         </service>
 
         <service class="NetiTags\Service\Tag\Product" id="neti_tags.service.tag.product">
-            <argument id="neti_tags.service.relation" type="service"/>
+            <argument type="service" id="neti_tags.service.tags_cache" />
         </service>
 
         <service class="NetiTags\Service\Controller" id="neti_tags.service.controller">
             <argument type="service" id="neti_tags.service.tag.relation_collector"/>
+        </service>
+
+        <service class="NetiTags\Service\TagsCache" id="neti_tags.service.tags_cache">
+            <argument id="neti_tags.service.relation" type="service" />
+            <argument id="models" type="service" />
+            <argument id="neti_tags.service.tag.relation_collector" type="service" />
         </service>
     </services>
 </container>

@@ -7,11 +7,8 @@
 
 namespace NetiTags\Service\Tag;
 
-use NetiTags\Service\RelationInterface;
+use NetiTags\Service\TagsCache;
 use Shopware\Bundle\StoreFrontBundle\Struct;
-use Shopware\Bundle\StoreFrontBundle\Struct\Country;
-use Shopware\Bundle\StoreFrontBundle\Struct\Customer\Group;
-use Shopware\Bundle\StoreFrontBundle\Struct\ShopContextInterface;
 
 /**
  * Class Product
@@ -21,19 +18,19 @@ use Shopware\Bundle\StoreFrontBundle\Struct\ShopContextInterface;
 class Product implements ProductInterface
 {
     /**
-     * @var RelationInterface
+     * @var TagsCache
      */
-    private $relationService;
+    private $tagsCache;
 
     /**
      * Product constructor.
      *
-     * @param RelationInterface $relationService
+     * @param TagsCache $tagsCache
      */
     public function __construct(
-        RelationInterface $relationService
+        TagsCache $tagsCache
     ) {
-        $this->relationService = $relationService;
+        $this->tagsCache = $tagsCache;
     }
 
     /**
@@ -48,7 +45,8 @@ class Product implements ProductInterface
         }
 
         $coreAttriutes = $product->getAttribute('core');
-        $tags          = $this->relationService->getTags('articles', $product->getVariantId());
+        // $tags          = $this->relationService->getTags('articles', $product->getVariantId());
+        $tags = $this->tagsCache->searchTagsCache([$product->getVariantId()], 'articles');
         $coreAttriutes->set('neti_tags', $tags);
 
         return $product;
@@ -61,8 +59,9 @@ class Product implements ProductInterface
      */
     public function getList(array $products)
     {
-        foreach ($products as &$product) {
-            $product = $this->get($product);
+        $this->tagsCache->warmupTagsCache(\array_keys($products), 'articles');
+        foreach ($products as $product) {
+            $this->get($product);
         }
 
         return $products;
