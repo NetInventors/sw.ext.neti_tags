@@ -72,6 +72,10 @@ class TagsCache
 
     public function warmupTagsCache(array $ids, $relation)
     {
+        if (!isset(self::$tagsCache[$relation])) {
+            self::$tagsCache[$relation] = [];
+        }
+
         $qbr = $this->modelManager->getRepository(Tag::class)->createQueryBuilder('t');
         $qbr->leftJoin('t.relations', 'relations');
         $qbr->leftJoin('relations.tableRegistry', 'tableRegistry');
@@ -83,6 +87,6 @@ class TagsCache
             )
         );
 
-        self::$tagsCache[$relation] = $qbr->getQuery()->getArrayResult();
+        self::$tagsCache[$relation] = \array_merge(self::$tagsCache[$relation], $qbr->getQuery()->getArrayResult());
     }
 }
