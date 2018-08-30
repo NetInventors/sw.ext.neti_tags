@@ -82,20 +82,24 @@ class TagsCache
 
     public function warmupTagsCache(array $ids, $relation)
     {
+        if (\count($ids) < 1) {
+            return;
+        }
+
         if (!isset(self::$tagsCache[$relation])) {
             self::$tagsCache[$relation] = [];
         }
 
-        $qbr = $this->modelManager->getRepository(Tag::class)->createQueryBuilder('t');
-        $qbr->leftJoin('t.relations', 'relations');
-        $qbr->leftJoin('relations.tableRegistry', 'tableRegistry');
-
-        $qbr->andWhere(
-            $qbr->expr()->in('relations.relationId', $ids),
-            $qbr->expr()->eq('tableRegistry.tableName',
-                $qbr->expr()->literal($this->relationCollector->getByAlias($relation)->getTableName())
-            )
-        );
+        $qbr = $this->modelManager->getRepository(Tag::class)
+                                  ->createQueryBuilder('t');
+        $qbr->leftJoin('t.relations', 'relations')
+            ->leftJoin('relations.tableRegistry', 'tableRegistry')
+            ->andWhere(
+                $qbr->expr()->in('relations.relationId', ':ids'),
+                $qbr->expr()->eq('tableRegistry.tableName',
+                    $qbr->expr()->literal($this->relationCollector->getByAlias($relation)->getTableName())
+                )
+            )->setParameter('ids', $ids);
 
         self::$tagsCache[$relation] = \array_merge(self::$tagsCache[$relation], $qbr->getQuery()->getArrayResult());
     }
