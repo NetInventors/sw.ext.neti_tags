@@ -4,7 +4,6 @@ build:
             dependencies:
                 before:
                     - git clone ssh://git@gitlab.netinventors.de:2202/shopware/plugins/NetiFoundation.git
-                    - git clone ssh://git@gitlab.netinventors.de:2202/shopware/plugins/NetiStoreLocator.git
             environment:
                 php:
                     version: 5.6.16
@@ -12,7 +11,6 @@ build:
 filter:
     dependency_paths:
         - "NetiFoundation/*"
-        - "NetiStoreLocator/*"
 
 checks:
     php:
