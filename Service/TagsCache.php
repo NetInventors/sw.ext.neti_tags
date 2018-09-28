@@ -56,7 +56,7 @@ class TagsCache
      *
      * @return array
      */
-    public function searchTagsCache(array $ids, $relation)
+    public function searchTagsCache(array $ids, $relation) : array
     {
         if (\count($ids) < 1) {
             return [];
@@ -75,6 +75,10 @@ class TagsCache
             }
 
             $return[$id] = $relationCache[$id];
+        }
+
+        if (\count($return) === 1) {
+            $return = (array)\reset($return);
         }
 
         return $return;
