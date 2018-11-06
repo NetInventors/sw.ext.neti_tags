@@ -16,11 +16,17 @@ use NetiTags\Service\Tag\Relations\Category;
 use NetiTags\Service\Tag\Relations\Cms;
 use NetiTags\Service\Tag\Relations\Customer;
 use NetiTags\Service\Tag\Relations\CustomerStream;
+use NetiTags\Service\Tag\Relations\Order;
 use NetiTags\Service\Tag\Relations\ProductStream;
 use Shopware\Components\Model\ModelManager;
 use Shopware\Models\Plugin\Plugin;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Class Setup
+ *
+ * @package NetiTags\Components
+ */
 class Setup
 {
     /**
@@ -60,61 +66,25 @@ class Setup
             $modelManager
         );
 
-        $articleRelationService = new Article($modelManager, $snippets, $tableRegistry);
-        $tableRegistry->register(
-            $articleRelationService->getName(),
-            $articleRelationService->getTableName(),
-            $articleRelationService->getEntityName(),
-            $plugin
+        $relations = array(
+            new Article($modelManager, $snippets, $tableRegistry),
+            new Customer($modelManager, $snippets, $tableRegistry),
+            new Blog($modelManager, $snippets, $tableRegistry),
+            new Cms($modelManager, $snippets, $tableRegistry),
+            new Category($modelManager, $snippets, $tableRegistry),
+            new ProductStream($modelManager, $snippets, $tableRegistry),
+            new CustomerStream($modelManager, $snippets, $tableRegistry),
+            new Order($modelManager, $snippets, $tableRegistry),
         );
 
-        $customerRelationService = new Customer($modelManager, $snippets, $tableRegistry);
-        $tableRegistry->register(
-            $customerRelationService->getName(),
-            $customerRelationService->getTableName(),
-            $customerRelationService->getEntityName(),
-            $plugin
-        );
-
-        $customerRelationService = new Blog($modelManager, $snippets, $tableRegistry);
-        $tableRegistry->register(
-            $customerRelationService->getName(),
-            $customerRelationService->getTableName(),
-            $customerRelationService->getEntityName(),
-            $plugin
-        );
-
-        $customerRelationService = new Cms($modelManager, $snippets, $tableRegistry);
-        $tableRegistry->register(
-            $customerRelationService->getName(),
-            $customerRelationService->getTableName(),
-            $customerRelationService->getEntityName(),
-            $plugin
-        );
-
-        $customerRelationService = new Category($modelManager, $snippets, $tableRegistry);
-        $tableRegistry->register(
-            $customerRelationService->getName(),
-            $customerRelationService->getTableName(),
-            $customerRelationService->getEntityName(),
-            $plugin
-        );
-
-        $productStreamRelationService = new ProductStream($modelManager, $snippets, $tableRegistry);
-        $tableRegistry->register(
-            $productStreamRelationService->getName(),
-            $productStreamRelationService->getTableName(),
-            $productStreamRelationService->getEntityName(),
-            $plugin
-        );
-
-        $customerStreamRelationService = new CustomerStream($modelManager, $snippets, $tableRegistry);
-        $tableRegistry->register(
-            $customerStreamRelationService->getName(),
-            $customerStreamRelationService->getTableName(),
-            $customerStreamRelationService->getEntityName(),
-            $plugin
-        );
+        foreach ($relations as $relation) {
+            $tableRegistry->register(
+                $relation->getName(),
+                $relation->getTableName(),
+                $relation->getEntityName(),
+                $plugin
+            );
+        }
     }
 
     /**

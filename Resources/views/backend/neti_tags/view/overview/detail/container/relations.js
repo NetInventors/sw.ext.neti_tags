@@ -35,6 +35,9 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
             },
             'customer_stream': {
                 'title': '{s name="tab_panel_title_customer_stream"}Customer Stream{/s}'
+            },
+            'order': {
+                'title': '{s name="tab_panel_title_order"}Order{/s}'
             }
         }
     },
@@ -88,6 +91,7 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         items.push(me.getCategoryTabPanel());
         items.push(me.getProductStreamTabPanel());
         items.push(me.getCustomerStreamTabPanel());
+        items.push(me.getOrderTabPanel());
 
         return items;
     },
@@ -103,6 +107,7 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
 
         return me.customerStreamTabPanel || me.createCustomerStreamTabPanel();
     },
+
     'getArticleTabPanel': function () {
         var me = this;
 
@@ -125,6 +130,27 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         var me = this;
 
         return me.cmsTabPanel || me.createCmsTabPanel();
+    },
+
+
+    'getOrderTabPanel': function () {
+        var me = this;
+
+        return me.orderTabPanel || me.createOrderTabPanel();
+    },
+
+    'createOrderTabPanel': function () {
+        var me = this;
+
+        me.orderTabPanel = Ext.create('Ext.panel.Panel', {
+            'title': me.snippets.tab_panel.order.title,
+            'border': null,
+            'closable': false,
+            'layout': 'fit',
+            'items': me.getOrderTabPanelItems()
+        });
+
+        return me.orderTabPanel;
     },
 
     'createCmsTabPanel': function () {
@@ -230,6 +256,17 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         return me.customerTabPanel;
     },
 
+    'getOrderTabPanelItems': function () {
+        var me = this,
+            items = [];
+
+        items.push(
+            me.getOrderGrid()
+        );
+
+        return items;
+    },
+
     'getCategoryTabPanelItems': function () {
         var me = this,
             items = [];
@@ -313,6 +350,12 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         return me.cmsGrid || me.createCmsGrid();
     },
 
+    'getOrderGrid': function () {
+        var me = this;
+
+        return me.orderGrid || me.createOrderGrid();
+    },
+
     'getProductStreamGrid': function () {
         var me = this;
 
@@ -357,6 +400,16 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
         });
 
         return me.blogGrid;
+    },
+
+    'createOrderGrid': function () {
+        var me = this;
+
+        me.orderGrid = Ext.create('Shopware.apps.NetiTags.view.overview.detail.container.relations.order.Grid', {
+            'store': me.getStore('order')
+        });
+
+        return me.orderGrid;
     },
 
     'createProductStreamGrid': function () {
@@ -460,6 +513,9 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.Relations', {
                 break;
             case 'customer_stream':
                 store = me.subApp.getStore('relations.CustomerStream');
+                break;
+            case 'order':
+                store = me.subApp.getStore('relations.Order');
                 break;
         }
 

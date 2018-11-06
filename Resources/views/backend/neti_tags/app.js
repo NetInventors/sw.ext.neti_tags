@@ -26,7 +26,8 @@ Ext.define('Shopware.apps.NetiTags', {
         'relations.Category',
         'relations.Customer',
         'relations.CustomerStream',
-        'relations.ProductStream'
+        'relations.ProductStream',
+        'relations.Order'
     ],
 
     views: [
@@ -39,6 +40,7 @@ Ext.define('Shopware.apps.NetiTags', {
         'overview.detail.container.relations.category.Grid',
         'overview.detail.container.relations.productStream.Grid',
         'overview.detail.container.relations.customerStream.Grid',
+        'overview.detail.container.relations.order.Grid',
         'overview.detail.container.Relations',
         'overview.detail.Container',
         'overview.detail.Window'
@@ -52,7 +54,8 @@ Ext.define('Shopware.apps.NetiTags', {
         'relations.Category',
         'relations.Customer',
         'relations.CustomerStream',
-        'relations.ProductStream'
+        'relations.ProductStream',
+        'relations.Order'
     ],
 
     'pluginConfig': {$neti_tags_plugin_config|@json_encode},
