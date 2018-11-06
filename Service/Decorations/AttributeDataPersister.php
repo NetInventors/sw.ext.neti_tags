@@ -89,18 +89,18 @@ class AttributeDataPersister extends CoreService
     private function persistRelations(array &$data, $table, $foreignKey)
     {
         $relationHandler = $this->relationCollector->getByAttributeTableName($table);
-        if (empty($relationHandler)) {
+        if (null === $relationHandler) {
             return;
         }
 
         $tmpTags = $data['neti_tags'];
-        if (! is_array($tmpTags)) {
+        if (! \is_array($tmpTags)) {
             $tmpTags = explode('|', trim($tmpTags, '|'));
         }
 
         $tags = [];
         foreach ($tmpTags as $key => $tag) {
-            if (! is_numeric($tag)) {
+            if (! \is_numeric($tag)) {
                 continue;
             }
 

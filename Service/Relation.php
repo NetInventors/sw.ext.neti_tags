@@ -41,18 +41,18 @@ class Relation implements RelationInterface
     public function getTags($alias, $relationId)
     {
         $relationHandler = $this->relationCollector->getByAlias($alias);
-        if (empty($relationHandler)) {
-            return;
+        if (null === $relationHandler) {
+            return null;
         }
 
         try {
             $tags = $relationHandler->getTags((int) $relationId);
         } catch (\Exception $e) {
-            return;
+            return null;
         }
 
         if (empty($tags)) {
-            return;
+            return null;
         }
 
         return $tags;

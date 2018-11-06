@@ -31,14 +31,14 @@ interface RelationCollectorInterface
     /**
      * @param string $tableName
      *
-     * @return RelationsInterface
+     * @return null|RelationsInterface
      */
     public function getByAttributeTableName($tableName);
 
     /**
      * @param string $alias
      *
-     * @return RelationsInterface
+     * @return null|RelationsInterface
      */
     public function getByAlias($alias);
 

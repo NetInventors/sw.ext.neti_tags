@@ -44,7 +44,7 @@ class Association implements AssociationInterface
     public function searchAssociation($search, $association, $offset, $limit, $id = null, $filter = [], $sort = [])
     {
         $associationHandler = $this->relationCollector->getByAlias($association);
-        if (empty($associationHandler)) {
+        if (null === $associationHandler) {
             return array();
         }
 
