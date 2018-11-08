@@ -46,7 +46,39 @@ class Backend implements SubscriberInterface
         return array(
             'Enlight_Controller_Action_PostDispatch'                  => array('onPostDispatch', 10),
             'Enlight_Controller_Action_PostDispatch_Backend_Customer' => 'onPostDispatchCustomerStream',
+            'Enlight_Controller_Action_PostDispatch_Backend_Order'    => 'onPostDispatchOrder',
         );
+    }
+
+    public function onPostDispatchOrder(\Enlight_Event_EventArgs $args)
+    {
+        /**
+         * @var \Shopware_Controllers_Backend_Order          $subject
+         * @var \Enlight_Controller_Request_RequestHttp      $request
+         * @var \Enlight_Controller_Response_ResponseHttp    $response
+         */
+        $subject  = $args->getSubject();
+        $request  = $args->get('subject')->Request();
+        $response = $args->get('subject')->Response();
+        if (! $request->isDispatched() || $response->isException()) {
+            return;
+        }
+
+        $module = $request->getModuleName();
+        if ('backend' !== $module) {
+            return;
+        }
+
+        /**
+         * @var \Enlight_View_Default $view
+         */
+        $view = $subject->View();
+
+        $view->addTemplateDir(
+            $this->pluginDir . '/Resources/views/'
+        );
+
+        $view->extendsTemplate('backend/neti_tags/extensions/view/order/list/filter.js');
     }
 
     /**
