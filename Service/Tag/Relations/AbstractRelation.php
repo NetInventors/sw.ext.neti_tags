@@ -19,12 +19,16 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Trait RelationTrait
+ * Class AbstractRelation
  *
  * @package NetiTags\Service\Tag\Relations
  */
-trait RelationTrait
+abstract class AbstractRelation implements RelationsInterface
 {
+    const TABLE_NAME = '';
+    const ENTITY_NAME = '';
+    const ATTRIBUTE_TABLE_NAME = '';
+
     /**
      * @var ModelManager
      */
@@ -116,10 +120,7 @@ trait RelationTrait
         $filter = [],
         $sort = []
     ) {
-        /** @var QueryBuilder $qbr */
-        $qbr = $this->modelManager->getRepository(static::ENTITY_NAME)->createQueryBuilder('t');
-
-        $qbr->select(static::ENTITY_FIELDS);
+        $qbr = $this->buildQuery();
 
         if (! empty($search)) {
             $this->addSearch($search, $qbr);
@@ -145,6 +146,18 @@ trait RelationTrait
             'data'    => $data,
             'total'   => $paginator->count(),
         );
+    }
+
+    /**
+     * @return QueryBuilder
+     */
+    protected function buildQuery() {
+        /** @var QueryBuilder $qbr */
+        $qbr = $this->modelManager->getRepository(static::ENTITY_NAME)->createQueryBuilder('t');
+
+        $qbr->select(static::ENTITY_FIELDS);
+
+        return $qbr;
     }
 
     /**
@@ -209,10 +222,7 @@ trait RelationTrait
      */
     public function fetchRelations(array $relation)
     {
-        /** @var QueryBuilder $qbr */
-        $qbr = $this->modelManager->getRepository(static::ENTITY_NAME)->createQueryBuilder('t');
-
-        $qbr->select(static::ENTITY_FIELDS);
+        $qbr = $this->buildQuery();
 
         $qbr->andWhere(
             $qbr->expr()->eq('t.id', $relation['relationId'])
@@ -391,4 +401,9 @@ trait RelationTrait
 
         return $qbr;
     }
+
+    /**
+     * @return string
+     */
+    abstract public function getName();
 }

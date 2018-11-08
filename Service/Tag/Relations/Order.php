@@ -16,10 +16,8 @@ use Shopware\Models\Attribute\Order as OrderAttribute;
  *
  * @package NetiTags\Service\Tag\Relations
  */
-class Order implements RelationsInterface
+class Order extends AbstractRelation
 {
-    use RelationTrait;
-
     /**
      * @var string
      */
