@@ -28,6 +28,8 @@ abstract class AbstractRelation implements RelationsInterface
     const TABLE_NAME = '';
     const ENTITY_NAME = '';
     const ATTRIBUTE_TABLE_NAME = '';
+    const ATTRIBUTE_ENTITY_NAME = '';
+    const ENTITY_FIELDS = array();
 
     /**
      * @var ModelManager
@@ -69,17 +71,17 @@ abstract class AbstractRelation implements RelationsInterface
      */
     public function getTableName()
     {
-        return self::TABLE_NAME;
+        return static::TABLE_NAME;
     }
 
     public function getEntityName()
     {
-        return self::ENTITY_NAME;
+        return static::ENTITY_NAME;
     }
 
     public function getAttributeTableName()
     {
-        return self::ATTRIBUTE_TABLE_NAME;
+        return static::ATTRIBUTE_TABLE_NAME;
     }
 
     /**
@@ -265,7 +267,7 @@ abstract class AbstractRelation implements RelationsInterface
     public function persistRelations(array $data, $relationId)
     {
         $tableRegistryId = $this->getTableRegistrationIdForTable();
-        if (empty($tableRegistryId)) {
+        if (0 === $tableRegistryId) {
             return;
         }
 
@@ -392,8 +394,12 @@ abstract class AbstractRelation implements RelationsInterface
         /** @var array $where */
         $where = [];
 
-        /** @var string $fieldName */
         foreach (static::ENTITY_FIELDS as $fieldName) {
+            if(false !== strpos($fieldName, ' AS ')) {
+                $fieldName = explode(' AS ', $fieldName);
+                $fieldName = reset($fieldName);
+            }
+
             $where[] = $fieldName . ' LIKE :search';
         }
         $qbr->andWhere(implode(' OR ', $where));

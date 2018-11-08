@@ -43,7 +43,14 @@ class Order extends AbstractRelation
      */
     const ENTITY_FIELDS = [
         't.id',
-        't.number'
+        't.number',
+        't.orderTime',
+        't.invoiceAmount',
+        'customer.id AS customerId',
+        'customer.email AS customerEmail',
+        'billingAddress.firstName',
+        'billingAddress.lastName',
+        'billingAddress.company',
     ];
 
     /**
@@ -75,5 +82,18 @@ class Order extends AbstractRelation
     {
         return $this->snippets->getNamespace('plugins/neti_tags/backend/detail/relations/order')
             ->get('name', 'Order');
+    }
+
+    /**
+     * @return \Shopware\Components\Model\QueryBuilder
+     */
+    protected function buildQuery()
+    {
+        $qbr = parent::buildQuery();
+
+        $qbr->innerJoin('t.customer', 'customer');
+        $qbr->innerJoin('t.billing', 'billingAddress');
+
+        return $qbr;
     }
 }

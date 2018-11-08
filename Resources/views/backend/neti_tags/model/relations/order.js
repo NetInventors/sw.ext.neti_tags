@@ -16,6 +16,34 @@ Ext.define('Shopware.apps.NetiTags.model.relations.Order', {
         {
             'name': 'number',
             'type': 'string'
+        },
+        {
+            'name': 'lastName',
+            'type': 'string'
+        },
+        {
+            'name': 'firstName',
+            'type': 'string'
+        },
+        {
+            'name': 'company',
+            'type': 'string'
+        },
+        {
+            'name': 'customerEmail',
+            'type': 'string'
+        },
+        {
+            'name': 'customerId',
+            'type': 'int'
+        },
+        {
+            'name': 'invoiceAmount',
+            'type': 'float'
+        },
+        {
+            'name': 'orderTime',
+            'type': 'date'
         }
     ]
 });
