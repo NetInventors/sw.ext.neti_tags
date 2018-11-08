@@ -12,6 +12,7 @@
         </service>
         <service class="NetiTags\Subscriber\Backend" id="neti_tags.subscriber.backend">
             <argument>%neti_tags.plugin_dir%</argument>
+            <argument type="service" id="neti_tags.service.tag.relations.order"/>
             <tag name="shopware.event_subscriber"/>
         </service>
         <service class="NetiTags\Subscriber\CustomerSubscriber" id="neti_tags.subscriber.customer_subscriber">

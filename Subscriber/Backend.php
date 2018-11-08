@@ -9,6 +9,7 @@ namespace NetiTags\Subscriber;
 
 use Enlight\Event\SubscriberInterface;
 use Enlight_Event_EventArgs;
+use NetiTags\Service\Tag\Relations\RelationsInterface;
 
 /**
  * Class Backend
@@ -28,14 +29,22 @@ class Backend implements SubscriberInterface
     protected $templateManager;
 
     /**
+     * @var RelationsInterface
+     */
+    protected $orderRelation;
+
+    /**
      * Backend constructor.
      *
-     * @param string $pluginDir
+     * @param string            $pluginDir
+     * @param RelationsInterface $orderRelation
      */
     public function __construct(
-        $pluginDir
+        $pluginDir,
+        RelationsInterface $orderRelation
     ) {
-        $this->pluginDir = $pluginDir;
+        $this->pluginDir     = $pluginDir;
+        $this->orderRelation = $orderRelation;
     }
 
     /**
@@ -44,18 +53,54 @@ class Backend implements SubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'Enlight_Controller_Action_PostDispatch'                  => array('onPostDispatch', 10),
-            'Enlight_Controller_Action_PostDispatch_Backend_Customer' => 'onPostDispatchCustomerStream',
-            'Enlight_Controller_Action_PostDispatch_Backend_Order'    => 'onPostDispatchOrder',
+            'Enlight_Controller_Action_PostDispatch'                     => array('onPostDispatch', 10),
+            'Enlight_Controller_Action_PostDispatch_Backend_Customer'    => 'onPostDispatchCustomerStream',
+            'Enlight_Controller_Action_PostDispatch_Backend_Order'       => 'onPostDispatchOrder',
+            'Shopware\Models\Order\Repository::filterListQuery::replace' => 'onFilterListQuery'
+        );
+    }
+
+    /**
+     * @param \Enlight_Hook_HookArgs $args
+     */
+    public function onFilterListQuery(\Enlight_Hook_HookArgs $args)
+    {
+        /** @var \Shopware\Models\Order\Repository $subject */
+        $subject = $args->getSubject();
+
+        $return = $args->getReturn();
+
+        $builder = $args->get('builder');
+        $filters = $args->get('filters');
+
+        $filterProperties = array_flip(array_column($filters, 'property'));
+        if (isset($filterProperties['attribute.netiTags'])) {
+            $filter = $filters[$filterProperties['attribute.netiTags']];
+            unset($filters[$filterProperties['attribute.netiTags']]);
+
+            $relations = $this->orderRelation->fetchRelations(array('relationId' => $filter['value']));
+
+            //var_dump($filter, $relations);
+        }
+
+        //var_dump($filters);
+        //exit;
+
+        return $args->getSubject()->executeParent(
+            $args->getMethod(),
+            array(
+                $builder,
+                $filters
+            )
         );
     }
 
     public function onPostDispatchOrder(\Enlight_Event_EventArgs $args)
     {
         /**
-         * @var \Shopware_Controllers_Backend_Order          $subject
-         * @var \Enlight_Controller_Request_RequestHttp      $request
-         * @var \Enlight_Controller_Response_ResponseHttp    $response
+         * @var \Shopware_Controllers_Backend_Order       $subject
+         * @var \Enlight_Controller_Request_RequestHttp   $request
+         * @var \Enlight_Controller_Response_ResponseHttp $response
          */
         $subject  = $args->getSubject();
         $request  = $args->get('subject')->Request();
