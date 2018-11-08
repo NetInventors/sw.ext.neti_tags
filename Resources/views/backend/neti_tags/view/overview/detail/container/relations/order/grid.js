@@ -18,7 +18,8 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.relations.orde
             'columns': {
                 'orderTime': {
                     'header': '{s name="grid_column_order_time"}Order time{/s}',
-                    'flex': 1
+                    'flex': 1,
+                    'renderer': me.dateColumn
                 },
                 'number': {
                     'header': '{s name="grid_column_number"}Number{/s}',
@@ -32,6 +33,7 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.relations.orde
                 'customerId': {
                     'header': '{s name="grid_column_customer"}Customer{/s}',
                     'flex': 3,
+                    'align': 'left',
                     'renderer': me.customerColumn,
                     'getSortParam': function () {
                         return 'customerName';
@@ -44,6 +46,44 @@ Ext.define('Shopware.apps.NetiTags.view.overview.detail.container.relations.orde
                 }
             }
         };
+    },
+
+    'createActionColumnItems': function () {
+        var me = this,
+            items = me.callParent(arguments);
+
+        items.unshift(me.createOpenOrderColumn());
+
+        return items;
+    },
+
+    'createOpenOrderColumn': function () {
+        var column;
+
+        column = {
+            'action': 'order',
+            'iconCls': 'sprite-sticky-notes-pin customers--orders',
+            'tooltip': '{s name="grid_tool_tip_order"}Show order{/s}',
+            'handler': function (view, rowIndex, colIndex, item, opts, record) {
+                Shopware.app.Application.addSubApplication({
+                    'name': 'Shopware.apps.Order',
+                    'action': 'detail',
+                    'params': {
+                        'orderId': record.get('id')
+                    }
+                });
+            }
+        };
+
+        return column;
+    },
+
+    'dateColumn': function (value, metaData, record) {
+        if (value === Ext.undefined) {
+            return value;
+        }
+
+        return Ext.util.Format.date(value) + ' ' + Ext.util.Format.date(value, timeFormat);
     },
 
     'customerColumn': function (value, metaData, record, colIndex, store, view) {
