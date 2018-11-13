@@ -9,6 +9,7 @@ namespace NetiTags\Service\Tag\Relations;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use NetiTags\Service\TableRegistryInterface;
+use Shopware\Components\Model\ModelEntity;
 use Shopware\Components\Model\ModelManager;
 use Shopware\Components\Model\QueryBuilder;
 use NetiTags\Models\Tag;
@@ -124,15 +125,15 @@ abstract class AbstractRelation implements RelationsInterface
     ) {
         $qbr = $this->buildQuery();
 
-        if (! empty($search)) {
+        if ('' !== $search) {
             $this->addSearch($search, $qbr);
         }
 
-        if (! empty($filter) && $id === null) {
+        if ($id === null && \count($filter) > 0) {
             $qbr->addFilter($filter);
         }
 
-        if (! empty($sort) && $id === null) {
+        if ($id === null && \count($sort) > 0) {
             $qbr->addOrderBy($sort);
         }
 
@@ -153,7 +154,8 @@ abstract class AbstractRelation implements RelationsInterface
     /**
      * @return QueryBuilder
      */
-    protected function buildQuery() {
+    protected function buildQuery()
+    {
         /** @var QueryBuilder $qbr */
         $qbr = $this->modelManager->getRepository(static::ENTITY_NAME)->createQueryBuilder('t');
 
@@ -171,31 +173,25 @@ abstract class AbstractRelation implements RelationsInterface
      */
     public function resolveRelations(array $relations)
     {
-        $attributeClassName = static::ATTRIBUTE_ENTITY_NAME;
-
         /** @var EntityRepository $repository */
         $repository = $this->modelManager->getRepository(static::ENTITY_NAME);
         /** @var array $relationModels */
         $relationModels = [];
         /** @var array $relation */
         foreach ($relations as $relation) {
-            /** @var \Shopware\Models\Order\Order $model */
+            /** @var ModelEntity $model */
             $model = $repository->find($relation['id']);
-            if (null === $model) {
+            if (null === $model || ! method_exists($model, 'getId')) {
                 continue;
             }
 
             /** @var TableRegistry $tableRegistryModel */
             $tableRegistryModel = $this->tableRegistry->getByTableName($this->getTableName());
-            if (!$tableRegistryModel instanceof TableRegistry) {
+            if (! $tableRegistryModel instanceof TableRegistry) {
                 continue;
             }
 
-            if (null === $model->getAttribute()) {
-                $attribute = new $attributeClassName();
-                $this->modelManager->persist($attribute);
-                $model->setAttribute($attribute);
-            }
+            $this->createAttributeModel($model);
 
             /** @var Relation $relationModel */
             $relationModel = new Relation();
@@ -217,6 +213,25 @@ abstract class AbstractRelation implements RelationsInterface
     }
 
     /**
+     * @param ModelEntity $model
+     */
+    protected function createAttributeModel(ModelEntity $model)
+    {
+        if (! (method_exists($model, 'getAttribute')
+            && method_exists($model, 'setAttribute'))) {
+            return;
+        }
+
+        $attributeClassName = static::ATTRIBUTE_ENTITY_NAME;
+
+        if (null === $model->getAttribute()) {
+            $attribute = new $attributeClassName();
+            $this->modelManager->persist($attribute);
+            $model->setAttribute($attribute);
+        }
+    }
+
+    /**
      * @param array $relation
      *
      * @return array|null
@@ -232,7 +247,7 @@ abstract class AbstractRelation implements RelationsInterface
 
         $result = $qbr->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_ARRAY);
 
-        if (empty($result)) {
+        if (null === $result) {
             return null;
         }
 
@@ -261,6 +276,7 @@ abstract class AbstractRelation implements RelationsInterface
     /**
      * @param array $data
      * @param int   $relationId
+     *
      * @throws \Doctrine\ORM\ORMInvalidArgumentException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
@@ -305,7 +321,7 @@ abstract class AbstractRelation implements RelationsInterface
     public function getTags($relationId)
     {
         $tableRegistryId = $this->getTableRegistrationIdForTable();
-        if (empty($tableRegistryId)) {
+        if (0 === $tableRegistryId) {
             return null;
         }
 
@@ -319,10 +335,41 @@ abstract class AbstractRelation implements RelationsInterface
         try {
             $results = $qbr->getQuery()->getArrayResult();
         } catch (\Exception $e) {
-            $results = null;
+            return null;
         }
 
-        if (empty($results)) {
+        if (0 === \count($results)) {
+            return null;
+        }
+
+        return $results;
+    }
+
+    /**
+     * @param int $tagId
+     *
+     * @return array|null
+     */
+    public function getRelations($tagId)
+    {
+        $tableRegistryId = $this->getTableRegistrationIdForTable();
+        if (0 === $tableRegistryId) {
+            return null;
+        }
+
+        /** @var QueryBuilder $qbr */
+        $qbr = $this->getRelationsQuery($tagId);
+        $qbr->select(array(
+            't.relationId',
+        ));
+
+        try {
+            $results = $qbr->getQuery()->getArrayResult();
+        } catch (\Exception $e) {
+            return null;
+        }
+
+        if (0 === \count($results)) {
             return null;
         }
 
@@ -343,6 +390,25 @@ abstract class AbstractRelation implements RelationsInterface
 
         $qbr->andWhere(
             $qbr->expr()->eq('relations.relationId', $relationId),
+            $qbr->expr()->eq('tableRegistry.tableName', $qbr->expr()->literal($this->getTableName()))
+        );
+
+        return $qbr;
+    }
+
+    /**
+     * @param int $tagId
+     *
+     * @return QueryBuilder
+     */
+    private function getRelationsQuery($tagId)
+    {
+        /** @var QueryBuilder $qbr */
+        $qbr = $this->modelManager->getRepository(Relation::class)->createQueryBuilder('t');
+        $qbr->leftJoin('t.tableRegistry', 'tableRegistry');
+
+        $qbr->andWhere(
+            $qbr->expr()->eq('t.tagId', $tagId),
             $qbr->expr()->eq('tableRegistry.tableName', $qbr->expr()->literal($this->getTableName()))
         );
 
@@ -395,7 +461,7 @@ abstract class AbstractRelation implements RelationsInterface
         $where = [];
 
         foreach (static::ENTITY_FIELDS as $fieldName) {
-            if(false !== strpos($fieldName, ' AS ')) {
+            if (false !== strpos($fieldName, ' AS ')) {
                 $fieldName = explode(' AS ', $fieldName);
                 $fieldName = reset($fieldName);
             }
