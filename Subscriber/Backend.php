@@ -65,11 +65,9 @@ class Backend implements SubscriberInterface
      */
     public function onFilterListQuery(\Enlight_Hook_HookArgs $args)
     {
-        /** @var \Shopware\Models\Order\Repository $subject */
-        $subject = $args->getSubject();
-
-        $return = $args->getReturn();
-
+        /**
+         * @var \Shopware\Components\Model\QueryBuilder $builder
+         */
         $builder = $args->get('builder');
         $filters = $args->get('filters');
 
@@ -78,13 +76,10 @@ class Backend implements SubscriberInterface
             $filter = $filters[$filterProperties['attribute.netiTags']];
             unset($filters[$filterProperties['attribute.netiTags']]);
 
-            $relations = $this->orderRelation->fetchRelations(array('relationId' => $filter['value']));
+            $relations = $this->orderRelation->getRelations($filter['value']);
 
-            //var_dump($filter, $relations);
+            $filters[] = $builder->expr()->in('orders.id', $relations);
         }
-
-        //var_dump($filters);
-        //exit;
 
         return $args->getSubject()->executeParent(
             $args->getMethod(),
