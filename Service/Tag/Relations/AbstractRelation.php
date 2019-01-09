@@ -24,7 +24,7 @@ use Doctrine\ORM\EntityRepository;
  *
  * @package NetiTags\Service\Tag\Relations
  */
-abstract class AbstractRelation implements RelationsInterface
+abstract class AbstractRelation implements RelationsTagsInterface
 {
     const TABLE_NAME = '';
     const ENTITY_NAME = '';
@@ -350,7 +350,7 @@ abstract class AbstractRelation implements RelationsInterface
      *
      * @return array|null
      */
-    public function getRelations($tagId)
+    public function getRelationsForTag($tagId)
     {
         $tableRegistryId = $this->getTableRegistrationIdForTable();
         if (0 === $tableRegistryId) {

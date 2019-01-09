@@ -9,7 +9,7 @@ namespace NetiTags\Subscriber;
 
 use Enlight\Event\SubscriberInterface;
 use Enlight_Event_EventArgs;
-use NetiTags\Service\Tag\Relations\RelationsInterface;
+use NetiTags\Service\Tag\Relations\RelationsTagsInterface;
 
 /**
  * Class Backend
@@ -29,19 +29,19 @@ class Backend implements SubscriberInterface
     protected $templateManager;
 
     /**
-     * @var RelationsInterface
+     * @var RelationsTagsInterface
      */
     protected $orderRelation;
 
     /**
      * Backend constructor.
      *
-     * @param string            $pluginDir
-     * @param RelationsInterface $orderRelation
+     * @param string                 $pluginDir
+     * @param RelationsTagsInterface $orderRelation
      */
     public function __construct(
         $pluginDir,
-        RelationsInterface $orderRelation
+        RelationsTagsInterface $orderRelation
     ) {
         $this->pluginDir     = $pluginDir;
         $this->orderRelation = $orderRelation;
@@ -76,7 +76,7 @@ class Backend implements SubscriberInterface
             $filter = $filters[$filterProperties['attribute.netiTags']];
             unset($filters[$filterProperties['attribute.netiTags']]);
 
-            $relations = $this->orderRelation->getRelations($filter['value']);
+            $relations = $this->orderRelation->getRelationsForTag($filter['value']);
 
             $filters[] = $builder->expr()->in('orders.id', $relations);
         }

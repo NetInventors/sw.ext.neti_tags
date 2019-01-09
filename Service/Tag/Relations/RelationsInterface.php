@@ -99,11 +99,4 @@ interface RelationsInterface
      * @return array|null
      */
     public function getTags($relationId);
-
-    /**
-     * @param int $tagId
-     *
-     * @return null|array
-     */
-    public function getRelations($tagId);
 }
