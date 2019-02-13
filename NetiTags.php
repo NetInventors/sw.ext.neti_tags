@@ -54,16 +54,18 @@ class NetiTags extends Plugin
     /**
      * @param InstallContext $context
      *
-     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
-     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
-     * @throws \Doctrine\ORM\ORMInvalidArgumentException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\Tools\ToolsException
      * @throws \Shopware\Components\Api\Exception\ValidationException
+     * @throws \Zend_Db_Adapter_Exception
+     * @throws \Zend_Db_Statement_Exception
      */
     public function install(InstallContext $context)
     {
         parent::install($context);
         $setup = new Setup($this->container);
+        $setup->createRelationTable();
         $setup->registerRelationTables($context->getPlugin());
     }
 
@@ -75,6 +77,7 @@ class NetiTags extends Plugin
      * @throws \Doctrine\ORM\ORMInvalidArgumentException
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Shopware\Components\Api\Exception\ValidationException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function update(UpdateContext $context)
     {
