@@ -8,6 +8,7 @@
 namespace NetiTags\Components;
 
 
+use Doctrine\ORM\Tools\SchemaTool;
 use NetiTags\Service\TableRegistry;
 use NetiTags\Service\Tag\Relations\Article;
 use NetiTags\Service\Tag\Relations\Blog;
@@ -114,5 +115,25 @@ class Setup
             $customerStreamRelationService->getEntityName(),
             $plugin
         );
+    }
+
+    /**
+     * Create the table registry table, if it does not exist
+     *
+     * @throws \Doctrine\ORM\Tools\ToolsException
+     * @throws \Zend_Db_Adapter_Exception
+     * @throws \Zend_Db_Statement_Exception
+     */
+    public function createRelationTable()
+    {
+        $modelManager = $this->container->get('models');
+        $db           = $this->container->get('db');
+        $schemaTool   = new SchemaTool($modelManager);
+        $metaData     = $modelManager->getClassMetadata(\NetiTags\Models\TableRegistry::class);
+
+        $query = $db->query('show tables like "' . $metaData->getTableName() . '%"');
+        if (0 === $query->rowCount()) {
+            $schemaTool->createSchema([$metaData]);
+        }
     }
 }

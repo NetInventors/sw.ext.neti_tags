@@ -10,6 +10,15 @@
     <author>Net Inventors GmbH</author>
     <compatibility minVersion="5.5.0"/>
 
+    <changelog version="2.0.1">
+        <changes lang="de"><![CDATA[
+[#30881] Fehler im Installationsprozess behoben
+]]></changes>
+        <changes lang="en"><![CDATA[
+[#30881] Fixed an error in the installation process
+]]></changes>
+    </changelog>
+
     <changelog version="2.0.0">
         <changes lang="de"><![CDATA[
 [#30183] Release für SW 5.5
