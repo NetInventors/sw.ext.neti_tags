@@ -77,8 +77,7 @@ class Backend implements SubscriberInterface
             unset($filters[$filterProperties['attribute.netiTags']]);
 
             $relations = $this->orderRelation->getRelationsForTag($filter['value']);
-
-            $filters[] = $builder->expr()->in('orders.id', $relations);
+            $builder->andWhere($builder->expr()->in('orders.id', array_column($relations, 'relationId')));
         }
 
         return $args->getSubject()->executeParent(
