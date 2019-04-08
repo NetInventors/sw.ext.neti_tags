@@ -5,10 +5,19 @@
     <label lang="de">Tags</label>
     <label lang="en">Tags</label>
 
-    <version>1.3.4</version>
+    <version>1.3.5</version>
     <link>http://www.netinventors.de</link>
     <author>Net Inventors GmbH</author>
     <compatibility minVersion="5.2.6"/>
+
+    <changelog version="1.3.5">
+        <changes lang="de"><![CDATA[
+[#31273] Fehler im Caching-Mechanismus behoben
+]]></changes>
+        <changes lang="en"><![CDATA[
+[#31273] Fix in the caching mechanism
+]]></changes>
+    </changelog>
 
     <changelog version="1.3.4">
         <changes lang="de"><![CDATA[
