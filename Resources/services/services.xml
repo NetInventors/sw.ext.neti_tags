@@ -25,7 +25,6 @@
         </service>
 
         <service class="NetiTags\Service\TagsCache" id="neti_tags.service.tags_cache">
-            <argument id="neti_tags.service.relation" type="service" />
             <argument id="models" type="service" />
             <argument id="neti_tags.service.tag.relation_collector" type="service" />
         </service>
