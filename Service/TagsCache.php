@@ -107,12 +107,10 @@ class TagsCache
             )->setParameter('ids', $ids);
 
         $tagsCache = &self::$tagsCache[$relation];
-        for ($i = 0; $i < 1000; $i++) {
-            foreach ($qbr->getQuery()->getArrayResult() as $item) {
-                $relationId = $item['relationId'];
-                unset($item['relationId']);
-                $tagsCache[$relationId][] = $item;
-            }
+        foreach ($qbr->getQuery()->getArrayResult() as $item) {
+            $relationId = $item['relationId'];
+            unset($item['relationId']);
+            $tagsCache[$relationId][] = $item;
         }
     }
 }
