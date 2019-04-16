@@ -64,7 +64,7 @@ class TagsCache
 
         if (
             !$warmedUp
-            && \count($newIds = \array_diff(\array_keys($relationCache), $ids)) > 0
+            && \count($newIds = \array_diff($ids, \array_keys($relationCache))) > 0
         ) {
             $this->warmupTagsCache($newIds, $relation);
         }
