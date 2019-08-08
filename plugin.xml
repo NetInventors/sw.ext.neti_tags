@@ -5,10 +5,19 @@
     <label lang="de">Tags</label>
     <label lang="en">Tags</label>
 
-    <version>2.0.2</version>
+    <version>2.1.0</version>
     <link>http://www.netinventors.de</link>
     <author>Net Inventors GmbH</author>
     <compatibility minVersion="5.5.0"/>
+
+    <changelog version="2.1.0">
+        <changes lang="de"><![CDATA[
+[#30284] Tags für Bestellungen
+]]></changes>
+        <changes lang="en"><![CDATA[
+[#30284] Tags for orders
+]]></changes>
+    </changelog>
 
     <changelog version="2.0.2">
         <changes lang="de"><![CDATA[

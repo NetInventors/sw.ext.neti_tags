@@ -48,7 +48,7 @@ class RelationCollector implements RelationCollectorInterface
     /**
      * @param string $tableName
      *
-     * @return RelationsInterface
+     * @return null|RelationsInterface
      */
     public function getByAttributeTableName($tableName)
     {
@@ -59,18 +59,22 @@ class RelationCollector implements RelationCollectorInterface
 
             return $relation;
         }
+
+        return null;
     }
 
     /**
      * @param string $alias
      *
-     * @return RelationsInterface
+     * @return null|RelationsInterface
      */
     public function getByAlias($alias)
     {
         if (isset($this->relations[$alias])) {
             return $this->relations[$alias];
         }
+
+        return null;
     }
 
     /**

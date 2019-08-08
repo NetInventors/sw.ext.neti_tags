@@ -8,7 +8,6 @@
 namespace NetiTags\Service\Tag\Relations;
 
 use NetiTags\Models\Relation;
-use NetiTags\Models\Tag;
 
 /**
  * Interface AssociationsInterface

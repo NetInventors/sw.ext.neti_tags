@@ -10,7 +10,8 @@ Ext.override(Shopware.attribute.Form, {
             Ext.create('Shopware.apps.NetiTagsExtensions.view.base.attribute.cms.field.Handler'),
             Ext.create('Shopware.apps.NetiTagsExtensions.view.base.attribute.category.field.Handler'),
             Ext.create('Shopware.apps.NetiTagsExtensions.view.base.attribute.productStream.field.Handler'),
-            Ext.create('Shopware.apps.NetiTagsExtensions.view.base.attribute.customerStream.field.Handler')
+            Ext.create('Shopware.apps.NetiTagsExtensions.view.base.attribute.customerStream.field.Handler'),
+            Ext.create('Shopware.apps.NetiTagsExtensions.view.base.attribute.order.field.Handler')
         ]);
     }
 });

@@ -1,4 +1,7 @@
 <?php
+
+use NetiTags\Models\Tag;
+
 return [
     'models'     => [
         NetiTags\Models\Tag::class,
@@ -15,7 +18,7 @@ return [
                     'de_DE' => 'Tags',
                     'en_GB' => 'Tags',
                 ],
-                'entity'           => 'NetiTags\Models\Tag',
+                'entity'           => Tag::class,
                 'displayInBackend' => true
             ]
         ],
@@ -28,7 +31,7 @@ return [
                     'de_DE' => 'Tags',
                     'en_GB' => 'Tags',
                 ],
-                'entity'           => 'NetiTags\Models\Tag',
+                'entity'           => Tag::class,
                 'displayInBackend' => true
             ]
         ],
@@ -41,7 +44,7 @@ return [
                     'de_DE' => 'Tags',
                     'en_GB' => 'Tags',
                 ],
-                'entity'           => 'NetiTags\Models\Tag',
+                'entity'           => Tag::class,
                 'displayInBackend' => true
             ]
         ],
@@ -54,7 +57,7 @@ return [
                     'de_DE' => 'Tags',
                     'en_GB' => 'Tags',
                 ],
-                'entity'           => 'NetiTags\Models\Tag',
+                'entity'           => Tag::class,
                 'displayInBackend' => true
             ]
         ],
@@ -67,7 +70,7 @@ return [
                     'de_DE' => 'Tags',
                     'en_GB' => 'Tags',
                 ],
-                'entity'           => 'NetiTags\Models\Tag',
+                'entity'           => Tag::class,
                 'displayInBackend' => true
             ]
         ],
@@ -80,7 +83,7 @@ return [
                     'de_DE' => 'Tags',
                     'en_GB' => 'Tags',
                 ],
-                'entity'           => 'NetiTags\Models\Tag',
+                'entity'           => Tag::class,
                 'displayInBackend' => true
             ]
         ],
@@ -93,7 +96,20 @@ return [
                     'de_DE' => 'Tags',
                     'en_GB' => 'Tags',
                 ],
-                'entity'           => 'NetiTags\Models\Tag',
+                'entity'           => Tag::class,
+                'displayInBackend' => true
+            ]
+        ],
+        [
+            'table'  => 's_order_attributes',
+            'suffix' => 'tags',
+            'type'   => 'int',
+            'data'   => [
+                'label'            => [
+                    'de_DE' => 'Tags',
+                    'en_GB' => 'Tags',
+                ],
+                'entity'           => Tag::class,
                 'displayInBackend' => true
             ]
         ],

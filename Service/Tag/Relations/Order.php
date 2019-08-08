@@ -9,42 +9,49 @@ namespace NetiTags\Service\Tag\Relations;
 
 use NetiTags\Service\TableRegistryInterface;
 use Shopware\Components\Model\ModelManager;
-use Shopware\Models\Attribute\Blog as BlogAttribute;
+use Shopware\Models\Attribute\Order as OrderAttribute;
 
 /**
- * Class Blog
+ * Class Order
  *
  * @package NetiTags\Service\Tag\Relations
  */
-class Blog extends AbstractRelation
+class Order extends AbstractRelation
 {
     /**
      * @var string
      */
-    const TABLE_NAME = 's_blog';
+    const TABLE_NAME = 's_order';
 
     /**
      * @var string
      */
-    const ENTITY_NAME = \Shopware\Models\Blog\Blog::class;
-
-    /**
-     * @var string
-     */
-    const ATTRIBUTE_TABLE_NAME = 's_blog_attributes';
-
-    /**
-     * @var string
-     */
-    const ATTRIBUTE_ENTITY_NAME = BlogAttribute::class;
+    const ENTITY_NAME = \Shopware\Models\Order\Order::class;
 
     /**
      *
      */
-    const ENTITY_FIELDS = array(
+    const ATTRIBUTE_ENTITY_NAME = OrderAttribute::class;
+
+    /**
+     * @var string
+     */
+    const ATTRIBUTE_TABLE_NAME = 's_order_attributes';
+
+    /**
+     *
+     */
+    const ENTITY_FIELDS = [
         't.id',
-        't.title',
-    );
+        't.number',
+        't.orderTime',
+        't.invoiceAmount',
+        'customer.id AS customerId',
+        'customer.email AS customerEmail',
+        'billingAddress.firstName',
+        'billingAddress.lastName',
+        'billingAddress.company',
+    ];
 
     /**
      * @var \Enlight_Components_Snippet_Manager
@@ -73,7 +80,20 @@ class Blog extends AbstractRelation
      */
     public function getName()
     {
-        return $this->snippets->getNamespace('plugins/neti_tags/backend/detail/relations/blog')
-            ->get('name', 'Blog');
+        return $this->snippets->getNamespace('plugins/neti_tags/backend/detail/relations/order')
+            ->get('name', 'Order');
+    }
+
+    /**
+     * @return \Shopware\Components\Model\QueryBuilder
+     */
+    protected function buildQuery()
+    {
+        $qbr = parent::buildQuery();
+
+        $qbr->innerJoin('t.customer', 'customer');
+        $qbr->innerJoin('t.billing', 'billingAddress');
+
+        return $qbr;
     }
 }

@@ -9,6 +9,7 @@ namespace NetiTags\Subscriber;
 
 use Enlight\Event\SubscriberInterface;
 use Enlight_Event_EventArgs;
+use NetiTags\Service\Tag\Relations\RelationsTagsInterface;
 
 /**
  * Class Backend
@@ -28,14 +29,22 @@ class Backend implements SubscriberInterface
     protected $templateManager;
 
     /**
+     * @var RelationsTagsInterface
+     */
+    protected $orderRelation;
+
+    /**
      * Backend constructor.
      *
-     * @param string $pluginDir
+     * @param string                 $pluginDir
+     * @param RelationsTagsInterface $orderRelation
      */
     public function __construct(
-        $pluginDir
+        $pluginDir,
+        RelationsTagsInterface $orderRelation
     ) {
-        $this->pluginDir = $pluginDir;
+        $this->pluginDir     = $pluginDir;
+        $this->orderRelation = $orderRelation;
     }
 
     /**
@@ -44,9 +53,71 @@ class Backend implements SubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'Enlight_Controller_Action_PostDispatch'                  => array('onPostDispatch', 10),
-            'Enlight_Controller_Action_PostDispatch_Backend_Customer' => 'onPostDispatchCustomerStream',
+            'Enlight_Controller_Action_PostDispatch'                     => array('onPostDispatch', 10),
+            'Enlight_Controller_Action_PostDispatch_Backend_Customer'    => 'onPostDispatchCustomerStream',
+            'Enlight_Controller_Action_PostDispatch_Backend_Order'       => 'onPostDispatchOrder',
+            'Shopware\Models\Order\Repository::filterListQuery::replace' => 'onFilterListQuery'
         );
+    }
+
+    /**
+     * @param \Enlight_Hook_HookArgs $args
+     */
+    public function onFilterListQuery(\Enlight_Hook_HookArgs $args)
+    {
+        /**
+         * @var \Shopware\Components\Model\QueryBuilder $builder
+         */
+        $builder = $args->get('builder');
+        $filters = $args->get('filters');
+
+        $filterProperties = array_flip(array_column($filters, 'property'));
+        if (isset($filterProperties['attribute.netiTags'])) {
+            $filter = $filters[$filterProperties['attribute.netiTags']];
+            unset($filters[$filterProperties['attribute.netiTags']]);
+
+            $relations = $this->orderRelation->getRelationsForTag($filter['value']);
+            $builder->andWhere($builder->expr()->in('orders.id', array_column($relations, 'relationId')));
+        }
+
+        return $args->getSubject()->executeParent(
+            $args->getMethod(),
+            array(
+                $builder,
+                $filters
+            )
+        );
+    }
+
+    public function onPostDispatchOrder(\Enlight_Event_EventArgs $args)
+    {
+        /**
+         * @var \Shopware_Controllers_Backend_Order       $subject
+         * @var \Enlight_Controller_Request_RequestHttp   $request
+         * @var \Enlight_Controller_Response_ResponseHttp $response
+         */
+        $subject  = $args->getSubject();
+        $request  = $args->get('subject')->Request();
+        $response = $args->get('subject')->Response();
+        if (! $request->isDispatched() || $response->isException()) {
+            return;
+        }
+
+        $module = $request->getModuleName();
+        if ('backend' !== $module) {
+            return;
+        }
+
+        /**
+         * @var \Enlight_View_Default $view
+         */
+        $view = $subject->View();
+
+        $view->addTemplateDir(
+            $this->pluginDir . '/Resources/views/'
+        );
+
+        $view->extendsTemplate('backend/neti_tags/extensions/view/order/list/filter.js');
     }
 
     /**
@@ -142,6 +213,8 @@ class Backend implements SubscriberInterface
             'backend/neti_tags/extensions/view/base/attribute/product_stream/field/handler.js',
             'backend/neti_tags/extensions/view/base/attribute/customer_stream/field.js',
             'backend/neti_tags/extensions/view/base/attribute/customer_stream/field/handler.js',
+            'backend/neti_tags/extensions/view/base/attribute/order/field.js',
+            'backend/neti_tags/extensions/view/base/attribute/order/field/handler.js',
             'backend/neti_tags/extensions/view/base/attribute/form.js',
         );
     }
