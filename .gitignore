@@ -5,3 +5,7 @@ sftp-config.json
 /nbproject/private/
 
 /vendor/
+
+/.build/plugins/
+/.build/tmp/
+/.build/update/
