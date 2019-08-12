@@ -8,7 +8,7 @@
     <version>3.0.0</version>
     <link>http://www.netinventors.de</link>
     <author>Net Inventors GmbH</author>
-    <compatibility minVersion="5.5.0"/>
+    <compatibility minVersion="5.6.0"/>
 
     <changelog version="3.0.0">
         <changes lang="de"><![CDATA[
