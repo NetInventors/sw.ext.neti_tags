@@ -43,7 +43,7 @@ class Category extends AbstractRelation
      */
     const ENTITY_FIELDS = array(
         't.id',
-        't.title',
+        't.name',
     );
 
     /**

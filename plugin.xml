@@ -5,10 +5,19 @@
     <label lang="de">Tags</label>
     <label lang="en">Tags</label>
 
-    <version>3.0.0</version>
+    <version>3.0.1</version>
     <link>http://www.netinventors.de</link>
     <author>Net Inventors GmbH</author>
     <compatibility minVersion="5.6.0"/>
+
+    <changelog version="3.0.1">
+        <changes lang="de"><![CDATA[
+[#32537] Kategorie-Relation korrigiert
+]]></changes>
+        <changes lang="en"><![CDATA[
+[#32537] Fix category relation
+]]></changes>
+    </changelog>
 
     <changelog version="3.0.0">
         <changes lang="de"><![CDATA[
