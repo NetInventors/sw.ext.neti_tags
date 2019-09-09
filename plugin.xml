@@ -12,10 +12,10 @@
 
     <changelog version="3.0.1">
         <changes lang="de"><![CDATA[
-[#32537] Kategorie-Relation korrigiert
+[#32540] Kategorie-Relation korrigiert
 ]]></changes>
         <changes lang="en"><![CDATA[
-[#32537] Fix category relation
+[#32540] Fix category relation
 ]]></changes>
     </changelog>
 
