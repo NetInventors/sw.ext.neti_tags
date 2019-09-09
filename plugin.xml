@@ -5,10 +5,19 @@
     <label lang="de">Tags</label>
     <label lang="en">Tags</label>
 
-    <version>1.3.5</version>
+    <version>1.3.6</version>
     <link>http://www.netinventors.de</link>
     <author>Net Inventors GmbH</author>
-    <compatibility minVersion="5.2.6"/>
+    <compatibility minVersion="5.4.0"/>
+
+    <changelog version="1.3.6">
+        <changes lang="de"><![CDATA[
+[#32526] Namespaces für die Snippets korrigiert
+]]></changes>
+        <changes lang="en"><![CDATA[
+[#32526] Fixed namespaces for the snippets
+]]></changes>
+    </changelog>
 
     <changelog version="1.3.5">
         <changes lang="de"><![CDATA[
@@ -118,6 +127,6 @@ Remove license check - part II
     </changelog>
 
     <requiredPlugins>
-        <requiredPlugin pluginName="NetiFoundation" minVersion="2.4.1"/>
+        <requiredPlugin pluginName="NetiFoundation" minVersion="2.4.16"/>
     </requiredPlugins>
 </plugin>
